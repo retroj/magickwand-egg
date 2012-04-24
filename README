@@ -1,0 +1,39 @@
+
+== Description
+
+
+
+== Authors
+
+* John J Foerch
+
+
+== Requirements
+=== Chicken Eggs
+
+* [[foreign]]
+* [[foreigners]]
+
+
+=== C Headers
+
+* MagickWand (libmagickwand-dev)
+
+
+== API
+
+
+
+
+== Examples
+
+
+
+== License
+
+BSD
+
+
+== Version History
+
+* 0.1 (...) initial release
