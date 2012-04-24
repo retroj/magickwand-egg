@@ -31,6 +31,8 @@
 
 (foreign-declare "#include <wand/MagickWand.h>")
 
+(define-foreign-type ssize_t long)
+
 (define-foreign-enum-type (magickboolean int)
   (magickboolean->int int->magickboolean)
   ((magickfalse) MagickFalse #f)
@@ -139,8 +141,8 @@
 (define magick-get-exception-type
   (foreign-lambda exceptiontype MagickGetExceptionType (const magickwand)))
 
-;;(define magick-get-iterator-index
-;;  (foreign-lambda ssize_t MagickGetIteratorIndex magickwand))
+(define magick-get-iterator-index
+  (foreign-lambda ssize_t MagickGetIteratorIndex magickwand))
 
 (define magick-query-configure-option
   (foreign-lambda c-string MagickQueryConfigureOption (const c-string)))
@@ -170,8 +172,8 @@
 (define magick-set-first-iterator
   (foreign-lambda void MagickSetFirstIterator magickwand))
 
-;;(define magick-set-iterator-index
-;;  (foreign-lambda magickboolean MagickSetIteratorIndex magickwand (const ssize_t)))
+(define magick-set-iterator-index
+  (foreign-lambda magickboolean MagickSetIteratorIndex magickwand (const ssize_t)))
 
 (define magick-set-last-iterator
   (foreign-lambda void MagickSetLastIterator magickwand))
