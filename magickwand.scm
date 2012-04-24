@@ -1196,7 +1196,7 @@
 (define destroy-pixel-iterator
   (foreign-lambda void DestroyPixelIterator))
 
-(define is-pixel-iterator
+(define pixel-iterator?
   (foreign-lambda void IsPixelIterator))
 
 (define new-pixel-iterator
@@ -1266,7 +1266,7 @@
 (define is-pixel-wand-similar
   (foreign-lambda void IsPixelWandSimilar))
 
-(define is-pixel-wand
+(define pixel-wand?
   (foreign-lambda void IsPixelWand))
 
 (define new-pixel-wand
@@ -1447,397 +1447,397 @@
 ;;;
 
 #|
-(define Clear-Drawing-Wand
+(define clear-drawing-wand
   (foreign-lambda void ClearDrawingWand))
 
-(define Clone-Drawing-Wand
+(define clone-drawing-wand
   (foreign-lambda void CloneDrawingWand))
 
-(define Destroy-Drawing-Wand
+(define destroy-drawing-wand
   (foreign-lambda void DestroyDrawingWand))
 
-(define Draw-Affine
+(define draw-affine
   (foreign-lambda void DrawAffine))
 
-(define Draw-Annotation
+(define draw-annotation
   (foreign-lambda void DrawAnnotation))
 
-(define Draw-Arc
+(define draw-arc
   (foreign-lambda void DrawArc))
 
-(define Draw-Bezier
+(define draw-bezier
   (foreign-lambda void DrawBezier))
 
-(define Draw-Circle
+(define draw-circle
   (foreign-lambda void DrawCircle))
 
-(define Draw-Clear-Exception
+(define draw-clear-exception
   (foreign-lambda void DrawClearException))
 
-(define Draw-Composite
+(define draw-composite
   (foreign-lambda void DrawComposite))
 
-(define Draw-Color
+(define draw-color
   (foreign-lambda void DrawColor))
 
-(define Draw-Comment
+(define draw-comment
   (foreign-lambda void DrawComment))
 
-(define Draw-Ellipse
+(define draw-ellipse
   (foreign-lambda void DrawEllipse))
 
-(define Draw-Get-Border-Color
+(define draw-get-border-color
   (foreign-lambda void DrawGetBorderColor))
 
-(define Draw-Get-Clip-Path
+(define draw-get-clip-path
   (foreign-lambda void DrawGetClipPath))
 
-(define Draw-Get-Clip-Rule
+(define draw-get-clip-rule
   (foreign-lambda void DrawGetClipRule))
 
-(define Draw-Get-Clip-Units
+(define draw-get-clip-units
   (foreign-lambda void DrawGetClipUnits))
 
-(define Draw-Get-Exception
+(define draw-get-exception
   (foreign-lambda void DrawGetException))
 
-(define Draw-Get-Exception-Type
+(define draw-get-exception-type
   (foreign-lambda void DrawGetExceptionType))
 
-(define Draw-Get-Fill-Color
+(define draw-get-fill-color
   (foreign-lambda void DrawGetFillColor))
 
-(define Draw-Get-Fill-Opacity
+(define draw-get-fill-opacity
   (foreign-lambda void DrawGetFillOpacity))
 
-(define Draw-Get-Fill-Rule
+(define draw-get-fill-rule
   (foreign-lambda void DrawGetFillRule))
 
-(define Draw-Get-Font
+(define draw-get-font
   (foreign-lambda void DrawGetFont))
 
-(define Draw-Get-Font-Family
+(define draw-get-font-family
   (foreign-lambda void DrawGetFontFamily))
 
-(define Draw-Get-Font-Resolution
+(define draw-get-font-resolution
   (foreign-lambda void DrawGetFontResolution))
 
-(define Draw-Get-Font-Size
+(define draw-get-font-size
   (foreign-lambda void DrawGetFontSize))
 
-(define Draw-Get-Font-Stretch
+(define draw-get-font-stretch
   (foreign-lambda void DrawGetFontStretch))
 
-(define Draw-Get-Font-Style
+(define draw-get-font-style
   (foreign-lambda void DrawGetFontStyle))
 
-(define Draw-Get-Font-Weight
+(define draw-get-font-weight
   (foreign-lambda void DrawGetFontWeight))
 
-(define Draw-Get-Gravity
+(define draw-get-gravity
   (foreign-lambda void DrawGetGravity))
 
-(define Draw-Get-Opacity
+(define draw-get-opacity
   (foreign-lambda void DrawGetOpacity))
 
-(define Draw-Get-Stroke-Antialias
+(define draw-get-stroke-antialias
   (foreign-lambda void DrawGetStrokeAntialias))
 
-(define Draw-Get-Stroke-Color
+(define draw-get-stroke-color
   (foreign-lambda void DrawGetStrokeColor))
 
-(define Draw-Get-Stroke-Dash-Array
+(define draw-get-stroke-dash-array
   (foreign-lambda void DrawGetStrokeDashArray))
 
-(define Draw-Get-Stroke-Dash-Offset
+(define draw-get-stroke-dash-offset
   (foreign-lambda void DrawGetStrokeDashOffset))
 
-(define Draw-Get-Stroke-Line-Cap
+(define draw-get-stroke-line-cap
   (foreign-lambda void DrawGetStrokeLineCap))
 
-(define Draw-Get-Stroke-Line-Join
+(define draw-get-stroke-line-join
   (foreign-lambda void DrawGetStrokeLineJoin))
 
-(define Draw-Get-Stroke-Miter-Limit
+(define draw-get-stroke-miter-limit
   (foreign-lambda void DrawGetStrokeMiterLimit))
 
-(define Draw-Get-Stroke-Opacity
+(define draw-get-stroke-opacity
   (foreign-lambda void DrawGetStrokeOpacity))
 
-(define Draw-Get-Stroke-Width
+(define draw-get-stroke-width
   (foreign-lambda void DrawGetStrokeWidth))
 
-(define Draw-Get-Text-Alignment
+(define draw-get-text-alignment
   (foreign-lambda void DrawGetTextAlignment))
 
-(define Draw-Get-Text-Antialias
+(define draw-get-text-antialias
   (foreign-lambda void DrawGetTextAntialias))
 
-(define Draw-Get-Text-Decoration
+(define draw-get-text-decoration
   (foreign-lambda void DrawGetTextDecoration))
 
-(define Draw-Get-Text-Encoding
+(define draw-get-text-encoding
   (foreign-lambda void DrawGetTextEncoding))
 
-(define Draw-Get-Text-Kerning
+(define draw-get-text-kerning
   (foreign-lambda void DrawGetTextKerning))
 
-(define Draw-Get-Text-Interword-Spacing
+(define draw-get-text-interword-spacing
   (foreign-lambda void DrawGetTextInterwordSpacing))
 
-(define Draw-Get-Text-Interword-Spacing
+(define draw-get-text-interword-spacing
   (foreign-lambda void DrawGetTextInterwordSpacing))
 
-(define Draw-Get-Vector-Graphics
+(define draw-get-vector-graphics
   (foreign-lambda void DrawGetVectorGraphics))
 
-(define Draw-Get-Text-Under-Color
+(define draw-get-text-under-color
   (foreign-lambda void DrawGetTextUnderColor))
 
-(define Draw-Line
+(define draw-line
   (foreign-lambda void DrawLine))
 
-(define Draw-Matte
+(define draw-matte
   (foreign-lambda void DrawMatte))
 
-(define Draw-Path-Close
+(define draw-path-close
   (foreign-lambda void DrawPathClose))
 
-(define Draw-Path-Curve-To-Absolute
+(define draw-path-curve-to-absolute
   (foreign-lambda void DrawPathCurveToAbsolute))
 
-(define Draw-Path-Curve-To-Relative
+(define draw-path-curve-to-relative
   (foreign-lambda void DrawPathCurveToRelative))
 
-(define Draw-Path-Curve-To-Quadratic-Bezier-Absolute
+(define draw-path-curve-to-quadratic-bezier-absolute
   (foreign-lambda void DrawPathCurveToQuadraticBezierAbsolute))
 
-(define Draw-Path-Curve-To-Quadratic-Bezier-Relative
+(define draw-path-curve-to-quadratic-bezier-relative
   (foreign-lambda void DrawPathCurveToQuadraticBezierRelative))
 
-(define Draw-Path-Curve-To-Quadratic-Bezier-Smooth-Absolute
+(define draw-path-curve-to-quadratic-bezier-smooth-absolute
   (foreign-lambda void DrawPathCurveToQuadraticBezierSmoothAbsolute))
 
-(define Draw-Path-Curve-To-Quadratic-Bezier-Smooth-Absolute
+(define draw-path-curve-to-quadratic-bezier-smooth-absolute
   (foreign-lambda void DrawPathCurveToQuadraticBezierSmoothAbsolute))
 
-(define Draw-Path-Curve-To-Smooth-Absolute
+(define draw-path-curve-to-smooth-absolute
   (foreign-lambda void DrawPathCurveToSmoothAbsolute))
 
-(define Draw-Path-Curve-To-Smooth-Relative
+(define draw-path-curve-to-smooth-relative
   (foreign-lambda void DrawPathCurveToSmoothRelative))
 
-(define Draw-Path-Elliptic-Arc-Absolute
+(define draw-path-elliptic-arc-absolute
   (foreign-lambda void DrawPathEllipticArcAbsolute))
 
-(define Draw-Path-Elliptic-Arc-Relative
+(define draw-path-elliptic-arc-relative
   (foreign-lambda void DrawPathEllipticArcRelative))
 
-(define Draw-Path-Finish
+(define draw-path-finish
   (foreign-lambda void DrawPathFinish))
 
-(define Draw-Path-Line-To-Absolute
+(define draw-path-line-to-absolute
   (foreign-lambda void DrawPathLineToAbsolute))
 
-(define Draw-Path-Line-To-Relative
+(define draw-path-line-to-relative
   (foreign-lambda void DrawPathLineToRelative))
 
-(define Draw-Path-Line-To-Horizontal-Absolute
+(define draw-path-line-to-horizontal-absolute
   (foreign-lambda void DrawPathLineToHorizontalAbsolute))
 
-(define Draw-Path-Line-To-Horizontal-Relative
+(define draw-path-line-to-horizontal-relative
   (foreign-lambda void DrawPathLineToHorizontalRelative))
 
-(define Draw-Path-Line-To-Vertical-Absolute
+(define draw-path-line-to-vertical-absolute
   (foreign-lambda void DrawPathLineToVerticalAbsolute))
 
-(define Draw-Path-Line-To-Vertical-Relative
+(define draw-path-line-to-vertical-relative
   (foreign-lambda void DrawPathLineToVerticalRelative))
 
-(define Draw-Path-Move-To-Absolute
+(define draw-path-move-to-absolute
   (foreign-lambda void DrawPathMoveToAbsolute))
 
-(define Draw-Path-Move-To-Relative
+(define draw-path-move-to-relative
   (foreign-lambda void DrawPathMoveToRelative))
 
-(define Draw-Path-Start
+(define draw-path-start
   (foreign-lambda void DrawPathStart))
 
-(define Draw-Point
+(define draw-point
   (foreign-lambda void DrawPoint))
 
-(define Draw-Polygon
+(define draw-polygon
   (foreign-lambda void DrawPolygon))
 
-(define Draw-Polyline
+(define draw-polyline
   (foreign-lambda void DrawPolyline))
 
-(define Draw-Pop-Clip-Path
+(define draw-pop-clip-path
   (foreign-lambda void DrawPopClipPath))
 
-(define Draw-Pop-Defs
+(define draw-pop-defs
   (foreign-lambda void DrawPopDefs))
 
-(define Draw-Pop-Pattern
+(define draw-pop-pattern
   (foreign-lambda void DrawPopPattern))
 
-(define Draw-Push-Clip-Path
+(define draw-push-clip-path
   (foreign-lambda void DrawPushClipPath))
 
-(define Draw-Push-Defs
+(define draw-push-defs
   (foreign-lambda void DrawPushDefs))
 
-(define Draw-Push-Pattern
+(define draw-push-pattern
   (foreign-lambda void DrawPushPattern))
 
-(define Draw-Rectangle
+(define draw-rectangle
   (foreign-lambda void DrawRectangle))
 
-(define Draw-Reset-Vector-Graphics
+(define draw-reset-vector-graphics
   (foreign-lambda void DrawResetVectorGraphics))
 
-(define Draw-Rotate
+(define draw-rotate
   (foreign-lambda void DrawRotate))
 
-(define Draw-Round-Rectangle
+(define draw-round-rectangle
   (foreign-lambda void DrawRoundRectangle))
 
-(define Draw-Scale
+(define draw-scale
   (foreign-lambda void DrawScale))
 
-(define Draw-Set-Border-Color
+(define draw-set-border-color
   (foreign-lambda void DrawSetBorderColor))
 
-(define Draw-Set-Clip-Path
+(define draw-set-clip-path
   (foreign-lambda void DrawSetClipPath))
 
-(define Draw-Set-Clip-Rule
+(define draw-set-clip-rule
   (foreign-lambda void DrawSetClipRule))
 
-(define Draw-Set-Clip-Units
+(define draw-set-clip-units
   (foreign-lambda void DrawSetClipUnits))
 
-(define Draw-Set-Fill-Color
+(define draw-set-fill-color
   (foreign-lambda void DrawSetFillColor))
 
-(define Draw-Set-Fill-Opacity
+(define draw-set-fill-opacity
   (foreign-lambda void DrawSetFillOpacity))
 
-(define Draw-Set-Font-Resolution
+(define draw-set-font-resolution
   (foreign-lambda void DrawSetFontResolution))
 
-(define Draw-Set-Opacity
+(define draw-set-opacity
   (foreign-lambda void DrawSetOpacity))
 
-(define Draw-Set-Fill-Pattern-URL
+(define draw-set-fill-pattern-url
   (foreign-lambda void DrawSetFillPatternURL))
 
-(define Draw-Set-Fill-Rule
+(define draw-set-fill-rule
   (foreign-lambda void DrawSetFillRule))
 
-(define Draw-Set-Font
+(define draw-set-font
   (foreign-lambda void DrawSetFont))
 
-(define Draw-Set-Font-Family
+(define draw-set-font-family
   (foreign-lambda void DrawSetFontFamily))
 
-(define Draw-Set-Font-Size
+(define draw-set-font-size
   (foreign-lambda void DrawSetFontSize))
 
-(define Draw-Set-Font-Stretch
+(define draw-set-font-stretch
   (foreign-lambda void DrawSetFontStretch))
 
-(define Draw-Set-Font-Style
+(define draw-set-font-style
   (foreign-lambda void DrawSetFontStyle))
 
-(define Draw-Set-Font-Weight
+(define draw-set-font-weight
   (foreign-lambda void DrawSetFontWeight))
 
-(define Draw-Set-Gravity
+(define draw-set-gravity
   (foreign-lambda void DrawSetGravity))
 
-(define Draw-Set-Stroke-Color
+(define draw-set-stroke-color
   (foreign-lambda void DrawSetStrokeColor))
 
-(define Draw-Set-Stroke-Pattern-URL
+(define draw-set-stroke-pattern-url
   (foreign-lambda void DrawSetStrokePatternURL))
 
-(define Draw-Set-Stroke-Antialias
+(define draw-set-stroke-antialias
   (foreign-lambda void DrawSetStrokeAntialias))
 
-(define Draw-Set-Stroke-Dash-Array
+(define draw-set-stroke-dash-array
   (foreign-lambda void DrawSetStrokeDashArray))
 
-(define Draw-Set-Stroke-Dash-Offset
+(define draw-set-stroke-dash-offset
   (foreign-lambda void DrawSetStrokeDashOffset))
 
-(define Draw-Set-Stroke-Line-Cap
+(define draw-set-stroke-line-cap
   (foreign-lambda void DrawSetStrokeLineCap))
 
-(define Draw-Set-Stroke-Line-Join
+(define draw-set-stroke-line-join
   (foreign-lambda void DrawSetStrokeLineJoin))
 
-(define Draw-Set-Stroke-Miter-Limit
+(define draw-set-stroke-miter-limit
   (foreign-lambda void DrawSetStrokeMiterLimit))
 
-(define Draw-Set-Stroke-Opacity
+(define draw-set-stroke-opacity
   (foreign-lambda void DrawSetStrokeOpacity))
 
-(define Draw-Set-Stroke-Width
+(define draw-set-stroke-width
   (foreign-lambda void DrawSetStrokeWidth))
 
-(define Draw-Set-Text-Alignment
+(define draw-set-text-alignment
   (foreign-lambda void DrawSetTextAlignment))
 
-(define Draw-Set-Text-Antialias
+(define draw-set-text-antialias
   (foreign-lambda void DrawSetTextAntialias))
 
-(define Draw-Set-Text-Decoration
+(define draw-set-text-decoration
   (foreign-lambda void DrawSetTextDecoration))
 
-(define Draw-Set-Text-Encoding
+(define draw-set-text-encoding
   (foreign-lambda void DrawSetTextEncoding))
 
-(define Draw-Set-Text-Kerning
+(define draw-set-text-kerning
   (foreign-lambda void DrawSetTextKerning))
 
-(define Draw-Set-Text-Interword-Spacing
+(define draw-set-text-interword-spacing
   (foreign-lambda void DrawSetTextInterwordSpacing))
 
-(define Draw-Set-Text-Interword-Spacing
+(define draw-set-text-interword-spacing
   (foreign-lambda void DrawSetTextInterwordSpacing))
 
-(define Draw-Set-Text-Under-Color
+(define draw-set-text-under-color
   (foreign-lambda void DrawSetTextUnderColor))
 
-(define Draw-Set-Vector-Graphics
+(define draw-set-vector-graphics
   (foreign-lambda void DrawSetVectorGraphics))
 
-(define Draw-Skew-X
+(define draw-skew-x
   (foreign-lambda void DrawSkewX))
 
-(define Draw-Skew-Y
+(define draw-skew-y
   (foreign-lambda void DrawSkewY))
 
-(define Draw-Translate
+(define draw-translate
   (foreign-lambda void DrawTranslate))
 
-(define Draw-Set-Viewbox
+(define draw-set-viewbox
   (foreign-lambda void DrawSetViewbox))
 
-(define Is-Drawing-Wand
+(define drawing-wand?
   (foreign-lambda void IsDrawingWand))
 
-(define New-Drawing-Wand
+(define new-drawing-wand
   (foreign-lambda void NewDrawingWand))
 
-(define Peek-Drawing-Wand
+(define peek-drawing-wand
   (foreign-lambda void PeekDrawingWand))
 
-(define Pop-Drawing-Wand
+(define pop-drawing-wand
   (foreign-lambda void PopDrawingWand))
 
-(define Push-Drawing-Wand
+(define push-drawing-wand
   (foreign-lambda void PushDrawingWand))
 |#
 
@@ -1887,7 +1887,7 @@
 (define get-wand-view-wand
   (foreign-lambda void GetWandViewWand))
 
-(define is-wand-view
+(define wand-view?
   (foreign-lambda void IsWandView))
 
 (define new-wand-view
