@@ -33,12 +33,12 @@
 
 (define-foreign-type ssize_t long)
 
-(define-foreign-enum-type (magickboolean int)
+(define-foreign-enum-type (magickboolean (enum MagickBooleanType))
   (magickboolean->int int->magickboolean)
   ((magickfalse) MagickFalse #f)
   ((magicktrue) MagickTrue #t))
 
-(define-foreign-enum-type (exceptiontype int)
+(define-foreign-enum-type (exceptiontype (enum ExceptionType))
   (exceptiontype->int int->exceptiontype)
   ((UndefinedException) UndefinedException)
   ((WarningException) WarningException)
@@ -113,6 +113,10 @@
 
 (define-foreign-type magickwand (c-pointer (struct _MagickWand)))
 
+(define-foreign-type drawingwand (c-pointer (struct _DrawingWand)))
+
+(define-foreign-type image (c-pointer (struct _Image)))
+
 
 ;;;
 ;;; MagickWand methods
@@ -147,21 +151,22 @@
 (define magick-query-configure-option
   (foreign-lambda c-string MagickQueryConfigureOption (const c-string)))
 
-;;(define magick-query-configure-options
-;;  (foreign-lambda MagickQueryConfigureOptions))
+(define magick-query-configure-options
+  (foreign-lambda c-string-list MagickQueryConfigureOptions
+                  (const c-string) (c-pointer size_t)))
 
-;;(define magick-query-font-metrics
-;;  (foreign-lambda (c-pointer double) MagickQueryFontMetrics
-;;                  magickwand (const drawingwand) (const c-string)))
+(define magick-query-font-metrics
+  (foreign-lambda (c-pointer double) MagickQueryFontMetrics
+                  magickwand (const drawingwand) (const c-string)))
 
-;;(define magick-query-multiline-font-metrics
-;;  (foreign-lambda (c-pointer double) MagickQueryMultilineFontMetrics
-;;                  magickwand (const drawingwand) (const c-string)))
+(define magick-query-multiline-font-metrics
+  (foreign-lambda (c-pointer double) MagickQueryMultilineFontMetrics
+                  magickwand (const drawingwand) (const c-string)))
 
-;;(define magick-query-fonts
-;;  (foreign-lambda (c-pointer c-string) MagickQueryFonts
-;;                  (const c-string)
-;;                  (c-pointer size_t)))
+(define magick-query-fonts
+  (foreign-lambda c-string-list MagickQueryFonts
+                  (const c-string)
+                  (c-pointer size_t)))
 
 (define magick-relinquish-memory
   (foreign-lambda c-pointer MagickRelinquishMemory c-pointer))
@@ -187,8 +192,8 @@
 (define new-magickwand
   (foreign-lambda magickwand NewMagickWand))
 
-;;(define new-magickwand-from-image
-;;  (foreign-lambda magickwand NewMagickWandFromImage (const image)))
+(define new-magickwand-from-image
+  (foreign-lambda magickwand NewMagickWandFromImage (const image)))
 
 
 ;;;
