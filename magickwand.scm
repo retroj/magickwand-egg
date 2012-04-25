@@ -111,11 +111,379 @@
   ((ConfigureFatalError) ConfigureFatalError)
   ((PolicyFatalError) PolicyFatalError))
 
+(define-foreign-enum-type (colorspace (enum ColorspaceType))
+  (colorspace->int int->colorspace)
+  ((UndefinedColorspace) UndefinedColorspace)
+  ((RGBColorspace) RGBColorspace)
+  ((GRAYColorspace) GRAYColorspace)
+  ((TransparentColorspace) TransparentColorspace)
+  ((OHTAColorspace) OHTAColorspace)
+  ((LabColorspace) LabColorspace)
+  ((XYZColorspace) XYZColorspace)
+  ((YCbCrColorspace) YCbCrColorspace)
+  ((YCCColorspace) YCCColorspace)
+  ((YIQColorspace) YIQColorspace)
+  ((YPbPrColorspace) YPbPrColorspace)
+  ((YUVColorspace) YUVColorspace)
+  ((CMYKColorspace) CMYKColorspace)
+  ((sRGBColorspace) sRGBColorspace)
+  ((HSBColorspace) HSBColorspace)
+  ((HSLColorspace) HSLColorspace)
+  ((HWBColorspace) HWBColorspace)
+  ((Rec601LumaColorspace) Rec601LumaColorspace)
+  ((Rec601YCbCrColorspace) Rec601YCbCrColorspace)
+  ((Rec709LumaColorspace) Rec709LumaColorspace)
+  ((Rec709YCbCrColorspace) Rec709YCbCrColorspace)
+  ((LogColorspace) LogColorspace)
+  ((CMYColorspace) CMYColorspace))
+
+(define-foreign-enum-type (compressiontype (enum CompressionType))
+  (compressiontype->int int->compressiontype)
+  ((UndefinedCompression) UndefinedCompression)
+  ((NoCompression) NoCompression)
+  ((BZipCompression) BZipCompression)
+  ((DXT1Compression) DXT1Compression)
+  ((DXT3Compression) DXT3Compression)
+  ((DXT5Compression) DXT5Compression)
+  ((FaxCompression) FaxCompression)
+  ((Group4Compression) Group4Compression)
+  ((JPEGCompression) JPEGCompression)
+  ((JPEG2000Compression) JPEG2000Compression)
+  ((LosslessJPEGCompression) LosslessJPEGCompression)
+  ((LZWCompression) LZWCompression)
+  ((RLECompression) RLECompression)
+  ((ZipCompression) ZipCompression)
+  ((ZipSCompression) ZipSCompression)
+  ((PizCompression) PizCompression)
+  ((Pxr24Compression) Pxr24Compression)
+  ((B44Compression) B44Compression)
+  ((B44ACompression) B44ACompression)
+  ((LZMACompression) LZMACompression)
+  ((JBIG1Compression) JBIG1Compression)
+  ((JBIG2Compression) JBIG2Compression))
+
+(define-foreign-enum-type (gravity (enum GravityType))
+  (gravity->int int->gravity)
+  ((UndefinedGravity) UndefinedGravity)
+  ((ForgetGravity) ForgetGravity)
+  ((NorthWestGravity) NorthWestGravity)
+  ((NorthGravity) NorthGravity)
+  ((NorthEastGravity) NorthEastGravity)
+  ((WestGravity) WestGravity)
+  ((CenterGravity) CenterGravity)
+  ((EastGravity) EastGravity)
+  ((SouthWestGravity) SouthWestGravity)
+  ((SouthGravity) SouthGravity)
+  ((SouthEastGravity) SouthEastGravity)
+  ((StaticGravity) StaticGravity))
+
+(define-foreign-enum-type (interlacetype (enum InterlaceType))
+  (interlacetype->int int->interlacetype)
+  ((UndefinedInterlace) UndefinedInterlace)
+  ((NoInterlace) NoInterlace)
+  ((LineInterlace) LineInterlace)
+  ((PlaneInterlace) PlaneInterlace)
+  ((PartitionInterlace) PartitionInterlace)
+  ((GIFInterlace) GIFInterlace)
+  ((JPEGInterlace) JPEGInterlace)
+  ((PNGInterlace) PNGInterlace))
+
+(define-foreign-enum-type (interpolatepixelmethod (enum InterpolatePixelMethod))
+  (interpolatepixelmethod->int int->interpolatepixelmethod)
+  ((UndefinedInterpolatePixel) UndefinedInterpolatePixel)
+  ((AverageInterpolatePixel) AverageInterpolatePixel)
+  ((BicubicInterpolatePixel) BicubicInterpolatePixel)
+  ((BilinearInterpolatePixel) BilinearInterpolatePixel)
+  ((FilterInterpolatePixel) FilterInterpolatePixel)
+  ((IntegerInterpolatePixel) IntegerInterpolatePixel)
+  ((MeshInterpolatePixel) MeshInterpolatePixel)
+  ((NearestNeighborInterpolatePixel) NearestNeighborInterpolatePixel)
+  ((SplineInterpolatePixel) SplineInterpolatePixel))
+
+(define-foreign-enum-type (orientation (enum OrientationType))
+  (orientation->int int->orientation)
+  ((UndefinedOrientation) UndefinedOrientation)
+  ((TopLeftOrientation) TopLeftOrientation)
+  ((TopRightOrientation) TopRightOrientation)
+  ((BottomRightOrientation) BottomRightOrientation)
+  ((BottomLeftOrientation) BottomLeftOrientation)
+  ((LeftTopOrientation) LeftTopOrientation)
+  ((RightTopOrientation) RightTopOrientation)
+  ((RightBottomOrientation) RightBottomOrientation)
+  ((LeftBottomOrientation) LeftBottomOrientation))
+
+(define-foreign-type magicksize unsigned-long)
+
+(define-foreign-enum-type (resourcetype (enum ResourceType))
+  (resourcetype->int int->resourcetype)
+  ((UndefinedResource) UndefinedResource)
+  ((AreaResource) AreaResource)
+  ((DiskResource) DiskResource)
+  ((FileResource) FileResource)
+  ((MapResource) MapResource)
+  ((MemoryResource) MemoryResource)
+  ((ThreadResource) ThreadResource)
+  ((TimeResource) TimeResource)
+  ((ThrottleResource) ThrottleResource))
+
+(define-foreign-enum-type (imagetype (enum ImageType))
+  (imagetype->int int->imagetype)
+  ((UndefinedType) UndefinedType)
+  ((BilevelType) BilevelType)
+  ((GrayscaleType) GrayscaleType)
+  ((GrayscaleMatteType) GrayscaleMatteType)
+  ((PaletteType) PaletteType)
+  ((PaletteMatteType) PaletteMatteType)
+  ((TrueColorType) TrueColorType)
+  ((TrueColorMatteType) TrueColorMatteType)
+  ((ColorSeparationType) ColorSeparationType)
+  ((ColorSeparationMatteType) ColorSeparationMatteType)
+  ((OptimizeType) OptimizeType)
+  ((PaletteBilevelMatteType) PaletteBilevelMatteType))
+
+(define-foreign-enum-type (channeltype (enum ChannelType))
+  (channeltype->int int->channeltype)
+  ((UndefinedChannel) UndefinedChannel)
+  ((RedChannel) RedChannel)
+  ((GrayChannel) GrayChannel)
+  ((CyanChannel) CyanChannel)
+  ((GreenChannel) GreenChannel)
+  ((MagentaChannel) MagentaChannel)
+  ((BlueChannel) BlueChannel)
+  ((YellowChannel) YellowChannel)
+  ((AlphaChannel) AlphaChannel)
+  ((OpacityChannel) OpacityChannel)
+  ((MatteChannel) MatteChannel)
+  ((BlackChannel) BlackChannel)
+  ((IndexChannel) IndexChannel)
+  ((CompositeChannels) CompositeChannels)
+  ((AllChannels) AllChannels)
+  ((TrueAlphaChannel) TrueAlphaChannel)
+  ((RGBChannels) RGBChannels)
+  ((GrayChannels) GrayChannels)
+  ((SyncChannels) SyncChannels)
+  ((DefaultChannels) DefaultChannels))
+
+(define-foreign-enum-type (noisetype (enum NoiseType))
+  (noisetype->int int->noisetype)
+  ((UndefinedNoise) UndefinedNoise)
+  ((UniformNoise) UniformNoise)
+  ((GaussianNoise) GaussianNoise)
+  ((MultiplicativeGaussianNoise) MultiplicativeGaussianNoise)
+  ((ImpulseNoise) ImpulseNoise)
+  ((LaplacianNoise) LaplacianNoise)
+  ((PoissonNoise) PoissonNoise)
+  ((RandomNoise) RandomNoise))
+
+(define-foreign-enum-type (kernelinfotype (enum KernelInfoType))
+  (kernelinfotype->int int->kernelinfotype)
+  ((UndefinedKernel) UndefinedKernel)
+  ((UnityKernel) UnityKernel)
+  ((GaussianKernel) GaussianKernel)
+  ((DoGKernel) DoGKernel)
+  ((LoGKernel) LoGKernel)
+  ((BlurKernel) BlurKernel)
+  ((CometKernel) CometKernel)
+  ((LaplacianKernel) LaplacianKernel)
+  ((SobelKernel) SobelKernel)
+  ((FreiChenKernel) FreiChenKernel)
+  ((RobertsKernel) RobertsKernel)
+  ((PrewittKernel) PrewittKernel)
+  ((CompassKernel) CompassKernel)
+  ((KirschKernel) KirschKernel)
+  ((DiamondKernel) DiamondKernel)
+  ((SquareKernel) SquareKernel)
+  ((RectangleKernel) RectangleKernel)
+  ((OctagonKernel) OctagonKernel)
+  ((DiskKernel) DiskKernel)
+  ((PlusKernel) PlusKernel)
+  ((CrossKernel) CrossKernel)
+  ((RingKernel) RingKernel)
+  ((PeaksKernel) PeaksKernel)
+  ((EdgesKernel) EdgesKernel)
+  ((CornersKernel) CornersKernel)
+  ((DiagonalsKernel) DiagonalsKernel)
+  ((LineEndsKernel) LineEndsKernel)
+  ((LineJunctionsKernel) LineJunctionsKernel)
+  ((RidgesKernel) RidgesKernel)
+  ((ConvexHullKernel) ConvexHullKernel)
+  ((ThinSEKernel) ThinSEKernel)
+  ((SkeletonKernel) SkeletonKernel)
+  ((ChebyshevKernel) ChebyshevKernel)
+  ((ManhattanKernel) ManhattanKernel)
+  ((OctagonalKernel) OctagonalKernel)
+  ((EuclideanKernel) EuclideanKernel)
+  ((UserDefinedKernel) UserDefinedKernel))
+
+(define-foreign-enum-type (metrictype (enum MetricType))
+  (metrictype->int int->metrictype)
+  ((UndefinedMetric) UndefinedMetric)
+  ((AbsoluteErrorMetric) AbsoluteErrorMetric)
+  ((MeanAbsoluteErrorMetric) MeanAbsoluteErrorMetric)
+  ((MeanErrorPerPixelMetric) MeanErrorPerPixelMetric)
+  ((MeanSquaredErrorMetric) MeanSquaredErrorMetric)
+  ((PeakAbsoluteErrorMetric) PeakAbsoluteErrorMetric)
+  ((PeakSignalToNoiseRatioMetric) PeakSignalToNoiseRatioMetric)
+  ((RootMeanSquaredErrorMetric) RootMeanSquaredErrorMetric)
+  ((NormalizedCrossCorrelationErrorMetric) NormalizedCrossCorrelationErrorMetric)
+  ((FuzzErrorMetric) FuzzErrorMetric))
+
+(define-foreign-enum-type (imagelayermethod (enum ImageLayerMethod))
+  (imagelayermethod->int int->imagelayermethod)
+  ((UndefinedLayer) UndefinedLayer)
+  ((CoalesceLayer) CoalesceLayer)
+  ((CompareAnyLayer) CompareAnyLayer)
+  ((CompareClearLayer) CompareClearLayer)
+  ((CompareOverlayLayer) CompareOverlayLayer)
+  ((DisposeLayer) DisposeLayer)
+  ((OptimizeLayer) OptimizeLayer)
+  ((OptimizeImageLayer) OptimizeImageLayer)
+  ((OptimizePlusLayer) OptimizePlusLayer)
+  ((OptimizeTransLayer) OptimizeTransLayer)
+  ((RemoveDupsLayer) RemoveDupsLayer)
+  ((RemoveZeroLayer) RemoveZeroLayer)
+  ((CompositeLayer) CompositeLayer)
+  ((MergeLayer) MergeLayer)
+  ((FlattenLayer) FlattenLayer)
+  ((MosaicLayer) MosaicLayer)
+  ((TrimBoundsLayer) TrimBoundsLayer))
+
+(define-foreign-enum-type (compositeoperator (enum CompositeOperator))
+  (compositeoperator->int int->compositeoperator)
+  ((UndefinedCompositeOp) UndefinedCompositeOp)
+  ((NoCompositeOp) NoCompositeOp)
+  ((ModulusAddCompositeOp) ModulusAddCompositeOp)
+  ((AtopCompositeOp) AtopCompositeOp)
+  ((BlendCompositeOp) BlendCompositeOp)
+  ((BumpmapCompositeOp) BumpmapCompositeOp)
+  ((ChangeMaskCompositeOp) ChangeMaskCompositeOp)
+  ((ClearCompositeOp) ClearCompositeOp)
+  ((ColorBurnCompositeOp) ColorBurnCompositeOp)
+  ((ColorDodgeCompositeOp) ColorDodgeCompositeOp)
+  ((ColorizeCompositeOp) ColorizeCompositeOp)
+  ((CopyBlackCompositeOp) CopyBlackCompositeOp)
+  ((CopyBlueCompositeOp) CopyBlueCompositeOp)
+  ((CopyCompositeOp) CopyCompositeOp)
+  ((CopyCyanCompositeOp) CopyCyanCompositeOp)
+  ((CopyGreenCompositeOp) CopyGreenCompositeOp)
+  ((CopyMagentaCompositeOp) CopyMagentaCompositeOp)
+  ((CopyOpacityCompositeOp) CopyOpacityCompositeOp)
+  ((CopyRedCompositeOp) CopyRedCompositeOp)
+  ((CopyYellowCompositeOp) CopyYellowCompositeOp)
+  ((DarkenCompositeOp) DarkenCompositeOp)
+  ((DstAtopCompositeOp) DstAtopCompositeOp)
+  ((DstCompositeOp) DstCompositeOp)
+  ((DstInCompositeOp) DstInCompositeOp)
+  ((DstOutCompositeOp) DstOutCompositeOp)
+  ((DstOverCompositeOp) DstOverCompositeOp)
+  ((DifferenceCompositeOp) DifferenceCompositeOp)
+  ((DisplaceCompositeOp) DisplaceCompositeOp)
+  ((DissolveCompositeOp) DissolveCompositeOp)
+  ((ExclusionCompositeOp) ExclusionCompositeOp)
+  ((HardLightCompositeOp) HardLightCompositeOp)
+  ((HueCompositeOp) HueCompositeOp)
+  ((InCompositeOp) InCompositeOp)
+  ((LightenCompositeOp) LightenCompositeOp)
+  ((LinearLightCompositeOp) LinearLightCompositeOp)
+  ((LuminizeCompositeOp) LuminizeCompositeOp)
+  ((MinusDstCompositeOp) MinusDstCompositeOp)
+  ((ModulateCompositeOp) ModulateCompositeOp)
+  ((MultiplyCompositeOp) MultiplyCompositeOp)
+  ((OutCompositeOp) OutCompositeOp)
+  ((OverCompositeOp) OverCompositeOp)
+  ((OverlayCompositeOp) OverlayCompositeOp)
+  ((PlusCompositeOp) PlusCompositeOp)
+  ((ReplaceCompositeOp) ReplaceCompositeOp)
+  ((SaturateCompositeOp) SaturateCompositeOp)
+  ((ScreenCompositeOp) ScreenCompositeOp)
+  ((SoftLightCompositeOp) SoftLightCompositeOp)
+  ((SrcAtopCompositeOp) SrcAtopCompositeOp)
+  ((SrcCompositeOp) SrcCompositeOp)
+  ((SrcInCompositeOp) SrcInCompositeOp)
+  ((SrcOutCompositeOp) SrcOutCompositeOp)
+  ((SrcOverCompositeOp) SrcOverCompositeOp)
+  ((ModulusSubtractCompositeOp) ModulusSubtractCompositeOp)
+  ((ThresholdCompositeOp) ThresholdCompositeOp)
+  ((XorCompositeOp) XorCompositeOp)
+  ((DivideDstCompositeOp) DivideDstCompositeOp)
+  ((DistortCompositeOp) DistortCompositeOp)
+  ((BlurCompositeOp) BlurCompositeOp)
+  ((PegtopLightCompositeOp) PegtopLightCompositeOp)
+  ((VividLightCompositeOp) VividLightCompositeOp)
+  ((PinLightCompositeOp) PinLightCompositeOp)
+  ((LinearDodgeCompositeOp) LinearDodgeCompositeOp)
+  ((LinearBurnCompositeOp) LinearBurnCompositeOp)
+  ((MathematicsCompositeOp) MathematicsCompositeOp)
+  ((DivideSrcCompositeOp) DivideSrcCompositeOp)
+  ((MinusSrcCompositeOp) MinusSrcCompositeOp)
+  ((DarkenIntensityCompositeOp) DarkenIntensityCompositeOp)
+  ((LightenIntensityCompositeOp) LightenIntensityCompositeOp))
+
+(define-foreign-enum-type (storagetype (enum StorageType))
+  (storagetype->int int->storagetype)
+  ((UndefinedPixel) UndefinedPixel)
+  ((CharPixel) CharPixel)
+  ((DoublePixel) DoublePixel)
+  ((FloatPixel) FloatPixel)
+  ((IntegerPixel) IntegerPixel)
+  ((LongPixel) LongPixel)
+  ((QuantumPixel) QuantumPixel)
+  ((ShortPixel) ShortPixel))
+
 (define-foreign-type magickwand (c-pointer (struct _MagickWand)))
 
 (define-foreign-type drawingwand (c-pointer (struct _DrawingWand)))
 
 (define-foreign-type image (c-pointer (struct _Image)))
+
+(define-foreign-type pixelwand (c-pointer (struct _PixelWand)))
+
+;; typedef MagickBooleanType
+;;   (*MagickProgressMonitor)(const char *,const MagickOffsetType,
+;;     const MagickSizeType,void *);
+
+(define-foreign-record-type (struct KernelInfo)
+  ((enum KernelInfoType) type kernelinfo-type)
+  (size_t width kernelinfo-width)
+  (size_t height kernelinfo-height)
+  (ssize_t x kernelinfo-x)
+  (ssize_t y kernelinfo-y)
+  ((c-pointer double) values kernelinfo-values)
+  (double minimum kernelinfo-minimum)
+  (double maximum kernelinfo-maximum)
+  (double negative_range kernelinfo-negative-range)
+  (double positive_range kernelinfo-positive-range)
+  (double angle kernelinfo-angle)
+  ((c-pointer (struct KernelInfo)) next kernelinfo-next)
+  (size_t signature kernelinfo-signature))
+;; typedef struct KernelInfo
+;; {
+;;   KernelInfoType
+;;     type;
+;; 
+;;   size_t
+;;     width,
+;;     height;
+;; 
+;;   ssize_t
+;;     x,
+;;     y;
+;; 
+;;   double
+;;     *values,
+;;     minimum,
+;;     maximum,
+;;     negative_range,
+;;     positive_range,
+;;     angle;
+;; 
+;;   struct KernelInfo
+;;     *next;
+;; 
+;;   size_t
+;;     signature;
+;; } KernelInfo;
+
 
 
 ;;;
@@ -200,342 +568,467 @@
 ;;; Magick-property methods
 ;;;
 
-#|
 (define magick-delete-image-artifact
-  (foreign-lambda void MagickDeleteImageArtifact))
+  (foreign-lambda magickboolean MagickDeleteImageArtifact
+                  magickwand (const c-string)))
 
 (define magick-delete-image-property
-  (foreign-lambda void MagickDeleteImageProperty))
+  (foreign-lambda magickboolean MagickDeleteImageProperty
+                  magickwand (const c-string)))
 
 (define magick-delete-option
-  (foreign-lambda void MagickDeleteOption))
+  (foreign-lambda magickboolean MagickDeleteOption
+                  magickwand (const c-string)))
 
 (define magick-get-antialias
-  (foreign-lambda void MagickGetAntialias))
+  (foreign-lambda magickboolean MagickGetAntialias magickwand))
 
 (define magick-get-background-color
-  (foreign-lambda void MagickGetBackgroundColor))
+  (foreign-lambda pixelwand MagickGetBackgroundColor magickwand))
 
 (define magick-get-colorspace
-  (foreign-lambda void MagickGetColorspace))
+  (foreign-lambda colorspace MagickGetColorspace magickwand))
 
 (define magick-get-compression
-  (foreign-lambda void MagickGetCompression))
+  (foreign-lambda compressiontype MagickGetCompression magickwand))
 
 (define magick-get-compression-quality
-  (foreign-lambda void MagickGetCompressionQuality))
+  (foreign-lambda size_t MagickGetCompressionQuality magickwand))
 
 (define magick-get-copyright
-  (foreign-lambda void MagickGetCopyright))
+  (foreign-lambda c-string MagickGetCopyright))
 
 (define magick-get-filename
-  (foreign-lambda void MagickGetFilename))
+  (foreign-lambda c-string MagickGetFilename magickwand))
 
 (define magick-get-font
-  (foreign-lambda void MagickGetFont))
+  (foreign-lambda c-string MagickGetFont magickwand))
 
 (define magick-get-format
-  (foreign-lambda void MagickGetFormat))
+  (foreign-lambda char MagickGetFormat magickwand))
 
 (define magick-get-gravity
-  (foreign-lambda void MagickGetGravity))
+  (foreign-lambda gravity MagickGetGravity magickwand))
 
 (define magick-get-home-url
-  (foreign-lambda void MagickGetHomeURL))
+  (foreign-lambda c-string MagickGetHomeURL))
 
 (define magick-get-image-artifact
-  (foreign-lambda void MagickGetImageArtifact))
+  (foreign-lambda c-string MagickGetImageArtifact magickwand (const c-string)))
 
 (define magick-get-image-artifacts
-  (foreign-lambda void MagickGetImageArtifacts))
+  (foreign-lambda c-string MagickGetImageArtifacts
+                  magickwand (const c-string) (c-pointer size_t)))
 
 (define magick-get-image-profile
-  (foreign-lambda void MagickGetImageProfile))
+  (foreign-lambda unsigned-c-string MagickGetImageProfile
+                  magickwand (const c-string) (c-pointer size_t)))
 
 (define magick-get-image-profiles
-  (foreign-lambda void MagickGetImageProfiles))
+  (foreign-lambda c-string MagickGetImageProfiles
+                  magickwand (const c-string) (c-pointer size_t)))
 
 (define magick-get-image-property
-  (foreign-lambda void MagickGetImageProperty))
+  (foreign-lambda c-string MagickGetImageProperty magickwand (const c-string)))
 
 (define magick-get-image-properties
-  (foreign-lambda void MagickGetImageProperties))
+  (foreign-lambda c-string MagickGetImageProperties
+                  magickwand (const c-string) (c-pointer size_t)))
 
 (define magick-get-interlace-scheme
-  (foreign-lambda void MagickGetInterlaceScheme))
+  (foreign-lambda interlacetype MagickGetInterlaceScheme magickwand))
 
 (define magick-get-interpolate-method
-  (foreign-lambda void MagickGetInterpolateMethod))
+  (foreign-lambda interpolatepixelmethod MagickGetInterpolateMethod magickwand))
 
 (define magick-get-option
-  (foreign-lambda void MagickGetOption))
+  (foreign-lambda c-string MagickGetOption magickwand (const c-string)))
 
 (define magick-get-options
-  (foreign-lambda void MagickGetOptions))
+  (foreign-lambda c-string MagickGetOptions
+                  magickwand (const c-string) (c-pointer size_t)))
 
 (define magick-get-orientation
-  (foreign-lambda void MagickGetOrientation))
+  (foreign-lambda orientation MagickGetOrientation magickwand))
 
 (define magick-get-package-name
-  (foreign-lambda void MagickGetPackageName))
+  (foreign-lambda c-string MagickGetPackageName))
 
 (define magick-get-page
-  (foreign-lambda void MagickGetPage))
+  (foreign-lambda magickboolean MagickGetPage
+                  magickwand (c-pointer size_t) (c-pointer size_t)
+                  (c-pointer size_t) (c-pointer size_t)))
 
 (define magick-get-pointsize
-  (foreign-lambda void MagickGetPointsize))
+  (foreign-lambda double MagickGetPointsize magickwand))
 
 (define magick-get-quantum-depth
-  (foreign-lambda void MagickGetQuantumDepth))
+  (foreign-lambda c-string MagickGetQuantumDepth (c-pointer size_t)))
 
 (define magick-get-quantum-range
-  (foreign-lambda void MagickGetQuantumRange))
+  (foreign-lambda c-string MagickGetQuantumRange (c-pointer size_t)))
 
 (define magick-get-release-date
-  (foreign-lambda void MagickGetReleaseDate))
+  (foreign-lambda c-string MagickGetReleaseDate))
 
 (define magick-get-resolution
-  (foreign-lambda void MagickGetResolution))
+  (foreign-lambda magickboolean MagickGetResolution
+                  magickwand (c-pointer double) (c-pointer double)))
 
-(define magick-get-resource
-  (foreign-lambda void MagickGetResource))
+;;(define magick-get-resource
+;;  (foreign-lambda magicksize MagickGetResource (const resourcetype)))
 
-(define magick-get-resource-limit
-  (foreign-lambda void MagickGetResourceLimit))
+;;(define magick-get-resource-limit
+;;  (foreign-lambda magicksize MagickGetResourceLimit (const resourcetype)))
 
 (define magick-get-sampling-factors
-  (foreign-lambda void MagickGetSamplingFactors))
+  (foreign-lambda (c-pointer double) MagickGetSamplingFactors
+                  magickwand (c-pointer size_t)))
 
 (define magick-get-size
-  (foreign-lambda void MagickGetSize))
+  (foreign-lambda magickboolean MagickGetSize
+                  magickwand (c-pointer size_t) (c-pointer size_t)))
 
 (define magick-get-size-offset
-  (foreign-lambda void MagickGetSizeOffset))
+  (foreign-lambda magickboolean MagickGetSizeOffset
+                  magickwand (c-pointer ssize_t)))
 
 (define magick-get-type
-  (foreign-lambda void MagickGetType))
+  (foreign-lambda imagetype MagickGetType magickwand))
 
 (define magick-get-version
-  (foreign-lambda void MagickGetVersion))
+  (foreign-lambda c-string MagickGetVersion (c-pointer size_t)))
 
 (define magick-profile-image
-  (foreign-lambda void MagickProfileImage))
+  (foreign-lambda magickboolean MagickProfileImage
+                  magickwand (const c-string) (const c-pointer) (const size_t)))
 
 (define magick-remove-image-profile
-  (foreign-lambda void MagickRemoveImageProfile))
+  (foreign-lambda unsigned-c-string MagickRemoveImageProfile
+                  magickwand (const c-string) (c-pointer size_t)))
 
-(define magick-set-antialias
-  (foreign-lambda void MagickSetAntialias))
+;;(define magick-set-antialias
+;;  (foreign-lambda magickboolean MagickSetAntialias magickwand (const magickboolean)))
 
 (define magick-set-background-color
-  (foreign-lambda void MagickSetBackgroundColor))
+  (foreign-lambda magickboolean MagickSetBackgroundColor magickwand (const pixelwand)))
 
-(define magick-set-colorspace
-  (foreign-lambda void MagickSetColorspace))
+;;(define magick-set-colorspace
+;;  (foreign-lambda magickboolean MagickSetColorspace magickwand (const colorspace)))
 
-(define magick-set-compression
-  (foreign-lambda void MagickSetCompression))
+;;(define magick-set-compression
+;;  (foreign-lambda magickboolean MagickSetCompression magickwand (const compressiontype)))
 
 (define magick-set-compression-quality
-  (foreign-lambda void MagickSetCompressionQuality))
+  (foreign-lambda magickboolean MagickSetCompressionQuality magickwand (const size_t)))
 
 (define magick-set-depth
-  (foreign-lambda void MagickSetDepth))
+  (foreign-lambda magickboolean MagickSetDepth magickwand (const size_t)))
 
 (define magick-set-extract
-  (foreign-lambda void MagickSetExtract))
+  (foreign-lambda magickboolean MagickSetExtract magickwand (const c-string)))
 
 (define magick-set-filename
-  (foreign-lambda void MagickSetFilename))
+  (foreign-lambda magickboolean MagickSetFilename magickwand (const c-string)))
 
 (define magick-set-font
-  (foreign-lambda void MagickSetFont))
+  (foreign-lambda magickboolean MagickSetFont magickwand (const c-string)))
 
 (define magick-set-format
-  (foreign-lambda void MagickSetFormat))
+  (foreign-lambda magickboolean MagickSetFormat magickwand (const c-string)))
 
-(define magick-set-gravity
-  (foreign-lambda void MagickSetGravity))
+;;(define magick-set-gravity
+;;  (foreign-lambda magickboolean MagickSetGravity magickwand (const gravity)))
 
 (define magick-set-image-artifact
-  (foreign-lambda void MagickSetImageArtifact))
+  (foreign-lambda magickboolean MagickSetImageArtifact
+                  magickwand (const c-string) (const c-string)))
 
 (define magick-set-image-profile
-  (foreign-lambda void MagickSetImageProfile))
+  (foreign-lambda magickboolean MagickSetImageProfile
+                  magickwand (const c-string) (const c-pointer) (const size_t)))
 
 (define magick-set-image-property
-  (foreign-lambda void MagickSetImageProperty))
+  (foreign-lambda magickboolean MagickSetImageProperty
+                  magickwand (const c-string) (const c-string)))
 
-(define magick-set-interlace-scheme
-  (foreign-lambda void MagickSetInterlaceScheme))
+;;(define magick-set-interlace-scheme
+;;  (foreign-lambda magickboolean MagickSetInterlaceScheme magickwand (const interlacetype)))
 
-(define magick-set-interpolate-method
-  (foreign-lambda void MagickSetInterpolateMethod))
+;;(define magick-set-interpolate-method
+;;  (foreign-lambda magickboolean MagickSetInterpolateMethod magickwand (const interpolatepixelmethod)))
 
 (define magick-set-option
-  (foreign-lambda void MagickSetOption))
+  (foreign-lambda magickboolean MagickSetOption
+                  magickwand (const c-string) (const c-string)))
 
-(define magick-set-orientation
-  (foreign-lambda void MagickSetOrientation))
+;;(define magick-set-orientation
+;;  (foreign-lambda magickboolean MagickSetOrientation
+;;                  magickwand (const orientation)))
 
 (define magick-set-page
-  (foreign-lambda void MagickSetPage))
+  (foreign-lambda magickboolean MagickSetPage
+                  magickwand (const size_t) (const size_t)
+                  (const size_t) (const size_t)))
 
 (define magick-set-passphrase
-  (foreign-lambda void MagickSetPassphrase))
+  (foreign-lambda magickboolean MagickSetPassphrase magickwand (const c-string)))
 
 (define magick-set-pointsize
-  (foreign-lambda void MagickSetPointsize))
+  (foreign-lambda magickboolean MagickSetPointsize magickwand (const double)))
 
-(define magick-set-progress-monitor
-  (foreign-lambda void MagickSetProgressMonitor))
+;;(define magick-set-progress-monitor
+;;  (foreign-lambda magickprogressmonitor MagickSetProgressMonitor
+;;                  magickwand (const magickprogressmonitor) c-pointer))
 
-(define magick-set-resource-limit
-  (foreign-lambda void MagickSetResourceLimit))
+;;(define magick-set-resource-limit
+;;  (foreign-lambda magickboolean MagickSetResourceLimit
+;;                  (const resourcetype) (const magicksize)))
 
 (define magick-set-resolution
-  (foreign-lambda void MagickSetResolution))
+  (foreign-lambda magickboolean MagickSetResolution
+                  magickwand (const double) (const double)))
 
 (define magick-set-sampling-factors
-  (foreign-lambda void MagickSetSamplingFactors))
+  (foreign-lambda magickboolean MagickSetSamplingFactors
+                  magickwand (const size_t) (const (c-pointer double))))
 
 (define magick-set-size
-  (foreign-lambda void MagickSetSize))
+  (foreign-lambda magickboolean MagickSetSize
+                  magickwand (const size_t) (const size_t)))
 
 (define magick-set-size-offset
-  (foreign-lambda void MagickSetSizeOffset))
+  (foreign-lambda magickboolean MagickSetSizeOffset
+                  magickwand (const size_t) (const size_t)
+                  (const ssize_t)))
 
-(define magick-set-type
-  (foreign-lambda void MagickSetType))
-|#
+;;(define magick-set-type
+;;  (foreign-lambda magickboolean MagickSetType
+;;                  magickwand (const imagetype)))
 
 
 ;;;
 ;;; Magick-image methods
 ;;;
 
-#|
 (define get-image-from-magick-wand
-  (foreign-lambda void GetImageFromMagickWand))
+  (foreign-lambda image GetImageFromMagickWand magickwand))
 
 (define magick-adaptive-blur-image
-  (foreign-lambda void MagickAdaptiveBlurImage))
+  (foreign-lambda magickboolean MagickAdaptiveBlurImage
+                  magickwand (const double) (const double)))
+
+;;(define magick-adaptive-blur-image-channel
+;;  (foreign-lambda magickboolean MagickAdaptiveBlurImageChannel
+;;                  magickwand (const channeltype) (const double) (const double)))
 
 (define magick-adaptive-resize-image
-  (foreign-lambda void MagickAdaptiveResizeImage))
+  (foreign-lambda magickboolean MagickAdaptiveResizeImage
+                  magickwand (const size_t) (const size_t)))
 
 (define magick-adaptive-sharpen-image
-  (foreign-lambda void MagickAdaptiveSharpenImage))
+  (foreign-lambda magickboolean MagickAdaptiveSharpenImage
+                  magickwand (const double) (const double)))
+
+;;(define magick-adaptive-sharpen-image-channel
+;;  (foreign-lambda magickboolean MagickAdaptiveSharpenImageChannel
+;;                  magickwand (const channeltype) (const double) (const double)))
 
 (define magick-adaptive-threshold-image
-  (foreign-lambda void MagickAdaptiveThresholdImage))
+  (foreign-lambda magickboolean MagickAdaptiveThresholdImage
+                  magickwand (const size_t) (const size_t) (const ssize_t)))
 
 (define magick-add-image
-  (foreign-lambda void MagickAddImage))
+  (foreign-lambda magickboolean MagickAddImage
+                  magickwand (const magickwand)))
 
-(define magick-add-noise-image
-  (foreign-lambda void MagickAddNoiseImage))
+;;(define magick-add-noise-image
+;;  (foreign-lambda magickboolean MagickAddNoiseImage
+;;                  magickwand (const noisetype)))
+
+;;(define magick-add-noise-image-channel
+;;  (foreign-lambda magickboolean MagickAddNoiseImageChannel
+;;                  magickwand (const channeltype) (const noisetype)))
 
 (define magick-affine-transform-image
-  (foreign-lambda void MagickAffineTransformImage))
+  (foreign-lambda magickboolean MagickAffineTransformImage
+                  magickwand (const drawingwand)))
 
 (define magick-annotate-image
-  (foreign-lambda void MagickAnnotateImage))
+  (foreign-lambda magickboolean MagickAnnotateImage
+                  magickwand (const drawingwand) (const double) (const double)
+                  (const double) (const c-string)))
 
 (define magick-animate-images
-  (foreign-lambda void MagickAnimateImages))
+  (foreign-lambda magickboolean MagickAnimateImages magickwand (const c-string)))
 
-(define magick-append-images
-  (foreign-lambda void MagickAppendImages))
+;;(define magick-append-images
+;;  (foreign-lambda magickwand MagickAppendImages magickwand (const magickboolean)))
 
 (define magick-auto-gamma-image
-  (foreign-lambda void MagickAutoGammaImage))
+  (foreign-lambda magickboolean MagickAutoGammaImage magickwand))
+
+;;(define magick-auto-gamma-image-channel
+;;  (foreign-lambda magickboolean MagickAutoGammaImageChannel
+;;                  magickwand (const channeltype)))
 
 (define magick-auto-level-image
-  (foreign-lambda void MagickAutoLevelImage))
+  (foreign-lambda magickboolean MagickAutoLevelImage magickwand))
+
+;;(define magick-auto-level-image-channel
+;;  (foreign-lambda magickboolean MagickAutoLevelImageChannel
+;;                  magickwand (const channeltype)))
 
 (define magick-black-threshold-image
-  (foreign-lambda void MagickBlackThresholdImage))
+  (foreign-lambda magickboolean MagickBlackThresholdImage
+                  magickwand (const pixelwand)))
 
 (define magick-blue-shift-image
-  (foreign-lambda void MagickBlueShiftImage))
+  (foreign-lambda magickboolean MagickBlueShiftImage magickwand (const double)))
 
 (define magick-blur-image
-  (foreign-lambda void MagickBlurImage))
+  (foreign-lambda magickboolean MagickBlurImage
+                  magickwand (const double) (const double)))
+
+;;(define magick-blur-image-channel
+;;  (foreign-lambda magickboolean MagickBlurImageChannel
+;;                  magickwand (const channeltype)
+;;                  (const double) (const double)))
 
 (define magick-border-image
-  (foreign-lambda void MagickBorderImage))
+  (foreign-lambda magickboolean MagickBorderImage
+                  magickwand (const pixelwand) (const size_t) (const size_t)))
 
-;; Use MagickBrightnessContrastImage
+(define magick-brightness-contrast-image
+  (foreign-lambda magickboolean MagickBrightnessContrastImage
+                  magickwand (const double) (const double)))
+
+;;(define magick-brightness-contrast-image-channel
+;;  (foreign-lambda magickboolean MagickBrightnessContrastImageChannel
+;;                  magickwand (const channeltype) (const double) (const double)))
+
 (define magick-charcoal-image
-  (foreign-lambda void MagickCharcoalImage))
+  (foreign-lambda magickboolean MagickCharcoalImage
+                  magickwand (const double) (const double)))
 
 (define magick-chop-image
-  (foreign-lambda void MagickChopImage))
+  (foreign-lambda magickboolean MagickChopImage
+                  magickwand (const size_t) (const size_t)
+                  (const ssize_t) (const ssize_t)))
 
 (define magick-clamp-image
-  (foreign-lambda void MagickClampImage))
+  (foreign-lambda magickboolean MagickClampImage magickwand))
+
+;;(define magick-clamp-image-channel
+;;  (foreign-lambda magickboolean MagickClampImageChannel magickwand (const channeltype)))
 
 (define magick-clip-image
-  (foreign-lambda void MagickClipImage))
+  (foreign-lambda magickboolean MagickClipImage magickwand))
 
-(define magick-clip-image-path
-  (foreign-lambda void MagickClipImagePath))
+;;(define magick-clip-image-path
+;;  (foreign-lambda magickboolean MagickClipImagePath
+;;                  magickwand (const c-string) (const magickboolean)))
 
 (define magick-clut-image
-  (foreign-lambda void MagickClutImage))
+  (foreign-lambda magickboolean MagickClutImage
+                  magickwand (const magickwand)))
+
+;;(define magick-clut-image-channel
+;;  (foreign-lambda magickboolean MagickClutImageChannel
+;;                  magickwand (const channeltype) (const magickwand)))
 
 (define magick-coalesce-images
-  (foreign-lambda void MagickCoalesceImages))
+  (foreign-lambda magickwand MagickCoalesceImages magickwand))
 
 (define magick-color-decision-list-image
-  (foreign-lambda void MagickColorDecisionListImage))
+  (foreign-lambda magickboolean MagickColorDecisionListImage
+                  magickwand (const c-string)))
 
 (define magick-colorize-image
-  (foreign-lambda void MagickColorizeImage))
+  (foreign-lambda magickboolean MagickColorizeImage
+                  magickwand (const pixelwand) (const pixelwand)))
 
-(define magick-color-matrix-image
-  (foreign-lambda void MagickColorMatrixImage))
+;;(define magick-color-matrix-image
+;;  (foreign-lambda magickboolean MagickColorMatrixImage
+;;                  magickwand (const KernelInfo)))
 
-(define magick-combine-images
-  (foreign-lambda void MagickCombineImages))
+;;(define magick-combine-images
+;;  (foreign-lambda magickwand MagickCombineImages
+;;                  magickwand (const channeltype)))
 
 (define magick-comment-image
-  (foreign-lambda void MagickCommentImage))
+  (foreign-lambda magickboolean MagickCommentImage
+                  magickwand (const c-string)))
 
-(define magick-compare-image-channels
-  (foreign-lambda void MagickCompareImageChannels))
+;;(define magick-compare-image-channels
+;;  (foreign-lambda magickwand MagickCompareImageChannels
+;;                  magickwand (const magickwand) (const channeltype)
+;;                  (const metrictype) (c-pointer double)))
 
-(define magick-compare-image-layers
-  (foreign-lambda void MagickCompareImageLayers))
+;;(define magick-compare-image-layers
+;;  (foreign-lambda magickwand MagickCompareImageLayers
+;;                  magickwand (const imagelayermethod)))
 
-(define magick-compare-images
-  (foreign-lambda void MagickCompareImages))
+;;(define magick-compare-images
+;;  (foreign-lambda magickwand MagickCompareImages
+;;                  magickwand (const magickwand)
+;;                  (const metrictype) (c-pointer double)))
 
-(define magick-composite-image
-  (foreign-lambda void MagickCompositeImage))
+;;(define magick-composite-image
+;;  (foreign-lambda magickboolean MagickCompositeImage
+;;                  magickwand (const magickwand)
+;;                  (const compositeoperator)
+;;                  (const ssize_t) (const ssize_t)))
 
-(define magick-composite-layers
-  (foreign-lambda void MagickCompositeLayers))
+;;(define magick-composite-image-channel
+;;  (foreign-lambda magickboolean MagickCompositeImageChannel
+;;                  magickwand (const channeltype) (const magickwand)
+;;                  (const compositeoperator)
+;;                  (const ssize_t) (const ssize_t)))
 
-(define magick-contrast-image
-  (foreign-lambda void MagickContrastImage))
+;;(define magick-composite-layers
+;;  (foreign-lambda magickboolean MagickCompositeLayers
+;;                  magickwand (const magickwand)
+;;                  (const compositeoperator)
+;;                  (const ssize_t) (const ssize_t)))
+
+;;(define magick-contrast-image
+;;  (foreign-lambda magickboolean MagickContrastImage
+;;                  magickwand (const magickboolean)))
 
 (define magick-contrast-stretch-image
-  (foreign-lambda void MagickContrastStretchImage))
+  (foreign-lambda magickboolean MagickContrastStretchImage
+                  magickwand (const double) (const double)))
+
+;;(define magick-contrast-stretch-image-channel
+;;  (foreign-lambda magickboolean MagickContrastStretchImageChannel
+;;                  magickwand (const channeltype)
+;;                  (const double) (const double)))
 
 (define magick-convolve-image
-  (foreign-lambda void MagickConvolveImage))
+  (foreign-lambda magickboolean MagickConvolveImage
+                  magickwand (const size_t) (const (c-pointer double))))
+
+;;(define magick-convolve-image-channel
+;;  (foreign-lambda magickboolean MagickConvolveImageChannel
+;;                  magickwand (const channeltype)
+;;                  (const size_t) (const (c-pointer double))))
 
 (define magick-crop-image
-  (foreign-lambda void MagickCropImage))
+  (foreign-lambda magickboolean MagickCropImage
+                  magickwand (const size_t) (const size_t)
+                  (const ssize_t) (const ssize_t)))
 
 (define magick-cycle-colormap-image
-  (foreign-lambda void MagickCycleColormapImage))
+  (foreign-lambda magickboolean MagickCycleColormapImage
+                  magickwand (const ssize_t)))
 
-(define magick-constitute-image
-  (foreign-lambda void MagickConstituteImage))
+;;(define magick-constitute-image
+;;  (foreign-lambda magickboolean MagickConstituteImage
+;;                  magickwand (const size_t) (const size_t)
+;;                  (const c-string) (const storagetype) c-pointer))
 
+#|
 (define magick-decipher-image
   (foreign-lambda void MagickDecipherImage))
 
