@@ -430,6 +430,71 @@
   ((QuantumPixel) QuantumPixel)
   ((ShortPixel) ShortPixel))
 
+(define-foreign-enum-type (distortimagemethod (enum DistortImageMethod))
+  (distortimagemethod-> int->distortimagemethod)
+  ((UndefinedDistortion) UndefinedDistortion)
+  ((AffineDistortion) AffineDistortion)
+  ((AffineProjectionDistortion) AffineProjectionDistortion)
+  ((ScaleRotateTranslateDistortion) ScaleRotateTranslateDistortion)
+  ((PerspectiveDistortion) PerspectiveDistortion)
+  ((PerspectiveProjectionDistortion) PerspectiveProjectionDistortion)
+  ((BilinearForwardDistortion) BilinearForwardDistortion)
+  ((BilinearDistortion) BilinearDistortion)
+  ((BilinearReverseDistortion) BilinearReverseDistortion)
+  ((PolynomialDistortion) PolynomialDistortion)
+  ((ArcDistortion) ArcDistortion)
+  ((PolarDistortion) PolarDistortion)
+  ((DePolarDistortion) DePolarDistortion)
+  ((Cylinder2PlaneDistortion) Cylinder2PlaneDistortion)
+  ((Plane2CylinderDistortion) Plane2CylinderDistortion)
+  ((BarrelDistortion) BarrelDistortion)
+  ((BarrelInverseDistortion) BarrelInverseDistortion)
+  ((ShepardsDistortion) ShepardsDistortion)
+  ((ResizeDistortion) ResizeDistortion)
+  ((SentinelDistortion) SentinelDistortion))
+
+(define-foreign-enum-type (magickevaluateoperator (enum MagickEvaluateOperator))
+  (magickevaluateoperator->int int->magickevaluateoperator)
+  ((UndefinedEvaluateOperator) UndefinedEvaluateOperator)
+  ((AddEvaluateOperator) AddEvaluateOperator)
+  ((AndEvaluateOperator) AndEvaluateOperator)
+  ((DivideEvaluateOperator) DivideEvaluateOperator)
+  ((LeftShiftEvaluateOperator) LeftShiftEvaluateOperator)
+  ((MaxEvaluateOperator) MaxEvaluateOperator)
+  ((MinEvaluateOperator) MinEvaluateOperator)
+  ((MultiplyEvaluateOperator) MultiplyEvaluateOperator)
+  ((OrEvaluateOperator) OrEvaluateOperator)
+  ((RightShiftEvaluateOperator) RightShiftEvaluateOperator)
+  ((SetEvaluateOperator) SetEvaluateOperator)
+  ((SubtractEvaluateOperator) SubtractEvaluateOperator)
+  ((XorEvaluateOperator) XorEvaluateOperator)
+  ((PowEvaluateOperator) PowEvaluateOperator)
+  ((LogEvaluateOperator) LogEvaluateOperator)
+  ((ThresholdEvaluateOperator) ThresholdEvaluateOperator)
+  ((ThresholdBlackEvaluateOperator) ThresholdBlackEvaluateOperator)
+  ((ThresholdWhiteEvaluateOperator) ThresholdWhiteEvaluateOperator)
+  ((GaussianNoiseEvaluateOperator) GaussianNoiseEvaluateOperator)
+  ((ImpulseNoiseEvaluateOperator) ImpulseNoiseEvaluateOperator)
+  ((LaplacianNoiseEvaluateOperator) LaplacianNoiseEvaluateOperator)
+  ((MultiplicativeNoiseEvaluateOperator) MultiplicativeNoiseEvaluateOperator)
+  ((PoissonNoiseEvaluateOperator) PoissonNoiseEvaluateOperator)
+  ((UniformNoiseEvaluateOperator) UniformNoiseEvaluateOperator)
+  ((CosineEvaluateOperator) CosineEvaluateOperator)
+  ((SineEvaluateOperator) SineEvaluateOperator)
+  ((AddModulusEvaluateOperator) AddModulusEvaluateOperator)
+  ((MeanEvaluateOperator) MeanEvaluateOperator)
+  ((AbsEvaluateOperator) AbsEvaluateOperator)
+  ((ExponentialEvaluateOperator) ExponentialEvaluateOperator)
+  ((MedianEvaluateOperator) MedianEvaluateOperator))
+
+(define-foreign-enum-type (magickfunction (enum MagickFunction))
+  (magickfunction->int int->magickfunction)
+  ((UndefinedFunction) UndefinedFunction)
+  ((PolynomialFunction) PolynomialFunction)
+  ((SinusoidFunction) SinusoidFunction)
+  ((ArcsinFunction) ArcsinFunction)
+  ((ArctanFunction) ArctanFunction))
+
 (define-foreign-type magickwand (c-pointer (struct _MagickWand)))
 
 (define-foreign-type drawingwand (c-pointer (struct _DrawingWand)))
@@ -1028,82 +1093,137 @@
 ;;                  magickwand (const size_t) (const size_t)
 ;;                  (const c-string) (const storagetype) c-pointer))
 
-#|
 (define magick-decipher-image
-  (foreign-lambda void MagickDecipherImage))
+  (foreign-lambda magickboolean MagickDecipherImage
+                  magickwand (const c-string)))
 
 (define magick-deconstruct-images
-  (foreign-lambda void MagickDeconstructImages))
+  (foreign-lambda magickwand MagickDeconstructImages magickwand))
 
 (define magick-deskew-image
-  (foreign-lambda void MagickDeskewImage))
+  (foreign-lambda magickboolean MagickDeskewImage
+                  magickwand (const double)))
 
 (define magick-despeckle-image
-  (foreign-lambda void MagickDespeckleImage))
+  (foreign-lambda magickboolean MagickDespeckleImage magickwand))
 
 (define magick-destroy-image
-  (foreign-lambda void MagickDestroyImage))
+  (foreign-lambda image MagickDestroyImage image))
 
 (define magick-display-image
-  (foreign-lambda void MagickDisplayImage))
+  (foreign-lambda magickboolean MagickDisplayImage magickwand (const c-string)))
 
 (define magick-display-images
-  (foreign-lambda void MagickDisplayImages))
+  (foreign-lambda magickboolean MagickDisplayImages magickwand (const c-string)))
 
-(define magick-distort-image
-  (foreign-lambda void MagickDistortImage))
+;;(define magick-distort-image
+;;  (foreign-lambda magickboolean MagickDistortImage
+;;                  magickwand (const distortimagemethod)
+;;                  (const size_t) (const (c-pointer double))
+;;                  (const magickboolean)))
 
 (define magick-draw-image
-  (foreign-lambda void MagickDrawImage))
+  (foreign-lambda magickboolean MagickDrawImage
+                  magickwand (const drawingwand)))
 
 (define magick-edge-image
-  (foreign-lambda void MagickEdgeImage))
+  (foreign-lambda magickboolean MagickEdgeImage
+                  magickwand (const double)))
 
 (define magick-emboss-image
-  (foreign-lambda void MagickEmbossImage))
+  (foreign-lambda magickboolean MagickEmbossImage
+                  magickwand (const double) (const double)))
 
 (define magick-encipher-image
-  (foreign-lambda void MagickEncipherImage))
+  (foreign-lambda magickboolean MagickEncipherImage
+                  magickwand (const c-string)))
 
 (define magick-enhance-image
-  (foreign-lambda void MagickEnhanceImage))
+  (foreign-lambda magickboolean MagickEnhanceImage magickwand))
 
 (define magick-equalize-image
-  (foreign-lambda void MagickEqualizeImage))
+  (foreign-lambda magickboolean MagickEqualizeImage magickwand))
 
-(define magick-evaluate-image
-  (foreign-lambda void MagickEvaluateImage))
+;;(define magick-equalize-image-channel
+;;  (foreign-lambda magickboolean MagickEqualizeImageChannel
+;;                  magickwand (const channeltype)))
 
-(define magick-export-image-pixels
-  (foreign-lambda void MagickExportImagePixels))
+;;(define magick-evaluate-image
+;;  (foreign-lambda magickboolean MagickEvaluateImage
+;;                  magickwand (const magickevaluateoperator)
+;;                  (const double)))
+
+;;(define magick-evaluate-images
+;;  (foreign-lambda magickboolean MagickEvaluateImages
+;;                  magickwand (const magickevaluateoperator)))
+
+;;(define magick-evaluate-image-channel
+;;  (foreign-lambda magickboolean MagickEvaluateImageChannel
+;;                  magickwand (const channeltype)
+;;                  (const magickevaluateoperator)
+;;                  (const double)))
+
+;;(define magick-export-image-pixels
+;;  (foreign-lambda magickboolean MagickExportImagePixels
+;;                  magickwand (const ssize_t) (const ssize_t)
+;;                  (const size_t) (const size_t)
+;;                  (const c-string) (const storagetype)
+;;                  c-pointer))
 
 (define magick-extent-image
-  (foreign-lambda void MagickExtentImage))
+  (foreign-lambda magickboolean MagickExtentImage
+                  magickwand (const size_t) (const size_t)
+                  (const ssize_t) (const ssize_t)))
 
-(define magick-filter-image
-  (foreign-lambda void MagickFilterImage))
+;;(define magick-filter-image
+;;  (foreign-lambda magickboolean MagickFilterImage
+;;                  magickwand (const kernelinfo)))
+
+;;(define magick-filter-image-channel
+;;  (foreign-lambda magickboolean MagickFilterImageChannel
+;;                  magickwand (const channeltype) (const kernelinfo)))
 
 (define magick-flip-image
-  (foreign-lambda void MagickFlipImage))
+  (foreign-lambda magickboolean MagickFlipImage magickwand))
 
-(define magick-floodfill-paint-image
-  (foreign-lambda void MagickFloodfillPaintImage))
+;;(define magick-floodfill-paint-image
+;;  (foreign-lambda magickboolean MagickFloodfillPaintImage
+;;                  magickwand (const channeltype) (const pixelwand)
+;;                  (const double) (const pixelwand)
+;;                  (const ssize_t) (const ssize_t)
+;;                  (const magickboolean)))
 
 (define magick-flop-image
-  (foreign-lambda void MagickFlopImage))
+  (foreign-lambda magickboolean MagickFlopImage magickwand))
 
-(define magick-forward-fourier-transform-image
-  (foreign-lambda void MagickForwardFourierTransformImage))
+;;(define magick-forward-fourier-transform-image
+;;  (foreign-lambda magickboolean MagickForwardFourierTransformImage
+;;                  magickwand (const magickboolean)))
 
 (define magick-frame-image
-  (foreign-lambda void MagickFrameImage))
+  (foreign-lambda magickboolean MagickFrameImage
+                  magickwand (const pixelwand)
+                  (const size_t) (const size_t)
+                  (const ssize_t) (const ssize_t)))
 
-(define magick-function-image
-  (foreign-lambda void MagickFunctionImage))
+;;(define magick-function-image
+;;  (foreign-lambda magickboolean MagickFunctionImage
+;;                  magickwand (const magickfunction)
+;;                  (const size_t) (const (c-pointer double))))
+
+;;(define magick-function-image-channel
+;;  (foreign-lambda magickboolean MagickFunctionImageChannel
+;;                  magickwand (const channeltype) (const magickfunction)
+;;                  (const size_t) (const (c-pointer double))))
 
 (define magick-fx-image
-  (foreign-lambda void MagickFxImage))
+  (foreign-lambda magickwand MagickFxImage magickwand (const c-string)))
 
+;;(define magick-fx-image-channel
+;;  (foreign-lambda magickwand MagickFxImageChannel
+;;                  magickwand (const channeltype) (const c-string)))
+
+#|
 (define magick-gamma-image
   (foreign-lambda void MagickGammaImage))
 
