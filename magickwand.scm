@@ -495,6 +495,81 @@
   ((ArcsinFunction) ArcsinFunction)
   ((ArctanFunction) ArctanFunction))
 
+(define-foreign-enum-type (disposetype (enum DisposeType))
+  (disposetype-> int->disposetype)
+  ((UnrecognizedDispose) UnrecognizedDispose)
+  ((UndefinedDispose) UndefinedDispose)
+  ((NoneDispose) NoneDispose)
+  ((BackgroundDispose) BackgroundDispose)
+  ((PreviousDispose) PreviousDispose))
+
+(define-foreign-enum-type (renderingintent (enum RenderingIntent))
+  (renderingintent->int int->renderingintent)
+  ((UndefinedIntent) UndefinedIntent)
+  ((SaturationIntent) SaturationIntent)
+  ((PerceptualIntent) PerceptualIntent)
+  ((AbsoluteIntent) AbsoluteIntent)
+  ((RelativeIntent) RelativeIntent))
+
+(define-foreign-enum-type (resolutiontype (enum ResolutionType))
+  (resolutiontype->int int->resolutiontype)
+  ((UndefinedResolution) UndefinedResolution)
+  ((PixelsPerInchResolution) PixelsPerInchResolution)
+  ((PixelsPerCentimeterResolution) PixelsPerCentimeterResolution))
+
+(define-foreign-enum-type (virtualpixelmethod (enum VirtualPixelMethod))
+  (virtualpixelmethod->int int->virtualpixelmethod)
+  ((UndefinedVirtualPixelMethod) UndefinedVirtualPixelMethod)
+  ((BackgroundVirtualPixelMethod) BackgroundVirtualPixelMethod)
+  ((ConstantVirtualPixelMethod) ConstantVirtualPixelMethod)
+  ((DitherVirtualPixelMethod) DitherVirtualPixelMethod)
+  ((EdgeVirtualPixelMethod) EdgeVirtualPixelMethod)
+  ((MirrorVirtualPixelMethod) MirrorVirtualPixelMethod)
+  ((RandomVirtualPixelMethod) RandomVirtualPixelMethod)
+  ((TileVirtualPixelMethod) TileVirtualPixelMethod)
+  ((TransparentVirtualPixelMethod) TransparentVirtualPixelMethod)
+  ((MaskVirtualPixelMethod) MaskVirtualPixelMethod)
+  ((BlackVirtualPixelMethod) BlackVirtualPixelMethod)
+  ((GrayVirtualPixelMethod) GrayVirtualPixelMethod)
+  ((WhiteVirtualPixelMethod) WhiteVirtualPixelMethod)
+  ((HorizontalTileVirtualPixelMethod) HorizontalTileVirtualPixelMethod)
+  ((VerticalTileVirtualPixelMethod) VerticalTileVirtualPixelMethod)
+  ((HorizontalTileEdgeVirtualPixelMethod) HorizontalTileEdgeVirtualPixelMethod)
+  ((VerticalTileEdgeVirtualPixelMethod) VerticalTileEdgeVirtualPixelMethod)
+  ((CheckerTileVirtualPixelMethod) CheckerTileVirtualPixelMethod))
+
+(define-foreign-enum-type (montagemode (enum MontageMode))
+  (montagemode->int int->montagemode)
+  ((UndefinedMode) UndefinedMode)
+  ((FrameMode) FrameMode)
+  ((UnframeMode) UnframeMode)
+  ((ConcatenateMode) ConcatenateMode))
+
+(define-foreign-enum-type (morphologymethod (enum MorphologyMethod))
+  (morphologymethod->int int->morphologymethod)
+  ((UndefinedMorphology) UndefinedMorphology)
+  ((ConvolveMorphology) ConvolveMorphology)
+  ((CorrelateMorphology) CorrelateMorphology)
+  ((ErodeMorphology) ErodeMorphology)
+  ((DilateMorphology) DilateMorphology)
+  ((ErodeIntensityMorphology) ErodeIntensityMorphology)
+  ((DilateIntensityMorphology) DilateIntensityMorphology)
+  ((DistanceMorphology) DistanceMorphology)
+  ((OpenMorphology) OpenMorphology)
+  ((CloseMorphology) CloseMorphology)
+  ((OpenIntensityMorphology) OpenIntensityMorphology)
+  ((CloseIntensityMorphology) CloseIntensityMorphology)
+  ((SmoothMorphology) SmoothMorphology)
+  ((EdgeInMorphology) EdgeInMorphology)
+  ((EdgeOutMorphology) EdgeOutMorphology)
+  ((EdgeMorphology) EdgeMorphology)
+  ((TopHatMorphology) TopHatMorphology)
+  ((BottomHatMorphology) BottomHatMorphology)
+  ((HitAndMissMorphology) HitAndMissMorphology)
+  ((ThinningMorphology) ThinningMorphology)
+  ((ThickenMorphology) ThickenMorphology)
+  ((VoronoiMorphology) VoronoiMorphology))
+
 (define-foreign-type magickwand (c-pointer (struct _MagickWand)))
 
 (define-foreign-type drawingwand (c-pointer (struct _DrawingWand)))
@@ -521,34 +596,36 @@
   (double angle kernelinfo-angle)
   ((c-pointer (struct KernelInfo)) next kernelinfo-next)
   (size_t signature kernelinfo-signature))
-;; typedef struct KernelInfo
-;; {
-;;   KernelInfoType
-;;     type;
-;; 
-;;   size_t
-;;     width,
-;;     height;
-;; 
-;;   ssize_t
-;;     x,
-;;     y;
-;; 
-;;   double
-;;     *values,
-;;     minimum,
-;;     maximum,
-;;     negative_range,
-;;     positive_range,
-;;     angle;
-;; 
-;;   struct KernelInfo
-;;     *next;
-;; 
-;;   size_t
-;;     signature;
-;; } KernelInfo;
 
+(define-foreign-record-type ChannelFeatures
+  (double (angular_second_moment 4) channelfeatures-angular_second_moment)
+  (double (contrast 4) channelfeatures-contrast)
+  (double (correlation 4) channelfeatures-correlation)
+  (double (variance_sum_of_squares 4) channelfeatures-variance_sum_of_squares)
+  (double (inverse_difference_moment 4) channelfeatures-inverse_difference_moment)
+  (double (sum_average 4) channelfeatures-sum_average)
+  (double (sum_variance 4) channelfeatures-sum_variance)
+  (double (sum_entropy 4) channelfeatures-sum_entropy)
+  (double (entropy 4) channelfeatures-entropy)
+  (double (difference_variance 4) channelfeatures-difference_variance)
+  (double (difference_entropy 4) channelfeatures-difference_entropy)
+  (double (measure_of_correlation_1 4) channelfeatures-measure_of_correlation_1)
+  (double (measure_of_correlation_2 4) channelfeatures-measure_of_correlation_2)
+  (double (maximum_correlation_coefficient 4) channelfeatures-maximum_correlation_coefficient))
+
+(define-foreign-record-type ChannelStatistics
+  (size_t depth channelstatistics-depth)
+  (double minima channelstatistics-minima)
+  (double maxima channelstatistics-maxima)
+  (double sum channelstatistics-sum)
+  (double sum_squared channelstatistics-sum_squared)
+  (double sum_cubed channelstatistics-sum_cubed)
+  (double sum_fourth_power channelstatistics-sum_fourth_power)
+  (double mean channelstatistics-mean)
+  (double variance channelstatistics-variance)
+  (double standard_deviation channelstatistics-standard_deviation)
+  (double kurtosis channelstatistics-kurtosis)
+  (double skewness channelstatistics-skewness))
 
 
 ;;;
@@ -570,10 +647,10 @@
 (define magick-clear-exception
   (foreign-lambda magickboolean MagickClearException magickwand))
 
-(define magick-get-exception
-  (foreign-lambda c-string MagickGetException
-                  (const magickwand)
-                  (c-pointer exceptiontype)))
+;;(define magick-get-exception
+;;  (foreign-lambda c-string MagickGetException
+;;                  (const magickwand)
+;;                  (c-pointer exceptiontype)))
 
 (define magick-get-exception-type
   (foreign-lambda exceptiontype MagickGetExceptionType (const magickwand)))
@@ -1223,238 +1300,317 @@
 ;;  (foreign-lambda magickwand MagickFxImageChannel
 ;;                  magickwand (const channeltype) (const c-string)))
 
-#|
 (define magick-gamma-image
-  (foreign-lambda void MagickGammaImage))
+  (foreign-lambda magickboolean MagickGammaImage magickwand (const double)))
+
+;;(define magick-gamma-image-channel
+;;  (foreign-lambda magickboolean MagickGammaImageChannel
+;;                  magickwand (const channeltype) (const double)))
 
 (define magick-gaussian-blur-image
-  (foreign-lambda void MagickGaussianBlurImage))
+  (foreign-lambda magickboolean MagickGaussianBlurImage
+                  magickwand (const double) (const double)))
+
+;;(define magick-gaussian-blur-image-channel
+;;  (foreign-lambda magickboolean MagickGaussianBlurImageChannel
+;;                  magickwand (const channeltype)
+;;                  (const double) (const double)))
 
 (define magick-get-image
-  (foreign-lambda void MagickGetImage))
+  (foreign-lambda magickwand MagickGetImage magickwand))
 
 (define magick-get-image-alpha-channel
-  (foreign-lambda void MagickGetImageAlphaChannel))
+  (foreign-lambda magickboolean MagickGetImageAlphaChannel magickwand))
 
 (define magick-get-image-clip-mask
-  (foreign-lambda void MagickGetImageClipMask))
+  (foreign-lambda magickwand MagickGetImageClipMask magickwand))
 
 (define magick-get-image-background-color
-  (foreign-lambda void MagickGetImageBackgroundColor))
+  (foreign-lambda magickboolean MagickGetImageBackgroundColor magickwand pixelwand))
 
 (define magick-get-image-blob
-  (foreign-lambda void MagickGetImageBlob))
+  (foreign-lambda unsigned-c-string MagickGetImageBlob magickwand (c-pointer size_t)))
 
-(define magick-get-image-blob
-  (foreign-lambda void MagickGetImageBlob))
+(define magick-get-images-blob
+  (foreign-lambda unsigned-c-string MagickGetImagesBlob magickwand (c-pointer size_t)))
 
 (define magick-get-image-blue-primary
-  (foreign-lambda void MagickGetImageBluePrimary))
+  (foreign-lambda magickboolean MagickGetImageBluePrimary
+                  magickwand (c-pointer double) (c-pointer double)))
 
 (define magick-get-image-border-color
-  (foreign-lambda void MagickGetImageBorderColor))
+  (foreign-lambda magickboolean MagickGetImageBorderColor magickwand pixelwand))
 
-(define magick-get-image-channel-depth
-  (foreign-lambda void MagickGetImageChannelDepth))
+;;(define magick-get-image-channel-depth
+;;  (foreign-lambda size_t MagickGetImageChannelDepth magickwand (const channeltype)))
 
-(define magick-get-image-channel-distortion
-  (foreign-lambda void MagickGetImageChannelDistortion))
+;;(define magick-get-image-channel-distortion
+;;  (foreign-lambda magickboolean MagickGetImageChannelDistortion
+;;                  magickwand (const magickwand) (const channeltype)
+;;                  (const metrictype) (c-pointer double)))
 
-(define magick-get-image-channel-distortions
-  (foreign-lambda void MagickGetImageChannelDistortions))
+;;(define magick-get-image-channel-distortions
+;;  (foreign-lambda (c-pointer double) MagickGetImageChannelDistortions
+;;                  magickwand (const magickwand) (const metrictype)))
 
 (define magick-get-image-channel-features
-  (foreign-lambda void MagickGetImageChannelFeatures))
+  (foreign-lambda ChannelFeatures MagickGetImageChannelFeatures
+                  magickwand (const size_t)))
 
-(define magick-get-image-channel-kurtosis
-  (foreign-lambda void MagickGetImageChannelKurtosis))
+;;(define magick-get-image-channel-kurtosis
+;;  (foreign-lambda magickboolean MagickGetImageChannelKurtosis
+;;                  magickwand (const channeltype)
+;;                  (c-pointer double) (c-pointer double)))
 
-(define magick-get-image-channel-mean
-  (foreign-lambda void MagickGetImageChannelMean))
+;;(define magick-get-image-channel-mean
+;;  (foreign-lambda magickboolean MagickGetImageChannelMean
+;;                  magickwand (const channeltype)
+;;                  (c-pointer double) (c-pointer double)))
 
-(define magick-get-image-channel-range
-  (foreign-lambda void MagickGetImageChannelRange))
+;;(define magick-get-image-channel-range
+;;  (foreign-lambda magickboolean MagickGetImageChannelRange
+;;                  magickwand (const channeltype)
+;;                  (c-pointer double) (c-pointer double)))
 
 (define magick-get-image-channel-statistics
-  (foreign-lambda void MagickGetImageChannelStatistics))
+  (foreign-lambda ChannelStatistics MagickGetImageChannelStatistics magickwand))
 
 (define magick-get-image-colormap-color
-  (foreign-lambda void MagickGetImageColormapColor))
+  (foreign-lambda magickboolean MagickGetImageColormapColor
+                  magickwand (const size_t) pixelwand))
 
 (define magick-get-image-colors
-  (foreign-lambda void MagickGetImageColors))
+  (foreign-lambda size_t MagickGetImageColors magickwand))
 
 (define magick-get-image-colorspace
-  (foreign-lambda void MagickGetImageColorspace))
+  (foreign-lambda colorspace MagickGetImageColorspace magickwand))
 
 (define magick-get-image-compose
-  (foreign-lambda void MagickGetImageCompose))
+  (foreign-lambda compositeoperator MagickGetImageCompose magickwand))
 
 (define magick-get-image-compression
-  (foreign-lambda void MagickGetImageCompression))
+  (foreign-lambda compressiontype MagickGetImageCompression magickwand))
 
-(define magick-get-image-compression
-  (foreign-lambda void MagickGetImageCompression))
+(define magick-get-image-compression-quality
+  (foreign-lambda size_t MagickGetImageCompressionQuality magickwand))
 
 (define magick-get-image-delay
-  (foreign-lambda void MagickGetImageDelay))
+  (foreign-lambda size_t MagickGetImageDelay magickwand))
 
 (define magick-get-image-depth
-  (foreign-lambda void MagickGetImageDepth))
+  (foreign-lambda size_t MagickGetImageDepth magickwand))
 
-(define magick-get-image-distortion
-  (foreign-lambda void MagickGetImageDistortion))
+;;(define magick-get-image-distortion
+;;  (foreign-lambda magickboolean MagickGetImageDistortion
+;;                  magickwand (const magickwand) (const metrictype)
+;;                  (c-pointer double)))
 
 (define magick-get-image-dispose
-  (foreign-lambda void MagickGetImageDispose))
+  (foreign-lambda disposetype MagickGetImageDispose magickwand))
 
 (define magick-get-image-filename
-  (foreign-lambda void MagickGetImageFilename))
+  (foreign-lambda c-string MagickGetImageFilename magickwand))
 
 (define magick-get-image-format
-  (foreign-lambda void MagickGetImageFormat))
+  (foreign-lambda c-string MagickGetImageFormat magickwand))
 
 (define magick-get-image-fuzz
-  (foreign-lambda void MagickGetImageFuzz))
+  (foreign-lambda double MagickGetImageFuzz magickwand))
 
 (define magick-get-image-gamma
-  (foreign-lambda void MagickGetImageGamma))
+  (foreign-lambda double MagickGetImageGamma magickwand))
 
 (define magick-get-image-gravity
-  (foreign-lambda void MagickGetImageGravity))
+  (foreign-lambda gravity MagickGetImageGravity magickwand))
 
 (define magick-get-image-green-primary
-  (foreign-lambda void MagickGetImageGreenPrimary))
+  (foreign-lambda magickboolean MagickGetImageGreenPrimary
+                  magickwand (c-pointer double) (c-pointer double)))
 
 (define magick-get-image-height
-  (foreign-lambda void MagickGetImageHeight))
+  (foreign-lambda size_t MagickGetImageHeight magickwand))
 
 (define magick-get-image-histogram
-  (foreign-lambda void MagickGetImageHistogram))
+  (foreign-lambda (c-pointer pixelwand) MagickGetImageHistogram
+                  magickwand (c-pointer size_t)))
 
 (define magick-get-image-interlace-scheme
-  (foreign-lambda void MagickGetImageInterlaceScheme))
+  (foreign-lambda interlacetype MagickGetImageInterlaceScheme magickwand))
 
 (define magick-get-image-interpolate-method
-  (foreign-lambda void MagickGetImageInterpolateMethod))
+  (foreign-lambda interpolatepixelmethod MagickGetImageInterpolateMethod
+                  magickwand))
 
 (define magick-get-image-iterations
-  (foreign-lambda void MagickGetImageIterations))
+  (foreign-lambda size_t MagickGetImageIterations magickwand))
 
-(define magick-get-image-length
-  (foreign-lambda void MagickGetImageLength))
+;;(define magick-get-image-length
+;;  (foreign-lambda magickboolean MagickGetImageLength magickwand (c-pointer magicksize)))
 
 (define magick-get-image-matte-color
-  (foreign-lambda void MagickGetImageMatteColor))
+  (foreign-lambda magickboolean MagickGetImageMatteColor
+                  magickwand pixelwand))
 
 (define magick-get-image-orientation
-  (foreign-lambda void MagickGetImageOrientation))
+  (foreign-lambda orientation MagickGetImageOrientation magickwand))
 
 (define magick-get-image-page
-  (foreign-lambda void MagickGetImagePage))
+  (foreign-lambda magickboolean MagickGetImagePage
+                  magickwand
+                  (c-pointer size_t) (c-pointer size_t)
+                  (c-pointer ssize_t) (c-pointer ssize_t)))
 
 (define magick-get-image-pixel-color
-  (foreign-lambda void MagickGetImagePixelColor))
+  (foreign-lambda magickboolean MagickGetImagePixelColor
+                  magickwand (const ssize_t) (const ssize_t)
+                  pixelwand))
 
 (define magick-get-image-red-primary
-  (foreign-lambda void MagickGetImageRedPrimary))
+  (foreign-lambda magickboolean MagickGetImageRedPrimary
+                  magickwand (c-pointer double) (c-pointer double)))
 
 (define magick-get-image-region
-  (foreign-lambda void MagickGetImageRegion))
+  (foreign-lambda magickwand MagickGetImageRegion
+                  magickwand (const size_t) (const size_t)
+                  (const ssize_t) (const ssize_t)))
 
 (define magick-get-image-rendering-intent
-  (foreign-lambda void MagickGetImageRenderingIntent))
+  (foreign-lambda renderingintent MagickGetImageRenderingIntent magickwand))
 
 (define magick-get-image-resolution
-  (foreign-lambda void MagickGetImageResolution))
+  (foreign-lambda magickboolean MagickGetImageResolution
+                  magickwand (c-pointer double) (c-pointer double)))
 
 (define magick-get-image-scene
-  (foreign-lambda void MagickGetImageScene))
+  (foreign-lambda size_t MagickGetImageScene magickwand))
 
 (define magick-get-image-signature
-  (foreign-lambda void MagickGetImageSignature))
+  (foreign-lambda c-string MagickGetImageSignature magickwand))
 
 (define magick-get-image-ticks-per-second
-  (foreign-lambda void MagickGetImageTicksPerSecond))
+  (foreign-lambda size_t MagickGetImageTicksPerSecond magickwand))
 
 (define magick-get-image-type
-  (foreign-lambda void MagickGetImageType))
+  (foreign-lambda imagetype MagickGetImageType magickwand))
 
 (define magick-get-image-units
-  (foreign-lambda void MagickGetImageUnits))
+  (foreign-lambda resolutiontype MagickGetImageUnits magickwand))
 
 (define magick-get-image-virtual-pixel-method
-  (foreign-lambda void MagickGetImageVirtualPixelMethod))
+  (foreign-lambda virtualpixelmethod MagickGetImageVirtualPixelMethod magickwand))
 
 (define magick-get-image-white-point
-  (foreign-lambda void MagickGetImageWhitePoint))
+  (foreign-lambda magickboolean MagickGetImageWhitePoint
+                  magickwand (c-pointer double) (c-pointer double)))
 
 (define magick-get-image-width
-  (foreign-lambda void MagickGetImageWidth))
+  (foreign-lambda size_t MagickGetImageWidth magickwand))
 
 (define magick-get-number-images
-  (foreign-lambda void MagickGetNumberImages))
+  (foreign-lambda size_t MagickGetNumberImages magickwand))
 
 (define magick-get-image-total-ink-density
-  (foreign-lambda void MagickGetImageTotalInkDensity))
+  (foreign-lambda double MagickGetImageTotalInkDensity magickwand))
 
 (define magick-hald-clut-image
-  (foreign-lambda void MagickHaldClutImage))
+  (foreign-lambda magickboolean MagickHaldClutImage magickwand (const magickwand)))
+
+;;(define magick-hald-clut-image-channel
+;;  (foreign-lambda magickboolean MagickHaldClutImageChannel
+;;                  magickwand (const channeltype) (const magickwand)))
 
 (define magick-has-next-image
-  (foreign-lambda void MagickHasNextImage))
+  (foreign-lambda magickboolean MagickHasNextImage magickwand))
 
 (define magick-has-previous-image
-  (foreign-lambda void MagickHasPreviousImage))
+  (foreign-lambda magickboolean MagickHasPreviousImage magickwand))
 
 (define magick-identify-image
-  (foreign-lambda void MagickIdentifyImage))
+  (foreign-lambda c-string MagickIdentifyImage magickwand))
 
 (define magick-implode-image
-  (foreign-lambda void MagickImplodeImage))
+  (foreign-lambda magickboolean MagickImplodeImage magickwand (const double)))
 
-(define magick-import-image-pixels
-  (foreign-lambda void MagickImportImagePixels))
+;;(define magick-import-image-pixels
+;;  (foreign-lambda magickboolean MagickImportImagePixels
+;;                  magickwand (const ssize_t) (const ssize_t)
+;;                  (const size_t) (const size_t)
+;;                  (const c-string) (const storagetype)
+;;                  (const c-pointer)))
 
-(define magick-inverse-fourier-transform-image
-  (foreign-lambda void MagickInverseFourierTransformImage))
+;;(define magick-inverse-fourier-transform-image
+;;  (foreign-lambda magickboolean MagickInverseFourierTransformImage
+;;                  magickwand magickwand (const magickboolean)))
 
 (define magick-label-image
-  (foreign-lambda void MagickLabelImage))
+  (foreign-lambda magickboolean MagickLabelImage
+                  magickwand (const c-string)))
 
 (define magick-level-image
-  (foreign-lambda void MagickLevelImage))
+  (foreign-lambda magickboolean MagickLevelImage
+                  magickwand (const double) (const double)
+                  (const double)))
+
+;;(define magick-level-image-channel
+;;  (foreign-lambda magickboolean MagickLevelImageChannel
+;;                  magickwand (const channeltype)
+;;                  (const double) (const double)
+;;                  (const double)))
 
 (define magick-linear-stretch-image
-  (foreign-lambda void MagickLinearStretchImage))
+  (foreign-lambda magickboolean MagickLinearStretchImage
+                  magickwand (const double) (const double)))
 
 (define magick-liquid-rescale-image
-  (foreign-lambda void MagickLiquidRescaleImage))
+  (foreign-lambda magickboolean MagickLiquidRescaleImage
+                  magickwand (const size_t) (const size_t)
+                  (const double) (const double)))
 
 (define magick-magnify-image
-  (foreign-lambda void MagickMagnifyImage))
+  (foreign-lambda magickboolean MagickMagnifyImage magickwand))
 
-(define magick-merge-image-layers
-  (foreign-lambda void MagickMergeImageLayers))
+;;(define magick-merge-image-layers
+;;  (foreign-lambda magickwand MagickMergeImageLayers
+;;                  magickwand (const imagelayermethod)))
 
 (define magick-minify-image
-  (foreign-lambda void MagickMinifyImage))
+  (foreign-lambda magickboolean MagickMinifyImage magickwand))
 
 (define magick-modulate-image
-  (foreign-lambda void MagickModulateImage))
+  (foreign-lambda magickboolean MagickModulateImage
+                  magickwand (const double) (const double) (const double)))
 
-(define magick-montage-image
-  (foreign-lambda void MagickMontageImage))
+;;(define magick-montage-image
+;;  (foreign-lambda magickwand MagickMontageImage
+;;                  magickwand (const drawingwand)
+;;                  (const c-string) (const c-string)
+;;                  (const montagemode) (const c-string)))
 
 (define magick-morph-images
-  (foreign-lambda void MagickMorphImages))
+  (foreign-lambda magickwand MagickMorphImages
+                  magickwand (const size_t)))
 
-(define magick-morphology-image
-  (foreign-lambda void MagickMorphologyImage))
+;;(define magick-morphology-image
+;;  (foreign-lambda magickboolean MagickMorphologyImage
+;;                  magickwand morphologymethod
+;;                  (const ssize_t) KernelInfo))
+
+;;(define magick-morphology-image-channel
+;;  (foreign-lambda magickboolean MagickMorphologyImageChannel
+;;                  magickwand channeltype morphologymethod
+;;                  (const ssize_t) KernelInfo))
 
 (define magick-motion-blur-image
-  (foreign-lambda void MagickMotionBlurImage))
+  (foreign-lambda magickboolean MagickMotionBlurImage
+                  magickwand
+                  (const double) (const double) (const double)))
 
+;;(define magick-motion-blur-image-channel
+;;  (foreign-lambda magickboolean MagickMotionBlurImageChannel
+;;                  magickwand (const channeltype)
+;;                  (const double) (const double) (const double)))
+
+#|
 (define magick-negate-image
   (foreign-lambda void MagickNegateImage))
 
