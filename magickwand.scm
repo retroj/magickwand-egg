@@ -1610,31 +1610,57 @@
 ;;                  magickwand (const channeltype)
 ;;                  (const double) (const double) (const double)))
 
-#|
-(define magick-negate-image
-  (foreign-lambda void MagickNegateImage))
+;;(define magick-negate-image
+;;  (foreign-lambda magickboolean MagickNegateImage
+;;                  magickwand (const magickboolean)))
+
+;;(define magick-negate-image-channel
+;;  (foreign-lambda magickboolean MagickNegateImageChannel
+;;                  magickwand (const channeltype)
+;;                  (const magickboolean)))
 
 (define magick-new-image
-  (foreign-lambda void MagickNewImage))
+  (foreign-lambda magickboolean MagickNewImage
+                  magickwand (const size_t) (const size_t)
+                  (const pixelwand)))
 
 (define magick-next-image
-  (foreign-lambda void MagickNextImage))
+  (foreign-lambda magickboolean MagickNextImage magickwand))
 
 (define magick-normalize-image
-  (foreign-lambda void MagickNormalizeImage))
+  (foreign-lambda magickboolean MagickNormalizeImage magickwand))
+
+;;(define magick-normalize-image-channel
+;;  (foreign-lambda magickboolean MagickNormalizeImageChannel
+;;                  magickwand (const channeltype)))
 
 (define magick-oil-paint-image
-  (foreign-lambda void MagickOilPaintImage))
+  (foreign-lambda magickboolean MagickOilPaintImage
+                  magickwand (const double)))
 
-(define magick-opaque-paint-image
-  (foreign-lambda void MagickOpaquePaintImage))
+;;(define magick-opaque-paint-image
+;;  (foreign-lambda magickboolean MagickOpaquePaintImage
+;;                  magickwand (const pixelwand) (const pixelwand)
+;;                  (const double) (const magickboolean)))
+
+;;(define magick-opaque-paint-image-channel
+;;  (foreign-lambda magickboolean MagickOpaquePaintImageChannel
+;;                  magickwand (const channeltype)
+;;                  (const pixelwand) (const pixelwand)
+;;                  (const double) (const magickboolean)))
 
 (define magick-optimize-image-layers
-  (foreign-lambda void MagickOptimizeImageLayers))
+  (foreign-lambda magickwand MagickOptimizeImageLayers magickwand))
 
 (define magick-ordered-posterize-image
-  (foreign-lambda void MagickOrderedPosterizeImage))
+  (foreign-lambda magickboolean MagickOrderedPosterizeImage
+                  magickwand (const c-string)))
 
+;;(define magick-ordered-posterize-image-channel
+;;  (foreign-lambda magickboolean MagickOrderedPosterizeImageChannel
+;;                  magickwand (const channeltype) (const c-string)))
+
+#|
 (define magick-ping-image
   (foreign-lambda void MagickPingImage))
 
