@@ -685,6 +685,8 @@
 
 (define-foreign-type pixelwand (c-pointer (struct _PixelWand)))
 
+(define-foreign-type pixeliterator (c-pointer (struct _PixelIterator)))
+
 ;; typedef MagickBooleanType
 ;;   (*MagickProgressMonitor)(const char *,const MagickOffsetType,
 ;;     const MagickSizeType,void *);
@@ -2257,61 +2259,67 @@
 ;;; Pixel-iterator methods
 ;;;
 
-#|
 (define clear-pixel-iterator
-  (foreign-lambda void ClearPixelIterator))
+  (foreign-lambda void ClearPixelIterator pixeliterator))
 
 (define clone-pixel-iterator
-  (foreign-lambda void ClonePixelIterator))
+  (foreign-lambda pixeliterator ClonePixelIterator (const pixeliterator)))
 
 (define destroy-pixel-iterator
-  (foreign-lambda void DestroyPixelIterator))
+  (foreign-lambda pixeliterator DestroyPixelIterator pixeliterator))
 
 (define pixel-iterator?
-  (foreign-lambda void IsPixelIterator))
+  (foreign-lambda magickboolean IsPixelIterator (const pixeliterator)))
 
 (define new-pixel-iterator
-  (foreign-lambda void NewPixelIterator))
+  (foreign-lambda pixeliterator NewPixelIterator magickwand))
 
 (define pixel-clear-iterator-exception
-  (foreign-lambda void PixelClearIteratorException))
+  (foreign-lambda magickboolean PixelClearIteratorException pixeliterator))
 
 (define new-pixel-region-iterator
-  (foreign-lambda void NewPixelRegionIterator))
+  (foreign-lambda pixeliterator NewPixelRegionIterator
+                  magickwand (const ssize_t) (const ssize_t)
+                  (const size_t) (const size_t)))
 
 (define pixel-get-current-iterator-row
-  (foreign-lambda void PixelGetCurrentIteratorRow))
+  (foreign-lambda (c-pointer pixelwand) PixelGetCurrentIteratorRow
+                  pixeliterator (c-pointer size_t)))
 
-(define pixel-get-iterator-exception
-  (foreign-lambda void PixelGetIteratorException))
+;;(define pixel-get-iterator-exception
+;;  (foreign-lambda c-string PixelGetIteratorException
+;;                  (const pixeliterator) (c-pointer exceptiontype)))
 
 (define pixel-get-iterator-exception-type
-  (foreign-lambda void PixelGetIteratorExceptionType))
+  (foreign-lambda exceptiontype PixelGetIteratorExceptionType
+                  (const pixeliterator)))
 
 (define pixel-get-iterator-row
-  (foreign-lambda void PixelGetIteratorRow))
+  (foreign-lambda magickboolean PixelGetIteratorRow pixeliterator))
 
 (define pixel-get-next-iterator-row
-  (foreign-lambda void PixelGetNextIteratorRow))
+  (foreign-lambda (c-pointer pixelwand) PixelGetNextIteratorRow
+                  pixeliterator (c-pointer size_t)))
 
 (define pixel-get-previous-iterator-row
-  (foreign-lambda void PixelGetPreviousIteratorRow))
+  (foreign-lambda (c-pointer pixelwand) PixelGetPreviousIteratorRow
+                  pixeliterator (c-pointer size_t)))
 
 (define pixel-reset-iterator
-  (foreign-lambda void PixelResetIterator))
+  (foreign-lambda void PixelResetIterator pixeliterator))
 
 (define pixel-set-first-iterator-row
-  (foreign-lambda void PixelSetFirstIteratorRow))
+  (foreign-lambda void PixelSetFirstIteratorRow pixeliterator))
 
 (define pixel-set-iterator-row
-  (foreign-lambda void PixelSetIteratorRow))
+  (foreign-lambda magickboolean PixelSetIteratorRow
+                  pixeliterator (const ssize_t)))
 
 (define pixel-set-last-iterator-row
-  (foreign-lambda void PixelSetLastIteratorRow))
+  (foreign-lambda void PixelSetLastIteratorRow pixeliterator))
 
 (define pixel-sync-iterator
-  (foreign-lambda void PixelSyncIterator))
-|#
+  (foreign-lambda magickboolean PixelSyncIterator pixeliterator))
 
 
 ;;;
