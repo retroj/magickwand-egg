@@ -655,6 +655,28 @@
   ((ShapeAlphaChannel) ShapeAlphaChannel)
   ((TransparentAlphaChannel) TransparentAlphaChannel))
 
+(define-foreign-enum-type (sparsecolormethod (enum SparseColorMethod))
+  (sparsecolormethod->int int->sparsecolormethod)
+  ((UndefinedColorInterpolate) UndefinedColorInterpolate)
+  ((BarycentricColorInterpolate) BarycentricColorInterpolate)
+  ((BilinearColorInterpolate) BilinearColorInterpolate)
+  ((PolynomialColorInterpolate) PolynomialColorInterpolate)
+  ((ShepardsColorInterpolate) ShepardsColorInterpolate)
+  ((VoronoiColorInterpolate) VoronoiColorInterpolate)
+  ((InverseColorInterpolate) InverseColorInterpolate))
+
+(define-foreign-enum-type (statistictype (enum StatisticType))
+  (statistictype->int int->statistictype)
+  ((UndefinedStatistic) UndefinedStatistic)
+  ((GradientStatistic) GradientStatistic)
+  ((MaximumStatistic) MaximumStatistic)
+  ((MeanStatistic) MeanStatistic)
+  ((MedianStatistic) MedianStatistic)
+  ((MinimumStatistic) MinimumStatistic)
+  ((ModeStatistic) ModeStatistic)
+  ((NonpeakStatistic) NonpeakStatistic)
+  ((StandardDeviationStatistic) StandardDeviationStatistic))
+
 (define-foreign-type magickwand (c-pointer (struct _MagickWand)))
 
 (define-foreign-type drawingwand (c-pointer (struct _DrawingWand)))
@@ -711,6 +733,12 @@
   (double standard_deviation channelstatistics-standard_deviation)
   (double kurtosis channelstatistics-kurtosis)
   (double skewness channelstatistics-skewness))
+
+(define-foreign-record-type RectangleInfo
+  (size_t width rectangleinfo-width)
+  (size_t height rectangleinfo-height)
+  (ssize_t x rectangleinfo-x)
+  (ssize_t y rectangleinfo-y))
 
 
 ;;;
@@ -2045,118 +2073,184 @@
   (foreign-lambda magickboolean MagickSetImageWhitePoint
                   magickwand (const double) (const double)))
 
-#|
-(define magick-shade-image
-  (foreign-lambda void MagickShadeImage))
+;;(define magick-shade-image
+;;  (foreign-lambda magickboolean MagickShadeImage
+;;                  magickwand (const magickboolean)
+;;                  (const double) (const double)))
 
 (define magick-shadow-image
-  (foreign-lambda void MagickShadowImage))
+  (foreign-lambda magickboolean MagickShadowImage
+                  magickwand (const double) (const double)
+                  (const ssize_t) (const ssize_t)))
 
 (define magick-sharpen-image
-  (foreign-lambda void MagickSharpenImage))
+  (foreign-lambda magickboolean MagickSharpenImage
+                  magickwand (const double) (const double)))
+
+;;(define magick-sharpen-image-channel
+;;  (foreign-lambda magickboolean MagickSharpenImageChannel
+;;                  magickwand (const channeltype)
+;;                  (const double) (const double)))
 
 (define magick-shave-image
-  (foreign-lambda void MagickShaveImage))
+  (foreign-lambda magickboolean MagickShaveImage
+                  magickwand (const size_t) (const size_t)))
 
 (define magick-shear-image
-  (foreign-lambda void MagickShearImage))
+  (foreign-lambda magickboolean MagickShearImage
+                  magickwand (const pixelwand)
+                  (const double) (const double)))
 
-(define magick-sigmoidal-contrast-image
-  (foreign-lambda void MagickSigmoidalContrastImage))
+;;(define magick-sigmoidal-contrast-image
+;;  (foreign-lambda magickboolean MagickSigmoidalContrastImage
+;;                  magickwand (const magickboolean)
+;;                  (const double) (const double)))
 
-(define magick-similarity-image
-  (foreign-lambda void MagickSimilarityImage))
+;;(define magick-sigmoidal-contrast-image-channel
+;;  (foreign-lambda magickboolean MagickSigmoidalContrastImageChannel
+;;                  magickwand (const channeltype) (const magickboolean)
+;;                  (const double) (const double)))
+
+;;(define magick-similarity-image
+;;  (foreign-lambda magickwand MagickSimilarityImage
+;;                  magickwand (const magickwand) RectangleInfo
+;;                  (c-pointer double)))
 
 (define magick-sketch-image
-  (foreign-lambda void MagickSketchImage))
+  (foreign-lambda magickboolean MagickSketchImage
+                  magickwand (const double) (const double) (const double)))
 
-(define magick-smush-images
-  (foreign-lambda void MagickSmushImages))
+;;(define magick-smush-images
+;;  (foreign-lambda magickwand MagickSmushImages
+;;                  magickwand (const magickboolean) (const ssize_t)))
 
 (define magick-solarize-image
-  (foreign-lambda void MagickSolarizeImage))
+  (foreign-lambda magickboolean MagickSolarizeImage
+                  magickwand (const double)))
 
-(define magick-sparse-color-image
-  (foreign-lambda void MagickSparseColorImage))
+;;(define magick-sparse-color-image
+;;  (foreign-lambda magickboolean MagickSparseColorImage
+;;                  magickwand (const channeltype) (const sparsecolormethod)
+;;                  (const size_t) (const (c-pointer double))))
 
 (define magick-splice-image
-  (foreign-lambda void MagickSpliceImage))
+  (foreign-lambda magickboolean MagickSpliceImage
+                  magickwand (const size_t) (const size_t)
+                  (const ssize_t) (const ssize_t)))
 
 (define magick-spread-image
-  (foreign-lambda void MagickSpreadImage))
+  (foreign-lambda magickboolean MagickSpreadImage
+                  magickwand (const double)))
 
-(define magick-statistic-image
-  (foreign-lambda void MagickStatisticImage))
+;;(define magick-statistic-image
+;;  (foreign-lambda magickboolean MagickStatisticImage
+;;                  magickwand (const statistictype) (const double)
+;;                  (const size_t)))
+
+;;(define magick-statistic-image-channel
+;;  (foreign-lambda magickboolean MagickStatisticImageChannel
+;;                  magickwand (const channeltype) (const statistictype)
+;;                  (const double) (const size_t)))
 
 (define magick-stegano-image
-  (foreign-lambda void MagickSteganoImage))
+  (foreign-lambda magickwand MagickSteganoImage
+                  magickwand (const magickwand) (const ssize_t)))
 
 (define magick-stereo-image
-  (foreign-lambda void MagickStereoImage))
+  (foreign-lambda magickwand MagickStereoImage
+                  magickwand (const magickwand)))
 
 (define magick-strip-image
-  (foreign-lambda void MagickStripImage))
+  (foreign-lambda magickboolean MagickStripImage magickwand))
 
 (define magick-swirl-image
-  (foreign-lambda void MagickSwirlImage))
+  (foreign-lambda magickboolean MagickSwirlImage
+                  magickwand (const double)))
 
 (define magick-texture-image
-  (foreign-lambda void MagickTextureImage))
+  (foreign-lambda magickwand MagickTextureImage
+                  magickwand (const magickwand)))
 
 (define magick-threshold-image
-  (foreign-lambda void MagickThresholdImage))
+  (foreign-lambda magickboolean MagickThresholdImage
+                  magickwand (const double)))
+
+;;(define magick-threshold-image-channel
+;;  (foreign-lambda magickboolean MagickThresholdImageChannel
+;;                  magickwand (const channeltype) (const double)))
 
 (define magick-thumbnail-image
-  (foreign-lambda void MagickThumbnailImage))
+  (foreign-lambda magickboolean MagickThumbnailImage
+                  magickwand (const size_t) (const size_t)))
 
 (define magick-tint-image
-  (foreign-lambda void MagickTintImage))
+  (foreign-lambda magickboolean MagickTintImage
+                  magickwand (const pixelwand) (const pixelwand)))
 
 (define magick-transform-image
-  (foreign-lambda void MagickTransformImage))
+  (foreign-lambda magickwand MagickTransformImage
+                  magickwand (const c-string) (const c-string)))
 
-(define magick-transform-image-colorspace
-  (foreign-lambda void MagickTransformImageColorspace))
+;;(define magick-transform-image-colorspace
+;;  (foreign-lambda magickboolean MagickTransformImageColorspace
+;;                  magickwand (const colorspace)))
 
-(define magick-transparent-paint-image
-  (foreign-lambda void MagickTransparentPaintImage))
+;;(define magick-transparent-paint-image
+;;  (foreign-lambda magickboolean MagickTransparentPaintImage
+;;                  magickwand (const pixelwand) (const double)
+;;                  (const double) (const magickboolean)))
 
 (define magick-transpose-image
-  (foreign-lambda void MagickTransposeImage))
+  (foreign-lambda magickboolean MagickTransposeImage magickwand))
 
 (define magick-transverse-image
-  (foreign-lambda void MagickTransverseImage))
+  (foreign-lambda magickboolean MagickTransverseImage magickwand))
 
 (define magick-trim-image
-  (foreign-lambda void MagickTrimImage))
+  (foreign-lambda magickboolean MagickTrimImage
+                  magickwand (const double)))
 
 (define magick-unique-image-colors
-  (foreign-lambda void MagickUniqueImageColors))
+  (foreign-lambda magickboolean MagickUniqueImageColors magickwand))
 
 (define magick-unsharp-mask-image
-  (foreign-lambda void MagickUnsharpMaskImage))
+  (foreign-lambda magickboolean MagickUnsharpMaskImage
+                  magickwand (const double) (const double)
+                  (const double) (const double)))
+
+;;(define magick-unsharp-mask-image-channel
+;;  (foreign-lambda magickboolean MagickUnsharpMaskImageChannel
+;;                  magickwand (const channeltype) (const double)
+;;                  (const double) (const double) (const double)))
 
 (define magick-vignette-image
-  (foreign-lambda void MagickVignetteImage))
+  (foreign-lambda magickboolean MagickVignetteImage
+                  magickwand (const double) (const double)
+                  (const ssize_t) (const ssize_t)))
 
 (define magick-wave-image
-  (foreign-lambda void MagickWaveImage))
+  (foreign-lambda magickboolean MagickWaveImage
+                  magickwand (const double) (const double)))
 
 (define magick-white-threshold-image
-  (foreign-lambda void MagickWhiteThresholdImage))
+  (foreign-lambda magickboolean MagickWhiteThresholdImage
+                  magickwand (const pixelwand)))
 
 (define magick-write-image
-  (foreign-lambda void MagickWriteImage))
+  (foreign-lambda magickboolean MagickWriteImage
+                  magickwand (const c-string)))
 
-(define magick-write-image-file
-  (foreign-lambda void MagickWriteImageFile))
+;;(define magick-write-image-file
+;;  (foreign-lambda magickboolean MagickWriteImageFile
+;;                  magickwand (c-pointer FILE)))
 
-(define magick-write-images
-  (foreign-lambda void MagickWriteImages))
+;;(define magick-write-images
+;;  (foreign-lambda magickboolean MagickWriteImages
+;;                  magickwand (const c-string) (const magickboolean)))
 
-(define magick-write-images-file
-  (foreign-lambda void MagickWriteImagesFile))
-|#
+;;(define magick-write-images-file
+;;  (foreign-lambda magickboolean MagickWriteImagesFile
+;;                  magickwand (c-pointer FILE)))
 
 
 ;;;
