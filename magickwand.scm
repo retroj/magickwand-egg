@@ -683,6 +683,79 @@
   ((DirectClass) DirectClass)
   ((PseudoClass) PseudoClass))
 
+(define-foreign-enum-type (paintmethod (enum PaintMethod))
+  (paintmethod->int int->paintmethod)
+  ((UndefinedMethod) UndefinedMethod)
+  ((PointMethod) PointMethod)
+  ((ReplaceMethod) ReplaceMethod)
+  ((FloodfillMethod) FloodfillMethod)
+  ((FillToBorderMethod) FillToBorderMethod)
+  ((ResetMethod) ResetMethod))
+
+(define-foreign-enum-type (fillrule (enum FillRule))
+  (fillrule->int int->fillrule)
+  ((UndefinedRule) UndefinedRule)
+  ((EvenOddRule) EvenOddRule)
+  ((NonZeroRule) NonZeroRule))
+
+(define-foreign-enum-type (clippathunits (enum ClipPathUnits))
+  (clippathunits->int int->clippathunits)
+  ((UndefinedPathUnits) UndefinedPathUnits)
+  ((UserSpace) UserSpace)
+  ((UserSpaceOnUse) UserSpaceOnUse)
+  ((ObjectBoundingBox) ObjectBoundingBox))
+
+(define-foreign-enum-type (stretchtype (enum StretchType))
+  (stretchtype->int int->stretchtype)
+  ((UndefinedStretch) UndefinedStretch)
+  ((NormalStretch) NormalStretch)
+  ((UltraCondensedStretch) UltraCondensedStretch)
+  ((ExtraCondensedStretch) ExtraCondensedStretch)
+  ((CondensedStretch) CondensedStretch)
+  ((SemiCondensedStretch) SemiCondensedStretch)
+  ((SemiExpandedStretch) SemiExpandedStretch)
+  ((ExpandedStretch) ExpandedStretch)
+  ((ExtraExpandedStretch) ExtraExpandedStretch)
+  ((UltraExpandedStretch) UltraExpandedStretch)
+  ((AnyStretch) AnyStretch))
+
+(define-foreign-enum-type (styletype (enum StyleType))
+  (styletype->int int->styletype)
+  ((UndefinedStyle) UndefinedStyle)
+  ((NormalStyle) NormalStyle)
+  ((ItalicStyle) ItalicStyle)
+  ((ObliqueStyle) ObliqueStyle)
+  ((AnyStyle) AnyStyle))
+
+(define-foreign-enum-type (linecap (enum LineCap))
+  (linecap->int int->linecap)
+  ((UndefinedCap) UndefinedCap)
+  ((ButtCap) ButtCap)
+  ((RoundCap) RoundCap)
+  ((SquareCap) SquareCap))
+
+(define-foreign-enum-type (linejoin (enum LineJoin))
+  (linejoin->int int->linejoin)
+  ((UndefinedJoin) UndefinedJoin)
+  ((MiterJoin) MiterJoin)
+  ((RoundJoin) RoundJoin)
+  ((BevelJoin) BevelJoin))
+
+(define-foreign-enum-type (aligntype (enum AlignType))
+  (aligntype->int int->aligntype)
+  ((UndefinedAlign) UndefinedAlign)
+  ((LeftAlign) LeftAlign)
+  ((CenterAlign) CenterAlign)
+  ((RightAlign) RightAlign))
+
+(define-foreign-enum-type (decorationtype (enum DecorationType))
+  (decorationtype->int int->decorationtype)
+  ((UndefinedDecoration) UndefinedDecoration)
+  ((NoDecoration) NoDecoration)
+  ((UnderlineDecoration) UnderlineDecoration)
+  ((OverlineDecoration) OverlineDecoration)
+  ((LineThroughDecoration) LineThroughDecoration))
+
 (define-foreign-type magickwand (c-pointer (struct _MagickWand)))
 
 (define-foreign-type drawingwand (c-pointer (struct _DrawingWand)))
@@ -764,6 +837,25 @@
 
 ;;XXX: would be nice to have a complete definition here
 (define-foreign-type pixelpacket (c-pointer (struct _PixelPacket)))
+
+;;XXX: would be nice to have a complete definition here
+(define-foreign-type drawinfo (c-pointer (struct _DrawInfo)))
+
+(define-foreign-type imageinfo (c-pointer (struct _ImageInfo)))
+
+(define-foreign-type wandview (c-pointer (struct _WandView)))
+
+(define-foreign-record-type AffineMatrix
+  (double sx affinematrix-sx)
+  (double rx affinematrix-rx)
+  (double ry affinematrix-ry)
+  (double sy affinematrix-sy)
+  (double tx affinematrix-tx)
+  (double ty affinematrix-ty))
+
+(define-foreign-record-type PointInfo
+  (double x pointinfo-x)
+  (double y pointinfo-y))
 
 
 ;;;
@@ -2554,470 +2646,581 @@
 ;;; Drawing-wand methods
 ;;;
 
-#|
 (define clear-drawing-wand
-  (foreign-lambda void ClearDrawingWand))
+  (foreign-lambda void ClearDrawingWand drawingwand))
 
 (define clone-drawing-wand
-  (foreign-lambda void CloneDrawingWand))
+  (foreign-lambda drawingwand CloneDrawingWand (const drawingwand)))
 
 (define destroy-drawing-wand
-  (foreign-lambda void DestroyDrawingWand))
+  (foreign-lambda drawingwand DestroyDrawingWand drawingwand))
 
-(define draw-affine
-  (foreign-lambda void DrawAffine))
+;;(define draw-affine
+;;  (foreign-lambda void DrawAffine drawingwand (const AffineMatrix)))
 
 (define draw-annotation
-  (foreign-lambda void DrawAnnotation))
+  (foreign-lambda void DrawAnnotation
+                  drawingwand (const double) (const double)
+                  (const unsigned-c-string)))
 
 (define draw-arc
-  (foreign-lambda void DrawArc))
+  (foreign-lambda void DrawArc
+                  drawingwand (const double) (const double)
+                  (const double) (const double)
+                  (const double) (const double)))
 
-(define draw-bezier
-  (foreign-lambda void DrawBezier))
+;;(define draw-bezier
+;;  (foreign-lambda void DrawBezier
+;;                  drawingwand (const size_t) (const PointInfo)))
 
 (define draw-circle
-  (foreign-lambda void DrawCircle))
+  (foreign-lambda void DrawCircle
+                  drawingwand (const double) (const double)
+                  (const double) (const double)))
 
 (define draw-clear-exception
-  (foreign-lambda void DrawClearException))
+  (foreign-lambda magickboolean DrawClearException drawingwand))
 
-(define draw-composite
-  (foreign-lambda void DrawComposite))
+;;(define draw-composite
+;;  (foreign-lambda magickboolean DrawComposite
+;;                  drawingwand (const compositeoperator)
+;;                  (const double) (const double)
+;;                  (const double) (const double)
+;;                  magickwand))
 
-(define draw-color
-  (foreign-lambda void DrawColor))
+;;(define draw-color
+;;  (foreign-lambda void DrawColor
+;;                  drawingwand (const double)
+;;                  (const double) (const paintmethod)))
 
 (define draw-comment
-  (foreign-lambda void DrawComment))
+  (foreign-lambda void DrawComment drawingwand (const c-string)))
 
 (define draw-ellipse
-  (foreign-lambda void DrawEllipse))
+  (foreign-lambda void DrawEllipse
+                  drawingwand (const double) (const double)
+                  (const double) (const double)
+                  (const double) (const double)))
 
 (define draw-get-border-color
-  (foreign-lambda void DrawGetBorderColor))
+  (foreign-lambda void DrawGetBorderColor
+                  (const drawingwand) pixelwand))
 
 (define draw-get-clip-path
-  (foreign-lambda void DrawGetClipPath))
+  (foreign-lambda c-string DrawGetClipPath (const drawingwand)))
 
 (define draw-get-clip-rule
-  (foreign-lambda void DrawGetClipRule))
+  (foreign-lambda fillrule DrawGetClipRule (const drawingwand)))
 
 (define draw-get-clip-units
-  (foreign-lambda void DrawGetClipUnits))
+  (foreign-lambda clippathunits DrawGetClipUnits (const drawingwand)))
 
-(define draw-get-exception
-  (foreign-lambda void DrawGetException))
+;;(define draw-get-exception
+;;  (foreign-lambda c-string DrawGetException
+;;                  (const drawingwand) (c-pointer exceptiontype)))
 
 (define draw-get-exception-type
-  (foreign-lambda void DrawGetExceptionType))
+  (foreign-lambda exceptiontype DrawGetExceptionType (const drawingwand)))
 
 (define draw-get-fill-color
-  (foreign-lambda void DrawGetFillColor))
+  (foreign-lambda void DrawGetFillColor (const drawingwand) pixelwand))
 
 (define draw-get-fill-opacity
-  (foreign-lambda void DrawGetFillOpacity))
+  (foreign-lambda double DrawGetFillOpacity (const drawingwand)))
 
 (define draw-get-fill-rule
-  (foreign-lambda void DrawGetFillRule))
+  (foreign-lambda fillrule DrawGetFillRule (const drawingwand)))
 
 (define draw-get-font
-  (foreign-lambda void DrawGetFont))
+  (foreign-lambda c-string DrawGetFont (const drawingwand)))
 
 (define draw-get-font-family
-  (foreign-lambda void DrawGetFontFamily))
+  (foreign-lambda c-string DrawGetFontFamily (const drawingwand)))
 
 (define draw-get-font-resolution
-  (foreign-lambda void DrawGetFontResolution))
+  (foreign-lambda magickboolean DrawGetFontResolution
+                  (const drawingwand) (c-pointer double) (c-pointer double)))
 
 (define draw-get-font-size
-  (foreign-lambda void DrawGetFontSize))
+  (foreign-lambda double DrawGetFontSize (const drawingwand)))
 
 (define draw-get-font-stretch
-  (foreign-lambda void DrawGetFontStretch))
+  (foreign-lambda stretchtype DrawGetFontStretch (const drawingwand)))
 
 (define draw-get-font-style
-  (foreign-lambda void DrawGetFontStyle))
+  (foreign-lambda styletype DrawGetFontStyle (const drawingwand)))
 
 (define draw-get-font-weight
-  (foreign-lambda void DrawGetFontWeight))
+  (foreign-lambda size_t DrawGetFontWeight (const drawingwand)))
 
 (define draw-get-gravity
-  (foreign-lambda void DrawGetGravity))
+  (foreign-lambda gravity DrawGetGravity (const drawingwand)))
 
 (define draw-get-opacity
-  (foreign-lambda void DrawGetOpacity))
+  (foreign-lambda double DrawGetOpacity (const drawingwand)))
 
 (define draw-get-stroke-antialias
-  (foreign-lambda void DrawGetStrokeAntialias))
+  (foreign-lambda magickboolean DrawGetStrokeAntialias (const drawingwand)))
 
 (define draw-get-stroke-color
-  (foreign-lambda void DrawGetStrokeColor))
+  (foreign-lambda void DrawGetStrokeColor (const drawingwand) pixelwand))
 
 (define draw-get-stroke-dash-array
-  (foreign-lambda void DrawGetStrokeDashArray))
+  (foreign-lambda (c-pointer double) DrawGetStrokeDashArray
+                  (const drawingwand) (c-pointer size_t)))
 
 (define draw-get-stroke-dash-offset
-  (foreign-lambda void DrawGetStrokeDashOffset))
+  (foreign-lambda double DrawGetStrokeDashOffset (const drawingwand)))
 
 (define draw-get-stroke-line-cap
-  (foreign-lambda void DrawGetStrokeLineCap))
+  (foreign-lambda linecap DrawGetStrokeLineCap (const drawingwand)))
 
 (define draw-get-stroke-line-join
-  (foreign-lambda void DrawGetStrokeLineJoin))
+  (foreign-lambda linejoin DrawGetStrokeLineJoin (const drawingwand)))
 
 (define draw-get-stroke-miter-limit
-  (foreign-lambda void DrawGetStrokeMiterLimit))
+  (foreign-lambda size_t DrawGetStrokeMiterLimit (const drawingwand)))
 
 (define draw-get-stroke-opacity
-  (foreign-lambda void DrawGetStrokeOpacity))
+  (foreign-lambda double DrawGetStrokeOpacity (const drawingwand)))
 
 (define draw-get-stroke-width
-  (foreign-lambda void DrawGetStrokeWidth))
+  (foreign-lambda double DrawGetStrokeWidth (const drawingwand)))
 
 (define draw-get-text-alignment
-  (foreign-lambda void DrawGetTextAlignment))
+  (foreign-lambda aligntype DrawGetTextAlignment (const drawingwand)))
 
 (define draw-get-text-antialias
-  (foreign-lambda void DrawGetTextAntialias))
+  (foreign-lambda magickboolean DrawGetTextAntialias (const drawingwand)))
 
 (define draw-get-text-decoration
-  (foreign-lambda void DrawGetTextDecoration))
+  (foreign-lambda decorationtype DrawGetTextDecoration (const drawingwand)))
 
 (define draw-get-text-encoding
-  (foreign-lambda void DrawGetTextEncoding))
+  (foreign-lambda c-string DrawGetTextEncoding (const drawingwand)))
 
 (define draw-get-text-kerning
-  (foreign-lambda void DrawGetTextKerning))
+  (foreign-lambda double DrawGetTextKerning drawingwand))
+
+(define draw-get-text-interline-spacing
+  (foreign-lambda double DrawGetTextInterlineSpacing drawingwand))
 
 (define draw-get-text-interword-spacing
-  (foreign-lambda void DrawGetTextInterwordSpacing))
-
-(define draw-get-text-interword-spacing
-  (foreign-lambda void DrawGetTextInterwordSpacing))
+  (foreign-lambda double DrawGetTextInterwordSpacing drawingwand))
 
 (define draw-get-vector-graphics
-  (foreign-lambda void DrawGetVectorGraphics))
+  (foreign-lambda c-string DrawGetVectorGraphics drawingwand))
 
 (define draw-get-text-under-color
-  (foreign-lambda void DrawGetTextUnderColor))
+  (foreign-lambda void DrawGetTextUnderColor (const drawingwand) pixelwand))
 
 (define draw-line
-  (foreign-lambda void DrawLine))
+  (foreign-lambda void DrawLine
+                  drawingwand (const double) (const double)
+                  (const double) (const double)))
 
-(define draw-matte
-  (foreign-lambda void DrawMatte))
+;;(define draw-matte
+;;  (foreign-lambda void DrawMatte
+;;                  drawingwand (const double) (const double)
+;;                  (const paintmethod)))
 
 (define draw-path-close
-  (foreign-lambda void DrawPathClose))
+  (foreign-lambda void DrawPathClose drawingwand))
 
 (define draw-path-curve-to-absolute
-  (foreign-lambda void DrawPathCurveToAbsolute))
+  (foreign-lambda void DrawPathCurveToAbsolute
+                  drawingwand (const double) (const double)
+                  (const double) (const double)
+                  (const double) (const double)))
 
 (define draw-path-curve-to-relative
-  (foreign-lambda void DrawPathCurveToRelative))
+  (foreign-lambda void DrawPathCurveToRelative
+                  drawingwand (const double) (const double)
+                  (const double) (const double)
+                  (const double) (const double)))
 
 (define draw-path-curve-to-quadratic-bezier-absolute
-  (foreign-lambda void DrawPathCurveToQuadraticBezierAbsolute))
+  (foreign-lambda void DrawPathCurveToQuadraticBezierAbsolute
+                  drawingwand (const double) (const double)
+                  (const double) (const double)))
 
 (define draw-path-curve-to-quadratic-bezier-relative
-  (foreign-lambda void DrawPathCurveToQuadraticBezierRelative))
+  (foreign-lambda void DrawPathCurveToQuadraticBezierRelative
+                  drawingwand (const double) (const double)
+                  (const double) (const double)))
 
 (define draw-path-curve-to-quadratic-bezier-smooth-absolute
-  (foreign-lambda void DrawPathCurveToQuadraticBezierSmoothAbsolute))
+  (foreign-lambda void DrawPathCurveToQuadraticBezierSmoothAbsolute
+                  drawingwand (const double) (const double)))
 
-(define draw-path-curve-to-quadratic-bezier-smooth-absolute
-  (foreign-lambda void DrawPathCurveToQuadraticBezierSmoothAbsolute))
+(define draw-path-curve-to-quadratic-bezier-smooth-relative
+  (foreign-lambda void DrawPathCurveToQuadraticBezierSmoothRelative
+                  drawingwand (const double) (const double)))
 
 (define draw-path-curve-to-smooth-absolute
-  (foreign-lambda void DrawPathCurveToSmoothAbsolute))
+  (foreign-lambda void DrawPathCurveToSmoothAbsolute
+                  drawingwand (const double) (const double)
+                  (const double) (const double)))
 
 (define draw-path-curve-to-smooth-relative
-  (foreign-lambda void DrawPathCurveToSmoothRelative))
+  (foreign-lambda void DrawPathCurveToSmoothRelative
+                  drawingwand (const double) (const double)
+                  (const double) (const double)))
 
-(define draw-path-elliptic-arc-absolute
-  (foreign-lambda void DrawPathEllipticArcAbsolute))
+;;(define draw-path-elliptic-arc-absolute
+;;  (foreign-lambda void DrawPathEllipticArcAbsolute
+;;                  drawingwand (const double) (const double) (const double)
+;;                  (const magickboolean) (const magickboolean)
+;;                  (const double)  (const double)))
 
-(define draw-path-elliptic-arc-relative
-  (foreign-lambda void DrawPathEllipticArcRelative))
+;;(define draw-path-elliptic-arc-relative
+;;  (foreign-lambda void DrawPathEllipticArcRelative
+;;                  drawingwand (const double) (const double) (const double)
+;;                  (const magickboolean) (const magickboolean)
+;;                  (const double)  (const double)))
 
 (define draw-path-finish
-  (foreign-lambda void DrawPathFinish))
+  (foreign-lambda void DrawPathFinish drawingwand))
 
 (define draw-path-line-to-absolute
-  (foreign-lambda void DrawPathLineToAbsolute))
+  (foreign-lambda void DrawPathLineToAbsolute
+                  drawingwand (const double) (const double)))
 
 (define draw-path-line-to-relative
-  (foreign-lambda void DrawPathLineToRelative))
+  (foreign-lambda void DrawPathLineToRelative
+                  drawingwand (const double) (const double)))
 
 (define draw-path-line-to-horizontal-absolute
-  (foreign-lambda void DrawPathLineToHorizontalAbsolute))
+  (foreign-lambda void DrawPathLineToHorizontalAbsolute
+                  drawingwand (const double)))
 
 (define draw-path-line-to-horizontal-relative
-  (foreign-lambda void DrawPathLineToHorizontalRelative))
+  (foreign-lambda void DrawPathLineToHorizontalRelative
+                  drawingwand (const double)))
 
 (define draw-path-line-to-vertical-absolute
-  (foreign-lambda void DrawPathLineToVerticalAbsolute))
+  (foreign-lambda void DrawPathLineToVerticalAbsolute
+                  drawingwand (const double)))
 
 (define draw-path-line-to-vertical-relative
-  (foreign-lambda void DrawPathLineToVerticalRelative))
+  (foreign-lambda void DrawPathLineToVerticalRelative
+                  drawingwand (const double)))
 
 (define draw-path-move-to-absolute
-  (foreign-lambda void DrawPathMoveToAbsolute))
+  (foreign-lambda void DrawPathMoveToAbsolute
+                  drawingwand (const double) (const double)))
 
 (define draw-path-move-to-relative
-  (foreign-lambda void DrawPathMoveToRelative))
+  (foreign-lambda void DrawPathMoveToRelative
+                  drawingwand (const double) (const double)))
 
 (define draw-path-start
-  (foreign-lambda void DrawPathStart))
+  (foreign-lambda void DrawPathStart drawingwand))
 
 (define draw-point
-  (foreign-lambda void DrawPoint))
+  (foreign-lambda void DrawPoint
+                  drawingwand (const double) (const double)))
 
-(define draw-polygon
-  (foreign-lambda void DrawPolygon))
+;;(define draw-polygon
+;;  (foreign-lambda void DrawPolygon
+;;                  drawingwand (const size_t) (const PointInfo)))
 
-(define draw-polyline
-  (foreign-lambda void DrawPolyline))
+;;(define draw-polyline
+;;  (foreign-lambda void DrawPolyline
+;;                  drawingwand (const size_t) (const PointInfo)))
 
 (define draw-pop-clip-path
-  (foreign-lambda void DrawPopClipPath))
+  (foreign-lambda void DrawPopClipPath drawingwand))
 
 (define draw-pop-defs
-  (foreign-lambda void DrawPopDefs))
+  (foreign-lambda void DrawPopDefs drawingwand))
 
 (define draw-pop-pattern
-  (foreign-lambda void DrawPopPattern))
+  (foreign-lambda magickboolean DrawPopPattern drawingwand))
 
 (define draw-push-clip-path
-  (foreign-lambda void DrawPushClipPath))
+  (foreign-lambda void DrawPushClipPath drawingwand (const c-string)))
 
 (define draw-push-defs
-  (foreign-lambda void DrawPushDefs))
+  (foreign-lambda void DrawPushDefs drawingwand))
 
 (define draw-push-pattern
-  (foreign-lambda void DrawPushPattern))
+  (foreign-lambda magickboolean DrawPushPattern
+                  drawingwand (const c-string)
+                  (const double) (const double)
+                  (const double) (const double)))
 
 (define draw-rectangle
-  (foreign-lambda void DrawRectangle))
+  (foreign-lambda void DrawRectangle
+                  drawingwand (const double) (const double)
+                  (const double) (const double)))
 
 (define draw-reset-vector-graphics
-  (foreign-lambda void DrawResetVectorGraphics))
+  (foreign-lambda void DrawResetVectorGraphics drawingwand))
 
 (define draw-rotate
-  (foreign-lambda void DrawRotate))
+  (foreign-lambda void DrawRotate drawingwand (const double)))
 
 (define draw-round-rectangle
-  (foreign-lambda void DrawRoundRectangle))
+  (foreign-lambda void DrawRoundRectangle
+                  drawingwand double double
+                  double double double double))
 
 (define draw-scale
-  (foreign-lambda void DrawScale))
+  (foreign-lambda void DrawScale
+                  drawingwand (const double) (const double)))
 
 (define draw-set-border-color
-  (foreign-lambda void DrawSetBorderColor))
+  (foreign-lambda void DrawSetBorderColor
+                  drawingwand (const pixelwand)))
 
 (define draw-set-clip-path
-  (foreign-lambda void DrawSetClipPath))
+  (foreign-lambda magickboolean DrawSetClipPath
+                  drawingwand (const c-string)))
 
-(define draw-set-clip-rule
-  (foreign-lambda void DrawSetClipRule))
+;;(define draw-set-clip-rule
+;;  (foreign-lambda void DrawSetClipRule
+;;                  drawingwand (const fillrule)))
 
-(define draw-set-clip-units
-  (foreign-lambda void DrawSetClipUnits))
+;;(define draw-set-clip-units
+;;  (foreign-lambda void DrawSetClipUnits
+;;                  drawingwand (const clippathunits)))
 
 (define draw-set-fill-color
-  (foreign-lambda void DrawSetFillColor))
+  (foreign-lambda void DrawSetFillColor
+                  drawingwand (const pixelwand)))
 
 (define draw-set-fill-opacity
-  (foreign-lambda void DrawSetFillOpacity))
+  (foreign-lambda void DrawSetFillOpacity
+                  drawingwand (const double)))
 
 (define draw-set-font-resolution
-  (foreign-lambda void DrawSetFontResolution))
+  (foreign-lambda magickboolean DrawSetFontResolution
+                  drawingwand (const double) (const double)))
 
 (define draw-set-opacity
-  (foreign-lambda void DrawSetOpacity))
+  (foreign-lambda void DrawSetOpacity drawingwand (const double)))
 
 (define draw-set-fill-pattern-url
-  (foreign-lambda void DrawSetFillPatternURL))
+  (foreign-lambda magickboolean DrawSetFillPatternURL
+                  drawingwand (const c-string)))
 
-(define draw-set-fill-rule
-  (foreign-lambda void DrawSetFillRule))
+;;(define draw-set-fill-rule
+;;  (foreign-lambda void DrawSetFillRule drawingwand (const fillrule)))
 
 (define draw-set-font
-  (foreign-lambda void DrawSetFont))
+  (foreign-lambda magickboolean DrawSetFont
+                  drawingwand (const c-string)))
 
 (define draw-set-font-family
-  (foreign-lambda void DrawSetFontFamily))
+  (foreign-lambda magickboolean DrawSetFontFamily
+                  drawingwand (const c-string)))
 
 (define draw-set-font-size
-  (foreign-lambda void DrawSetFontSize))
+  (foreign-lambda void DrawSetFontSize
+                  drawingwand (const double)))
 
-(define draw-set-font-stretch
-  (foreign-lambda void DrawSetFontStretch))
+;;(define draw-set-font-stretch
+;;  (foreign-lambda void DrawSetFontStretch
+;;                  drawingwand (const stretchtype)))
 
-(define draw-set-font-style
-  (foreign-lambda void DrawSetFontStyle))
+;;(define draw-set-font-style
+;;  (foreign-lambda void DrawSetFontStyle
+;;                  drawingwand (const styletype)))
 
 (define draw-set-font-weight
-  (foreign-lambda void DrawSetFontWeight))
+  (foreign-lambda void DrawSetFontWeight
+                  drawingwand (const size_t)))
 
-(define draw-set-gravity
-  (foreign-lambda void DrawSetGravity))
+;;(define draw-set-gravity
+;;  (foreign-lambda void DrawSetGravity
+;;                  drawingwand (const gravity)))
 
 (define draw-set-stroke-color
-  (foreign-lambda void DrawSetStrokeColor))
+  (foreign-lambda void DrawSetStrokeColor
+                  drawingwand (const pixelwand)))
 
 (define draw-set-stroke-pattern-url
-  (foreign-lambda void DrawSetStrokePatternURL))
+  (foreign-lambda magickboolean DrawSetStrokePatternURL
+                  drawingwand (const c-string)))
 
-(define draw-set-stroke-antialias
-  (foreign-lambda void DrawSetStrokeAntialias))
+;;(define draw-set-stroke-antialias
+;;  (foreign-lambda void DrawSetStrokeAntialias
+;;                  drawingwand (const magickboolean)))
 
 (define draw-set-stroke-dash-array
-  (foreign-lambda void DrawSetStrokeDashArray))
+  (foreign-lambda magickboolean DrawSetStrokeDashArray
+                  drawingwand (const size_t)
+                  (const (c-pointer double))))
 
 (define draw-set-stroke-dash-offset
-  (foreign-lambda void DrawSetStrokeDashOffset))
+  (foreign-lambda void DrawSetStrokeDashOffset
+                  drawingwand (const double)))
 
-(define draw-set-stroke-line-cap
-  (foreign-lambda void DrawSetStrokeLineCap))
+;;(define draw-set-stroke-line-cap
+;;  (foreign-lambda void DrawSetStrokeLineCap
+;;                  drawingwand (const linecap)))
 
-(define draw-set-stroke-line-join
-  (foreign-lambda void DrawSetStrokeLineJoin))
+;;(define draw-set-stroke-line-join
+;;  (foreign-lambda void DrawSetStrokeLineJoin
+;;                  drawingwand (const linejoin)))
 
 (define draw-set-stroke-miter-limit
-  (foreign-lambda void DrawSetStrokeMiterLimit))
+  (foreign-lambda void DrawSetStrokeMiterLimit
+                  drawingwand (const size_t)))
 
 (define draw-set-stroke-opacity
-  (foreign-lambda void DrawSetStrokeOpacity))
+  (foreign-lambda void DrawSetStrokeOpacity
+                  drawingwand (const double)))
 
 (define draw-set-stroke-width
-  (foreign-lambda void DrawSetStrokeWidth))
+  (foreign-lambda void DrawSetStrokeWidth
+                  drawingwand (const double)))
 
-(define draw-set-text-alignment
-  (foreign-lambda void DrawSetTextAlignment))
+;;(define draw-set-text-alignment
+;;  (foreign-lambda void DrawSetTextAlignment
+;;                  drawingwand (const aligntype)))
 
-(define draw-set-text-antialias
-  (foreign-lambda void DrawSetTextAntialias))
+;;(define draw-set-text-antialias
+;;  (foreign-lambda void DrawSetTextAntialias
+;;                  drawingwand (const magickboolean)))
 
-(define draw-set-text-decoration
-  (foreign-lambda void DrawSetTextDecoration))
+;;(define draw-set-text-decoration
+;;  (foreign-lambda void DrawSetTextDecoration
+;;                  drawingwand (const decorationtype)))
 
 (define draw-set-text-encoding
-  (foreign-lambda void DrawSetTextEncoding))
+  (foreign-lambda void DrawSetTextEncoding
+                  drawingwand (const c-string)))
 
 (define draw-set-text-kerning
-  (foreign-lambda void DrawSetTextKerning))
+  (foreign-lambda void DrawSetTextKerning
+                  drawingwand (const double)))
+
+(define draw-set-text-interline-spacing
+  (foreign-lambda void DrawSetTextInterlineSpacing
+                  drawingwand (const double)))
 
 (define draw-set-text-interword-spacing
-  (foreign-lambda void DrawSetTextInterwordSpacing))
-
-(define draw-set-text-interword-spacing
-  (foreign-lambda void DrawSetTextInterwordSpacing))
+  (foreign-lambda void DrawSetTextInterwordSpacing
+                  drawingwand (const double)))
 
 (define draw-set-text-under-color
-  (foreign-lambda void DrawSetTextUnderColor))
+  (foreign-lambda void DrawSetTextUnderColor
+                  drawingwand (const pixelwand)))
 
 (define draw-set-vector-graphics
-  (foreign-lambda void DrawSetVectorGraphics))
+  (foreign-lambda magickboolean DrawSetVectorGraphics
+                  drawingwand (const c-string)))
 
 (define draw-skew-x
-  (foreign-lambda void DrawSkewX))
+  (foreign-lambda void DrawSkewX drawingwand (const double)))
 
 (define draw-skew-y
-  (foreign-lambda void DrawSkewY))
+  (foreign-lambda void DrawSkewY drawingwand (const double)))
 
 (define draw-translate
-  (foreign-lambda void DrawTranslate))
+  (foreign-lambda void DrawTranslate
+                  drawingwand (const double) (const double)))
 
 (define draw-set-viewbox
-  (foreign-lambda void DrawSetViewbox))
+  (foreign-lambda void DrawSetViewbox
+                  drawingwand ssize_t ssize_t ssize_t ssize_t))
 
 (define drawing-wand?
-  (foreign-lambda void IsDrawingWand))
+  (foreign-lambda magickboolean IsDrawingWand (const drawingwand)))
 
 (define new-drawing-wand
-  (foreign-lambda void NewDrawingWand))
+  (foreign-lambda drawingwand NewDrawingWand))
 
 (define peek-drawing-wand
-  (foreign-lambda void PeekDrawingWand))
+  (foreign-lambda drawinfo PeekDrawingWand (const drawingwand)))
 
 (define pop-drawing-wand
-  (foreign-lambda void PopDrawingWand))
+  (foreign-lambda magickboolean PopDrawingWand drawingwand))
 
 (define push-drawing-wand
-  (foreign-lambda void PushDrawingWand))
-|#
+  (foreign-lambda magickboolean PushDrawingWand drawingwand))
 
 
 ;;;
 ;;; Command-line methods
 ;;;
 
-#|
-(define magick-command-genesis
-  (foreign-lambda magickboolean MagickCommandGenesis
-                  imageinfo                   ;; *image_info
-                  magickcommand               ;; command
-                  int                         ;; argc
-                  (c-pointer c-string)        ;; argv
-                  (c-pointer c-string)        ;; metadata
-                  (c-pointer exceptioninfo))) ;; exception
-|#
+;;(define magick-command-genesis
+;;  (foreign-lambda magickboolean MagickCommandGenesis
+;;                  imageinfo                   ;; *image_info
+;;                  magickcommand               ;; command
+;;                  int                         ;; argc
+;;                  (c-pointer c-string)        ;; argv
+;;                  (c-pointer c-string)        ;; metadata
+;;                  (c-pointer exceptioninfo))) ;; exception
 
 
 ;;;
 ;;; Wand-view methods
 ;;;
 
-#|
 (define clone-wand-view
-  (foreign-lambda void CloneWandView))
+  (foreign-lambda wandview CloneWandView (const wandview)))
 
 (define destroy-wand-view
-  (foreign-lambda void DestroyWandView))
+  (foreign-lambda wandview DestroyWandView wandview))
 
-(define duplex-transfer-wand-view-iterator
-  (foreign-lambda void DuplexTransferWandViewIterator))
+;;(define duplex-transfer-wand-view-iterator
+;;  (foreign-lambda magickboolean DuplexTransferWandViewIterator
+;;                  wandview wandview wandview
+;;                  duplextransferwandviewmethod
+;;                  c-pointer))
 
-(define get-wand-view-exception
-  (foreign-lambda void GetWandViewException))
+;;(define get-wand-view-exception
+;;  (foreign-lambda c-string GetWandViewException
+;;                  (const wandview) (c-pointer exceptiontype)))
 
-(define get-wand-view-extent
-  (foreign-lambda void GetWandViewExtent))
+;;(define get-wand-view-extent
+;;  (foreign-lambda RectangleInfo GetWandViewExtent (const wandview)))
 
-(define get-wand-view-iterator
-  (foreign-lambda void GetWandViewIterator))
+;;(define get-wand-view-iterator
+;;  (foreign-lambda magickboolean GetWandViewIterator
+;;                  wandview getwandviewmethod c-pointer))
 
 (define get-wand-view-pixels
-  (foreign-lambda void GetWandViewPixels))
+  (foreign-lambda pixelwand GetWandViewPixels (const wandview)))
 
 (define get-wand-view-wand
-  (foreign-lambda void GetWandViewWand))
+  (foreign-lambda magickwand GetWandViewWand (const wandview)))
 
 (define wand-view?
-  (foreign-lambda void IsWandView))
+  (foreign-lambda magickboolean IsWandView (const wandview)))
 
 (define new-wand-view
-  (foreign-lambda void NewWandView))
+  (foreign-lambda wandview NewWandView magickwand))
 
 (define new-wand-view-extent
-  (foreign-lambda void NewWandViewExtent))
+  (foreign-lambda wandview NewWandViewExtent
+                  magickwand (const ssize_t) (const ssize_t)
+                  (const size_t) (const size_t)))
 
 (define set-wand-view-description
-  (foreign-lambda void SetWandViewDescription))
+  (foreign-lambda void SetWandViewDescription
+                  wandview (const c-string)))
 
-(define set-wand-view-iterator
-  (foreign-lambda void SetWandViewIterator))
+;;(define set-wand-view-iterator
+;;  (foreign-lambda magickboolean SetWandViewIterator
+;;                  wandview setwandviewmethod c-pointer))
 
 (define set-wand-view-threads
-  (foreign-lambda void SetWandViewThreads))
+  (foreign-lambda void SetWandViewThreads
+                  wandview (const size_t)))
 
-(define transfer-wand-view-iterator
-  (foreign-lambda void TransferWandViewIterator))
+;;(define transfer-wand-view-iterator
+;;  (foreign-lambda magickboolean TransferWandViewIterator
+;;                  wandview wandview
+;;                  transferwandviewmethod
+;;                  c-pointer))
 
-(define update-wand-view-iterator
-  (foreign-lambda void UpdateWandViewIterator))
-|#
+;;(define update-wand-view-iterator
+;;  (foreign-lambda magickboolean UpdateWandViewIterator
+;;                  wandview updatewandviewmethod c-pointer))
 
 )
