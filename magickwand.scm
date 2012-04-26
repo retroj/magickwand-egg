@@ -677,6 +677,12 @@
   ((NonpeakStatistic) NonpeakStatistic)
   ((StandardDeviationStatistic) StandardDeviationStatistic))
 
+(define-foreign-enum-type (classtype (enum ClassType))
+  (classtype->int int->classtype)
+  ((UndefinedClass) UndefinedClass)
+  ((DirectClass) DirectClass)
+  ((PseudoClass) PseudoClass))
+
 (define-foreign-type magickwand (c-pointer (struct _MagickWand)))
 
 (define-foreign-type drawingwand (c-pointer (struct _DrawingWand)))
@@ -741,6 +747,23 @@
   (size_t height rectangleinfo-height)
   (ssize_t x rectangleinfo-x)
   (ssize_t y rectangleinfo-y))
+
+(define-foreign-type magickrealtype double)
+
+;;(define-foreign-record-type MagickPixelPacket
+;;  (classtype storage_class magickpixelpacket-storage_class)
+;;  (colorspace colorspace magickpixelpacket-colorspace)
+;;  (magickboolean matte magickpixelpacket-matte)
+;;  (double fuzz magickpixelpacket-fuzz)
+;;  (size_t depth magickpixelpacket-depth)
+;;  (magickrealtype red magickpixelpacket-red)
+;;  (magickrealtype green magickpixelpacket-green)
+;;  (magickrealtype blue magickpixelpacket-blue)
+;;  (magickrealtype opacity magickpixelpacket-opacity)
+;;  (magickrealtype index magickpixelpacket-index))
+
+;;XXX: would be nice to have a complete definition here
+(define-foreign-type pixelpacket (c-pointer (struct _PixelPacket)))
 
 
 ;;;
@@ -2326,199 +2349,205 @@
 ;;; Pixel-wand methods
 ;;;
 
-#|
 (define clear-pixel-wand
-  (foreign-lambda void ClearPixelWand))
+  (foreign-lambda void ClearPixelWand pixelwand))
 
 (define clone-pixel-wand
-  (foreign-lambda void ClonePixelWand))
+  (foreign-lambda pixelwand ClonePixelWand (const pixelwand)))
 
 (define clone-pixel-wands
-  (foreign-lambda void ClonePixelWands))
+  (foreign-lambda (c-pointer pixelwand) ClonePixelWands
+                  (const (c-pointer pixelwand)) (const size_t)))
 
 (define destroy-pixel-wand
-  (foreign-lambda void DestroyPixelWand))
+  (foreign-lambda pixelwand DestroyPixelWand pixelwand))
 
 (define destroy-pixel-wands
-  (foreign-lambda void DestroyPixelWands))
+  (foreign-lambda (c-pointer pixelwand) DestroyPixelWands
+                  (c-pointer pixelwand) (const size_t)))
 
 (define is-pixel-wand-similar
-  (foreign-lambda void IsPixelWandSimilar))
+  (foreign-lambda magickboolean IsPixelWandSimilar
+                  pixelwand pixelwand (const double)))
 
 (define pixel-wand?
-  (foreign-lambda void IsPixelWand))
+  (foreign-lambda magickboolean IsPixelWand (const pixelwand)))
 
 (define new-pixel-wand
-  (foreign-lambda void NewPixelWand))
+  (foreign-lambda pixelwand NewPixelWand))
 
 (define new-pixel-wands
-  (foreign-lambda void NewPixelWands))
+  (foreign-lambda (c-pointer pixelwand) NewPixelWands (const size_t)))
 
 (define pixel-clear-exception
-  (foreign-lambda void PixelClearException))
+  (foreign-lambda magickboolean PixelClearException pixelwand))
 
 (define pixel-get-alpha
-  (foreign-lambda void PixelGetAlpha))
+  (foreign-lambda double PixelGetAlpha (const pixelwand)))
 
-(define pixel-get-alpha-quantum
-  (foreign-lambda void PixelGetAlphaQuantum))
+;;(define pixel-get-alpha-quantum
+;;  (foreign-lambda quantum PixelGetAlphaQuantum (const pixelwand)))
 
 (define pixel-get-black
-  (foreign-lambda void PixelGetBlack))
+  (foreign-lambda double PixelGetBlack (const pixelwand)))
 
-(define pixel-get-black-quantum
-  (foreign-lambda void PixelGetBlackQuantum))
+;;(define pixel-get-black-quantum
+;;  (foreign-lambda quantum PixelGetBlackQuantum (const pixelwand)))
 
 (define pixel-get-blue
-  (foreign-lambda void PixelGetBlue))
+  (foreign-lambda double PixelGetBlue (const pixelwand)))
 
-(define pixel-get-blue-quantum
-  (foreign-lambda void PixelGetBlueQuantum))
+;;(define pixel-get-blue-quantum
+;;  (foreign-lambda quantum PixelGetBlueQuantum (const pixelwand)))
 
 (define pixel-get-color-as-string
-  (foreign-lambda void PixelGetColorAsString))
+  (foreign-lambda c-string PixelGetColorAsString pixelwand))
 
 (define pixel-get-color-as-normalized-string
-  (foreign-lambda void PixelGetColorAsNormalizedString))
+  (foreign-lambda c-string PixelGetColorAsNormalizedString pixelwand))
 
 (define pixel-get-color-count
-  (foreign-lambda void PixelGetColorCount))
+  (foreign-lambda size_t PixelGetColorCount (const pixelwand)))
 
 (define pixel-get-cyan
-  (foreign-lambda void PixelGetCyan))
+  (foreign-lambda double PixelGetCyan (const pixelwand)))
 
-(define pixel-get-cyan-quantum
-  (foreign-lambda void PixelGetCyanQuantum))
+;;(define pixel-get-cyan-quantum
+;;  (foreign-lambda quantum PixelGetCyanQuantum (const pixelwand)))
 
-(define pixel-get-exception
-  (foreign-lambda void PixelGetException))
+;;(define pixel-get-exception
+;;  (foreign-lambda c-string PixelGetException
+;;                  (const pixelwand) (c-pointer exceptiontype)))
 
 (define pixel-get-exception-type
-  (foreign-lambda void PixelGetExceptionType))
+  (foreign-lambda exceptiontype PixelGetExceptionType (const pixelwand)))
 
 (define pixel-get-fuzz
-  (foreign-lambda void PixelGetFuzz))
+  (foreign-lambda double PixelGetFuzz (const pixelwand)))
 
 (define pixel-get-green
-  (foreign-lambda void PixelGetGreen))
+  (foreign-lambda double PixelGetGreen (const pixelwand)))
 
-(define pixel-get-green-quantum
-  (foreign-lambda void PixelGetGreenQuantum))
+;;(define pixel-get-green-quantum
+;;  (foreign-lambda quantum PixelGetGreenQuantum (const pixelwand)))
 
 (define pixel-get-hsl
-  (foreign-lambda void PixelGetHSL))
+  (foreign-lambda void PixelGetHSL
+                  (const pixelwand) (c-pointer double)
+                  (c-pointer double) (c-pointer double)))
 
-(define pixel-get-index
-  (foreign-lambda void PixelGetIndex))
+;;(define pixel-get-index
+;;  (foreign-lambda indexpacket PixelGetIndex (c-pointer double)))
 
 (define pixel-get-magenta
-  (foreign-lambda void PixelGetMagenta))
+  (foreign-lambda double PixelGetMagenta (const pixelwand)))
 
-(define pixel-get-magenta-quantum
-  (foreign-lambda void PixelGetMagentaQuantum))
+;;(define pixel-get-magenta-quantum
+;;  (foreign-lambda quantum PixelGetMagentaQuantum (const pixelwand)))
 
-(define pixel-get-magick-color
-  (foreign-lambda void PixelGetMagickColor))
+;;(define pixel-get-magick-color
+;;  (foreign-lambda void PixelGetMagickColor
+;;                  pixelwand magickpixelpacket))
 
 (define pixel-get-opacity
-  (foreign-lambda void PixelGetOpacity))
+  (foreign-lambda double PixelGetOpacity (const pixelwand)))
 
-(define pixel-get-opacity-quantum
-  (foreign-lambda void PixelGetOpacityQuantum))
+;;(define pixel-get-opacity-quantum
+;;  (foreign-lambda quantum PixelGetOpacityQuantum (const pixelwand)))
 
 (define pixel-get-quantum-color
-  (foreign-lambda void PixelGetQuantumColor))
+  (foreign-lambda void PixelGetQuantumColor pixelwand pixelpacket))
 
 (define pixel-get-red
-  (foreign-lambda void PixelGetRed))
+  (foreign-lambda double PixelGetRed (const pixelwand)))
 
-(define pixel-get-red-quantum
-  (foreign-lambda void PixelGetRedQuantum))
+;;(define pixel-get-red-quantum
+;;  (foreign-lambda quantum PixelGetRedQuantum (const pixelwand)))
 
 (define pixel-get-yellow
-  (foreign-lambda void PixelGetYellow))
+  (foreign-lambda double PixelGetYellow (const pixelwand)))
 
-(define pixel-get-yellow-quantum
-  (foreign-lambda void PixelGetYellowQuantum))
+;;(define pixel-get-yellow-quantum
+;;  (foreign-lambda quantum PixelGetYellowQuantum (const pixelwand)))
 
 (define pixel-set-alpha
-  (foreign-lambda void PixelSetAlpha))
+  (foreign-lambda void PixelSetAlpha pixelwand (const double)))
 
-(define pixel-set-alpha-quantum
-  (foreign-lambda void PixelSetAlphaQuantum))
+;;(define pixel-set-alpha-quantum
+;;  (foreign-lambda void PixelSetAlphaQuantum pixelwand (const quantum)))
 
 (define pixel-set-black
-  (foreign-lambda void PixelSetBlack))
+  (foreign-lambda void PixelSetBlack pixelwand (const double)))
 
-(define pixel-set-black-quantum
-  (foreign-lambda void PixelSetBlackQuantum))
+;;(define pixel-set-black-quantum
+;;  (foreign-lambda void PixelSetBlackQuantum pixelwand (const quantum)))
 
 (define pixel-set-blue
-  (foreign-lambda void PixelSetBlue))
+  (foreign-lambda void PixelSetBlue pixelwand (const double)))
 
-(define pixel-set-blue-quantum
-  (foreign-lambda void PixelSetBlueQuantum))
+;;(define pixel-set-blue-quantum
+;;  (foreign-lambda void PixelSetBlueQuantum pixelwand (const quantum)))
 
 (define pixel-set-color
-  (foreign-lambda void PixelSetColor))
+  (foreign-lambda magickboolean PixelSetColor pixelwand (const c-string)))
 
 (define pixel-set-color-count
-  (foreign-lambda void PixelSetColorCount))
+  (foreign-lambda void PixelSetColorCount pixelwand (const size_t)))
 
 (define pixel-set-color-from-wand
-  (foreign-lambda void PixelSetColorFromWand))
+  (foreign-lambda void PixelSetColorFromWand pixelwand (const pixelwand)))
 
 (define pixel-set-cyan
-  (foreign-lambda void PixelSetCyan))
+  (foreign-lambda void PixelSetCyan pixelwand (const double)))
 
-(define pixel-set-cyan-quantum
-  (foreign-lambda void PixelSetCyanQuantum))
+;;(define pixel-set-cyan-quantum
+;;  (foreign-lambda void PixelSetCyanQuantum pixelwand (const quantum)))
 
 (define pixel-set-fuzz
-  (foreign-lambda void PixelSetFuzz))
+  (foreign-lambda void PixelSetFuzz pixelwand (const double)))
 
 (define pixel-set-green
-  (foreign-lambda void PixelSetGreen))
+  (foreign-lambda void PixelSetGreen pixelwand (const double)))
 
-(define pixel-set-green-quantum
-  (foreign-lambda void PixelSetGreenQuantum))
+;;(define pixel-set-green-quantum
+;;  (foreign-lambda void PixelSetGreenQuantum pixelwand (const quantum)))
 
 (define pixel-set-hsl
-  (foreign-lambda void PixelSetHSL))
+  (foreign-lambda void PixelSetHSL
+                  pixelwand (const double) (const double) (const double)))
 
-(define pixel-set-index
-  (foreign-lambda void PixelSetIndex))
+;;(define pixel-set-index
+;;  (foreign-lambda void PixelSetIndex pixelwand (const indexpacket)))
 
 (define pixel-set-magenta
-  (foreign-lambda void PixelSetMagenta))
+  (foreign-lambda void PixelSetMagenta pixelwand (const double)))
 
-(define pixel-set-magenta-quantum
-  (foreign-lambda void PixelSetMagentaQuantum))
+;;(define pixel-set-magenta-quantum
+;;  (foreign-lambda void PixelSetMagentaQuantum pixelwand (const quantum)))
 
-(define pixel-set-magick-color
-  (foreign-lambda void PixelSetMagickColor))
+;;(define pixel-set-magick-color
+;;  (foreign-lambda void PixelSetMagickColor pixelwand (const magickpixelpacket)))
 
 (define pixel-set-opacity
-  (foreign-lambda void PixelSetOpacity))
+  (foreign-lambda void PixelSetOpacity pixelwand (const double)))
 
-(define pixel-set-opacity-quantum
-  (foreign-lambda void PixelSetOpacityQuantum))
+;;(define pixel-set-opacity-quantum
+;;  (foreign-lambda void PixelSetOpacityQuantum pixelwand (const quantum)))
 
 (define pixel-set-quantum-color
-  (foreign-lambda void PixelSetQuantumColor))
+  (foreign-lambda void PixelSetQuantumColor pixelwand (const pixelpacket)))
 
 (define pixel-set-red
-  (foreign-lambda void PixelSetRed))
+  (foreign-lambda void PixelSetRed pixelwand (const double)))
 
-(define pixel-set-red-quantum
-  (foreign-lambda void PixelSetRedQuantum))
+;;(define pixel-set-red-quantum
+;;  (foreign-lambda void PixelSetRedQuantum pixelwand (const quantum)))
 
 (define pixel-set-yellow
-  (foreign-lambda void PixelSetYellow))
+  (foreign-lambda void PixelSetYellow pixelwand (const double)))
 
-(define pixel-set-yellow-quantum
-  (foreign-lambda void PixelSetYellowQuantum))
-|#
+;;(define pixel-set-yellow-quantum
+;;  (foreign-lambda void PixelSetYellowQuantum pixelwand (const quantum)))
 
 
 ;;;
