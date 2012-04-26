@@ -33,78 +33,24 @@
 
 (define-foreign-type ssize_t long)
 
-(define-foreign-enum-type (exceptiontype (enum ExceptionType))
+(define-foreign-enum-type (exceptiontype int)
   (exceptiontype->int int->exceptiontype)
-  ((UndefinedException) UndefinedException)
-  ((WarningException) WarningException)
-  ((ResourceLimitWarning) ResourceLimitWarning)
-  ((TypeWarning) TypeWarning)
-  ((OptionWarning) OptionWarning)
-  ((DelegateWarning) DelegateWarning)
-  ((MissingDelegateWarning) MissingDelegateWarning)
-  ((CorruptImageWarning) CorruptImageWarning)
-  ((FileOpenWarning) FileOpenWarning)
-  ((BlobWarning) BlobWarning)
-  ((StreamWarning) StreamWarning)
-  ((CacheWarning) CacheWarning)
-  ((CoderWarning) CoderWarning)
-  ((FilterWarning) FilterWarning)
-  ((ModuleWarning) ModuleWarning)
-  ((DrawWarning) DrawWarning)
-  ((ImageWarning) ImageWarning)
-  ((WandWarning) WandWarning)
-  ((RandomWarning) RandomWarning)
-  ((XServerWarning) XServerWarning)
-  ((MonitorWarning) MonitorWarning)
-  ((RegistryWarning) RegistryWarning)
-  ((ConfigureWarning) ConfigureWarning)
-  ((PolicyWarning) PolicyWarning)
-  ((ErrorException) ErrorException)
-  ((ResourceLimitError) ResourceLimitError)
-  ((TypeError) TypeError)
-  ((OptionError) OptionError)
-  ((DelegateError) DelegateError)
-  ((MissingDelegateError) MissingDelegateError)
-  ((CorruptImageError) CorruptImageError)
-  ((FileOpenError) FileOpenError)
-  ((BlobError) BlobError)
-  ((StreamError) StreamError)
-  ((CacheError) CacheError)
-  ((CoderError) CoderError)
-  ((FilterError) FilterError)
-  ((ModuleError) ModuleError)
-  ((DrawError) DrawError)
-  ((ImageError) ImageError)
-  ((WandError) WandError)
-  ((RandomError) RandomError)
-  ((XServerError) XServerError)
-  ((MonitorError) MonitorError)
-  ((RegistryError) RegistryError)
-  ((ConfigureError) ConfigureError)
-  ((PolicyError) PolicyError)
-  ((FatalErrorException) FatalErrorException)
-  ((ResourceLimitFatalError) ResourceLimitFatalError)
-  ((TypeFatalError) TypeFatalError)
-  ((OptionFatalError) OptionFatalError)
-  ((DelegateFatalError) DelegateFatalError)
-  ((MissingDelegateFatalError) MissingDelegateFatalError)
-  ((CorruptImageFatalError) CorruptImageFatalError)
-  ((FileOpenFatalError) FileOpenFatalError)
-  ((BlobFatalError) BlobFatalError)
-  ((StreamFatalError) StreamFatalError)
-  ((CacheFatalError) CacheFatalError)
-  ((CoderFatalError) CoderFatalError)
-  ((FilterFatalError) FilterFatalError)
-  ((ModuleFatalError) ModuleFatalError)
-  ((DrawFatalError) DrawFatalError)
-  ((ImageFatalError) ImageFatalError)
-  ((WandFatalError) WandFatalError)
-  ((RandomFatalError) RandomFatalError)
-  ((XServerFatalError) XServerFatalError)
-  ((MonitorFatalError) MonitorFatalError)
-  ((RegistryFatalError) RegistryFatalError)
-  ((ConfigureFatalError) ConfigureFatalError)
-  ((PolicyFatalError) PolicyFatalError))
+  UndefinedException WarningException ResourceLimitWarning TypeWarning
+  OptionWarning DelegateWarning MissingDelegateWarning CorruptImageWarning
+  FileOpenWarning BlobWarning StreamWarning CacheWarning CoderWarning
+  FilterWarning ModuleWarning DrawWarning ImageWarning WandWarning
+  RandomWarning XServerWarning MonitorWarning RegistryWarning
+  ConfigureWarning PolicyWarning ErrorException ResourceLimitError
+  TypeError OptionError DelegateError MissingDelegateError CorruptImageError
+  FileOpenError BlobError StreamError CacheError CoderError FilterError
+  ModuleError DrawError ImageError WandError RandomError XServerError
+  MonitorError RegistryError ConfigureError PolicyError FatalErrorException
+  ResourceLimitFatalError TypeFatalError OptionFatalError DelegateFatalError
+  MissingDelegateFatalError CorruptImageFatalError FileOpenFatalError
+  BlobFatalError StreamFatalError CacheFatalError CoderFatalError
+  FilterFatalError ModuleFatalError DrawFatalError ImageFatalError
+  WandFatalError RandomFatalError XServerFatalError MonitorFatalError
+  RegistryFatalError ConfigureFatalError PolicyFatalError)
 
 (define-foreign-enum-type (colorspace (enum ColorspaceType))
   (colorspace->int int->colorspace)
@@ -872,10 +818,13 @@
 (define magick-clear-exception
   (foreign-lambda bool MagickClearException magickwand))
 
-;;(define magick-get-exception
-;;  (foreign-lambda c-string MagickGetException
-;;                  (const magickwand)
-;;                  (c-pointer exceptiontype)))
+(define (magick-get-exception wand)
+  (let-location ((typeout int))
+    (let ((str ((foreign-lambda c-string MagickGetException
+                                (const magickwand)
+                                (c-pointer "ExceptionType"))
+                wand (location typeout))))
+      (values str (int->exceptiontype typeout)))))
 
 (define magick-get-exception-type
   (foreign-lambda exceptiontype MagickGetExceptionType (const magickwand)))
@@ -2396,9 +2345,13 @@
   (foreign-lambda (c-pointer pixelwand) PixelGetCurrentIteratorRow
                   pixeliterator (c-pointer size_t)))
 
-;;(define pixel-get-iterator-exception
-;;  (foreign-lambda c-string PixelGetIteratorException
-;;                  (const pixeliterator) (c-pointer exceptiontype)))
+(define (pixel-get-iterator-exception iterator)
+  (let-location ((typeout int))
+    (let ((str ((foreign-lambda c-string PixelGetIteratorException
+                                (const pixeliterator)
+                                (c-pointer "ExceptionType"))
+                iterator (location typeout))))
+      (values str (int->exceptiontype typeout)))))
 
 (define pixel-get-iterator-exception-type
   (foreign-lambda exceptiontype PixelGetIteratorExceptionType
@@ -2502,9 +2455,13 @@
 ;;(define pixel-get-cyan-quantum
 ;;  (foreign-lambda quantum PixelGetCyanQuantum (const pixelwand)))
 
-;;(define pixel-get-exception
-;;  (foreign-lambda c-string PixelGetException
-;;                  (const pixelwand) (c-pointer exceptiontype)))
+(define (pixel-get-exception wand)
+  (let-location ((typeout int))
+    (let ((str ((foreign-lambda c-string PixelGetException
+                                (const pixelwand)
+                                (c-pointer "ExceptionType"))
+                wand (location typeout))))
+      (values str (int->exceptiontype typeout)))))
 
 (define pixel-get-exception-type
   (foreign-lambda exceptiontype PixelGetExceptionType (const pixelwand)))
@@ -2710,9 +2667,13 @@
 (define draw-get-clip-units
   (foreign-lambda clippathunits DrawGetClipUnits (const drawingwand)))
 
-;;(define draw-get-exception
-;;  (foreign-lambda c-string DrawGetException
-;;                  (const drawingwand) (c-pointer exceptiontype)))
+(define (draw-get-exception wand)
+  (let-location ((typeout int))
+    (let ((str ((foreign-lambda c-string DrawGetException
+                                (const drawingwand)
+                                (c-pointer "ExceptionType"))
+                wand (location typeout))))
+      (values str (int->exceptiontype typeout)))))
 
 (define draw-get-exception-type
   (foreign-lambda exceptiontype DrawGetExceptionType (const drawingwand)))
@@ -3168,9 +3129,13 @@
 ;;                  duplextransferwandviewmethod
 ;;                  c-pointer))
 
-;;(define get-wand-view-exception
-;;  (foreign-lambda c-string GetWandViewException
-;;                  (const wandview) (c-pointer exceptiontype)))
+(define (get-wand-view-exception wv)
+  (let-location ((typeout int))
+    (let ((str ((foreign-lambda c-string GetWandViewException
+                                (const wandview)
+                                (c-pointer "ExceptionType"))
+                wv (location typeout))))
+      (values str (int->exceptiontype typeout)))))
 
 ;;(define get-wand-view-extent
 ;;  (foreign-lambda RectangleInfo GetWandViewExtent (const wandview)))
