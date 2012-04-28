@@ -86,7 +86,7 @@
   ((JBIG1Compression) JBIG1Compression)
   ((JBIG2Compression) JBIG2Compression))
 
-(define-foreign-enum-type (gravity (enum GravityType))
+(define-foreign-enum-type (gravity int)
   (gravity->int int->gravity)
   ((UndefinedGravity) UndefinedGravity)
   ((ForgetGravity) ForgetGravity)
@@ -1029,8 +1029,8 @@
 (define magick-set-format
   (foreign-lambda bool MagickSetFormat magickwand (const c-string)))
 
-;;(define magick-set-gravity
-;;  (foreign-lambda bool MagickSetGravity magickwand (const gravity)))
+(define magick-set-gravity
+  (foreign-lambda bool MagickSetGravity magickwand (const gravity)))
 
 (define magick-set-image-artifact
   (foreign-lambda bool MagickSetImageArtifact
@@ -2029,9 +2029,9 @@
   (foreign-lambda bool MagickSetImageGamma
                   magickwand (const double)))
 
-;;(define magick-set-image-gravity
-;;  (foreign-lambda bool MagickSetImageGravity
-;;                  magickwand (const gravity)))
+(define magick-set-image-gravity
+ (foreign-lambda bool MagickSetImageGravity
+                 magickwand (const gravity)))
 
 (define magick-set-image-green-primary
   (foreign-lambda bool MagickSetImageGreenPrimary
@@ -2964,9 +2964,9 @@
   (foreign-lambda void DrawSetFontWeight
                   drawingwand (const size_t)))
 
-;;(define draw-set-gravity
-;;  (foreign-lambda void DrawSetGravity
-;;                  drawingwand (const gravity)))
+(define draw-set-gravity
+ (foreign-lambda void DrawSetGravity
+                 drawingwand (const gravity)))
 
 (define draw-set-stroke-color
   (foreign-lambda void DrawSetStrokeColor
