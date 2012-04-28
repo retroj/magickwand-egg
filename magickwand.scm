@@ -420,7 +420,7 @@
   ((BackgroundDispose) BackgroundDispose)
   ((PreviousDispose) PreviousDispose))
 
-(define-foreign-enum-type (renderingintent (enum RenderingIntent))
+(define-foreign-enum-type (renderingintent int)
   (renderingintent->int int->renderingintent)
   ((UndefinedIntent) UndefinedIntent)
   ((SaturationIntent) SaturationIntent)
@@ -2077,9 +2077,9 @@
   (foreign-lambda bool MagickSetImageRedPrimary
                   magickwand (const double) (const double)))
 
-;;(define magick-set-image-rendering-intent
-;;  (foreign-lambda bool MagickSetImageRenderingIntent
-;;                  magickwand (const renderingintent)))
+(define magick-set-image-rendering-intent
+ (foreign-lambda bool MagickSetImageRenderingIntent
+                 magickwand (const renderingintent)))
 
 (define magick-set-image-resolution
   (foreign-lambda bool MagickSetImageResolution
