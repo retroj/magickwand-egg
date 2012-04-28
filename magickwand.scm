@@ -265,7 +265,7 @@
   ((MosaicLayer) MosaicLayer)
   ((TrimBoundsLayer) TrimBoundsLayer))
 
-(define-foreign-enum-type (compositeoperator (enum CompositeOperator))
+(define-foreign-enum-type (compositeoperator int)
   (compositeoperator->int int->compositeoperator)
   ((UndefinedCompositeOp) UndefinedCompositeOp)
   ((NoCompositeOp) NoCompositeOp)
@@ -1265,23 +1265,23 @@
                  magickwand (const magickwand)
                  (const metrictype) (c-pointer double)))
 
-;;(define magick-composite-image
-;;  (foreign-lambda bool MagickCompositeImage
-;;                  magickwand (const magickwand)
-;;                  (const compositeoperator)
-;;                  (const ssize_t) (const ssize_t)))
+(define magick-composite-image
+ (foreign-lambda bool MagickCompositeImage
+                 magickwand (const magickwand)
+                 (const compositeoperator)
+                 (const ssize_t) (const ssize_t)))
 
-;;(define magick-composite-image-channel
-;;  (foreign-lambda bool MagickCompositeImageChannel
-;;                  magickwand (const channeltype) (const magickwand)
-;;                  (const compositeoperator)
-;;                  (const ssize_t) (const ssize_t)))
+(define magick-composite-image-channel
+ (foreign-lambda bool MagickCompositeImageChannel
+                 magickwand (const channeltype) (const magickwand)
+                 (const compositeoperator)
+                 (const ssize_t) (const ssize_t)))
 
-;;(define magick-composite-layers
-;;  (foreign-lambda bool MagickCompositeLayers
-;;                  magickwand (const magickwand)
-;;                  (const compositeoperator)
-;;                  (const ssize_t) (const ssize_t)))
+(define magick-composite-layers
+ (foreign-lambda bool MagickCompositeLayers
+                 magickwand (const magickwand)
+                 (const compositeoperator)
+                 (const ssize_t) (const ssize_t)))
 
 (define magick-contrast-image
   (foreign-lambda bool MagickContrastImage
@@ -1984,9 +1984,9 @@
  (foreign-lambda bool MagickSetImageColorspace
                  magickwand (const colorspace)))
 
-;;(define magick-set-image-compose
-;;  (foreign-lambda bool MagickSetImageCompose
-;;                  magickwand (const compositeoperator)))
+(define magick-set-image-compose
+ (foreign-lambda bool MagickSetImageCompose
+                 magickwand (const compositeoperator)))
 
 (define magick-set-image-compression
  (foreign-lambda bool MagickSetImageCompression
@@ -2607,12 +2607,12 @@
 (define draw-clear-exception
   (foreign-lambda bool DrawClearException drawingwand))
 
-;;(define draw-composite
-;;  (foreign-lambda bool DrawComposite
-;;                  drawingwand (const compositeoperator)
-;;                  (const double) (const double)
-;;                  (const double) (const double)
-;;                  magickwand))
+(define draw-composite
+ (foreign-lambda bool DrawComposite
+                 drawingwand (const compositeoperator)
+                 (const double) (const double)
+                 (const double) (const double)
+                 magickwand))
 
 ;;(define draw-color
 ;;  (foreign-lambda void DrawColor
