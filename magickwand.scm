@@ -101,7 +101,7 @@
   ((SouthEastGravity) SouthEastGravity)
   ((StaticGravity) StaticGravity))
 
-(define-foreign-enum-type (interlacetype (enum InterlaceType))
+(define-foreign-enum-type (interlacetype int)
   (interlacetype->int int->interlacetype)
   ((UndefinedInterlace) UndefinedInterlace)
   ((NoInterlace) NoInterlace)
@@ -1044,8 +1044,8 @@
   (foreign-lambda bool MagickSetImageProperty
                   magickwand (const c-string) (const c-string)))
 
-;;(define magick-set-interlace-scheme
-;;  (foreign-lambda bool MagickSetInterlaceScheme magickwand (const interlacetype)))
+(define magick-set-interlace-scheme
+  (foreign-lambda bool MagickSetInterlaceScheme magickwand (const interlacetype)))
 
 ;;(define magick-set-interpolate-method
 ;;  (foreign-lambda bool MagickSetInterpolateMethod magickwand (const interpolatepixelmethod)))
@@ -2037,9 +2037,9 @@
   (foreign-lambda bool MagickSetImageGreenPrimary
                   magickwand (const double) (const double)))
 
-;;(define magick-set-image-interlace-scheme
-;;  (foreign-lambda bool MagickSetImageInterlaceScheme
-;;                  magickwand (const interlacetype)))
+(define magick-set-image-interlace-scheme
+ (foreign-lambda bool MagickSetImageInterlaceScheme
+                 magickwand (const interlacetype)))
 
 ;;(define magick-set-image-interpolate-method
 ;;  (foreign-lambda bool MagickSetImageInterpolateMethod
