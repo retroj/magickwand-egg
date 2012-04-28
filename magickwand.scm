@@ -796,7 +796,7 @@
   (double (measure_of_correlation_2 4) channelfeatures-measure_of_correlation_2)
   (double (maximum_correlation_coefficient 4) channelfeatures-maximum_correlation_coefficient))
 
-(define-foreign-record-type ChannelStatistics
+(define-foreign-record-type (channelstatistics ChannelStatistics)
   (size_t depth channelstatistics-depth)
   (double minima channelstatistics-minima)
   (double maxima channelstatistics-maxima)
@@ -1600,7 +1600,7 @@
                  (c-pointer double) (c-pointer double)))
 
 (define magick-get-image-channel-statistics
-  (foreign-lambda ChannelStatistics MagickGetImageChannelStatistics magickwand))
+  (foreign-lambda channelstatistics MagickGetImageChannelStatistics magickwand))
 
 (define magick-get-image-colormap-color
   (foreign-lambda bool MagickGetImageColormapColor
