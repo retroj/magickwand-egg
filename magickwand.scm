@@ -3113,8 +3113,10 @@
                 wv (location typeout))))
       (values str (int->exceptiontype typeout)))))
 
-;;(define get-wand-view-extent
-;;  (foreign-lambda RectangleInfo GetWandViewExtent (const wandview)))
+(define get-wand-view-extent
+  (foreign-lambda* rectangleinfo (((const wandview) w))
+    "RectangleInfo r = GetWandViewExtent(w);"
+    "C_return(&r);"))
 
 ;;(define get-wand-view-iterator
 ;;  (foreign-lambda bool GetWandViewIterator
