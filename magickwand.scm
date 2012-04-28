@@ -428,7 +428,7 @@
   ((AbsoluteIntent) AbsoluteIntent)
   ((RelativeIntent) RelativeIntent))
 
-(define-foreign-enum-type (resolutiontype (enum ResolutionType))
+(define-foreign-enum-type (resolutiontype int)
   (resolutiontype->int int->resolutiontype)
   ((UndefinedResolution) UndefinedResolution)
   ((PixelsPerInchResolution) PixelsPerInchResolution)
@@ -2096,9 +2096,9 @@
 (define magick-set-image-type
  (foreign-lambda bool MagickSetImageType magickwand (const imagetype)))
 
-;;(define magick-set-image-units
-;;  (foreign-lambda bool MagickSetImageUnits
-;;                  magickwand (const resolutiontype)))
+(define magick-set-image-units
+ (foreign-lambda bool MagickSetImageUnits
+                 magickwand (const resolutiontype)))
 
 ;;(define magick-set-image-virtual-pixel-method
 ;;  (foreign-lambda virtualpixelmethod MagickSetImageVirtualPixelMethod
