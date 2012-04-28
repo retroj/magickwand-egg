@@ -780,7 +780,7 @@
   ((c-pointer kernelinfo) next kernelinfo-next)
   (size_t signature kernelinfo-signature))
 
-(define-foreign-record-type ChannelFeatures
+(define-foreign-record-type (channelfeatures ChannelFeatures)
   (double (angular_second_moment 4) channelfeatures-angular_second_moment)
   (double (contrast 4) channelfeatures-contrast)
   (double (correlation 4) channelfeatures-correlation)
@@ -1581,7 +1581,7 @@
                  magickwand (const magickwand) (const metrictype)))
 
 (define magick-get-image-channel-features
-  (foreign-lambda ChannelFeatures MagickGetImageChannelFeatures
+  (foreign-lambda channelfeatures MagickGetImageChannelFeatures
                   magickwand (const size_t)))
 
 (define magick-get-image-channel-kurtosis
