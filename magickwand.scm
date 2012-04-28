@@ -853,6 +853,17 @@
   (double y pointinfo-y))
 
 
+(define-syntax define-magick-image-op
+  (syntax-rules ()
+    ((define-magick-image-op (scheme-name object . rest)
+                             (c-name . c-args))
+     (define (scheme-name object . rest)
+       (unless ((foreign-lambda bool c-name . c-args)
+                object . rest)
+         (abort (magick-get-exception object))
+         #t)))))
+
+
 ;;;
 ;;; MagickWand methods
 ;;;
@@ -1963,12 +1974,8 @@
                   magickwand (const channeltype)
                   (const double) (const double)))
 
-(define (magick-read-image wand filename)
-  (unless ((foreign-lambda bool MagickReadImage
-                           magickwand (const c-string))
-           wand filename)
-    (abort (magick-get-exception wand)))
-  #t)
+(define-magick-image-op (magick-read-image wand filename)
+  (MagickReadImage magickwand (const c-string)))
 
 (define magick-read-image-blob
   (foreign-lambda bool MagickReadImageBlob
@@ -2370,23 +2377,15 @@
   (foreign-lambda bool MagickWhiteThresholdImage
                   magickwand (const pixelwand)))
 
-(define (magick-write-image wand filename)
-  (unless ((foreign-lambda bool MagickWriteImage
-                           magickwand (const c-string))
-           wand filename)
-    (abort (magick-get-exception wand)))
-  #t)
+(define-magick-image-op (magick-write-image wand filename)
+  (MagickWriteImage magickwand (const c-string)))
 
 ;;(define magick-write-image-file
 ;;  (foreign-lambda bool MagickWriteImageFile
 ;;                  magickwand (c-pointer FILE)))
 
-(define (magick-write-images wand filename adjoin)
-  (unless ((foreign-lambda bool MagickWriteImages
-                           magickwand (const c-string) (const bool))
-           wand filename adjoin)
-    (abort (magick-get-exception wand)))
-  #t)
+(define-magick-image-op (magick-write-images wand filename adjoin)
+  (MagickWriteImages magickwand (const c-string) (const bool)))
 
 ;;(define magick-write-images-file
 ;;  (foreign-lambda bool MagickWriteImagesFile
