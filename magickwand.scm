@@ -2953,20 +2953,20 @@
                   drawingwand (const double)))
 
 (define draw-set-font-stretch
- (foreign-lambda void DrawSetFontStretch
-                 drawingwand (const stretchtype)))
+  (foreign-lambda void DrawSetFontStretch
+                  drawingwand (const stretchtype)))
 
 (define draw-set-font-style
- (foreign-lambda void DrawSetFontStyle
-                 drawingwand (const styletype)))
+  (foreign-lambda void DrawSetFontStyle
+                  drawingwand (const styletype)))
 
 (define draw-set-font-weight
   (foreign-lambda void DrawSetFontWeight
                   drawingwand (const size_t)))
 
 (define draw-set-gravity
- (foreign-lambda void DrawSetGravity
-                 drawingwand (const gravity)))
+  (foreign-lambda void DrawSetGravity
+                  drawingwand (const gravity)))
 
 (define draw-set-stroke-color
   (foreign-lambda void DrawSetStrokeColor
@@ -2977,8 +2977,8 @@
                   drawingwand (const c-string)))
 
 (define draw-set-stroke-antialias
- (foreign-lambda void DrawSetStrokeAntialias
-                 drawingwand (const bool)))
+  (foreign-lambda void DrawSetStrokeAntialias
+                  drawingwand (const bool)))
 
 (define draw-set-stroke-dash-array
   (foreign-lambda bool DrawSetStrokeDashArray
@@ -2990,8 +2990,8 @@
                   drawingwand (const double)))
 
 (define draw-set-stroke-line-cap
- (foreign-lambda void DrawSetStrokeLineCap
-                 drawingwand (const linecap)))
+  (foreign-lambda void DrawSetStrokeLineCap
+                  drawingwand (const linecap)))
 
 (define draw-set-stroke-line-join
   (foreign-lambda void DrawSetStrokeLineJoin
