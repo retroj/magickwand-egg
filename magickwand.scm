@@ -572,7 +572,7 @@
   ((ShapeAlphaChannel) ShapeAlphaChannel)
   ((TransparentAlphaChannel) TransparentAlphaChannel))
 
-(define-foreign-enum-type (sparsecolormethod (enum SparseColorMethod))
+(define-foreign-enum-type (sparsecolormethod int)
   (sparsecolormethod->int int->sparsecolormethod)
   ((UndefinedColorInterpolate) UndefinedColorInterpolate)
   ((BarycentricColorInterpolate) BarycentricColorInterpolate)
@@ -2163,10 +2163,10 @@
   (foreign-lambda bool MagickSolarizeImage
                   magickwand (const double)))
 
-;;(define magick-sparse-color-image
-;;  (foreign-lambda bool MagickSparseColorImage
-;;                  magickwand (const channeltype) (const sparsecolormethod)
-;;                  (const size_t) (const (c-pointer double))))
+(define magick-sparse-color-image
+ (foreign-lambda bool MagickSparseColorImage
+                 magickwand (const channeltype) (const sparsecolormethod)
+                 (const size_t) (const (c-pointer double))))
 
 (define magick-splice-image
   (foreign-lambda bool MagickSpliceImage
