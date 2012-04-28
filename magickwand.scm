@@ -462,7 +462,7 @@
   ((UnframeMode) UnframeMode)
   ((ConcatenateMode) ConcatenateMode))
 
-(define-foreign-enum-type (morphologymethod (enum MorphologyMethod))
+(define-foreign-enum-type (morphologymethod int)
   (morphologymethod->int int->morphologymethod)
   ((UndefinedMorphology) UndefinedMorphology)
   ((ConvolveMorphology) ConvolveMorphology)
