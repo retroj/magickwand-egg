@@ -487,7 +487,7 @@
   ((ThickenMorphology) ThickenMorphology)
   ((VoronoiMorphology) VoronoiMorphology))
 
-(define-foreign-enum-type (previewtype (enum PreviewType))
+(define-foreign-enum-type (previewtype int)
   (previewtype->int int->previewtype)
   ((UndefinedPreview) UndefinedPreview)
   ((RotatePreview) RotatePreview)
@@ -1828,9 +1828,9 @@
  (foreign-lambda bool MagickPosterizeImage
                  magickwand (const size_t) (const bool)))
 
-;;(define magick-preview-images
-;;  (foreign-lambda magickwand MagickPreviewImages
-;;                  magickwand (const previewtype)))
+(define magick-preview-images
+ (foreign-lambda magickwand MagickPreviewImages
+                 magickwand (const previewtype)))
 
 (define magick-previous-image
   (foreign-lambda bool MagickPreviousImage magickwand))
