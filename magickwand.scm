@@ -644,7 +644,7 @@
   ((ObliqueStyle) ObliqueStyle)
   ((AnyStyle) AnyStyle))
 
-(define-foreign-enum-type (linecap (enum LineCap))
+(define-foreign-enum-type (linecap int)
   (linecap->int int->linecap)
   ((UndefinedCap) UndefinedCap)
   ((ButtCap) ButtCap)
@@ -2989,9 +2989,9 @@
   (foreign-lambda void DrawSetStrokeDashOffset
                   drawingwand (const double)))
 
-;;(define draw-set-stroke-line-cap
-;;  (foreign-lambda void DrawSetStrokeLineCap
-;;                  drawingwand (const linecap)))
+(define draw-set-stroke-line-cap
+ (foreign-lambda void DrawSetStrokeLineCap
+                 drawingwand (const linecap)))
 
 ;;(define draw-set-stroke-line-join
 ;;  (foreign-lambda void DrawSetStrokeLineJoin
