@@ -52,31 +52,14 @@
   WandFatalError RandomFatalError XServerFatalError MonitorFatalError
   RegistryFatalError ConfigureFatalError PolicyFatalError)
 
-(define-foreign-enum-type (colorspace (enum ColorspaceType))
+(define-foreign-enum-type (colorspace int)
   (colorspace->int int->colorspace)
-  ((UndefinedColorspace) UndefinedColorspace)
-  ((RGBColorspace) RGBColorspace)
-  ((GRAYColorspace) GRAYColorspace)
-  ((TransparentColorspace) TransparentColorspace)
-  ((OHTAColorspace) OHTAColorspace)
-  ((LabColorspace) LabColorspace)
-  ((XYZColorspace) XYZColorspace)
-  ((YCbCrColorspace) YCbCrColorspace)
-  ((YCCColorspace) YCCColorspace)
-  ((YIQColorspace) YIQColorspace)
-  ((YPbPrColorspace) YPbPrColorspace)
-  ((YUVColorspace) YUVColorspace)
-  ((CMYKColorspace) CMYKColorspace)
-  ((sRGBColorspace) sRGBColorspace)
-  ((HSBColorspace) HSBColorspace)
-  ((HSLColorspace) HSLColorspace)
-  ((HWBColorspace) HWBColorspace)
-  ((Rec601LumaColorspace) Rec601LumaColorspace)
-  ((Rec601YCbCrColorspace) Rec601YCbCrColorspace)
-  ((Rec709LumaColorspace) Rec709LumaColorspace)
-  ((Rec709YCbCrColorspace) Rec709YCbCrColorspace)
-  ((LogColorspace) LogColorspace)
-  ((CMYColorspace) CMYColorspace))
+  UndefinedColorspace RGBColorspace GRAYColorspace TransparentColorspace
+  OHTAColorspace LabColorspace XYZColorspace YCbCrColorspace YCCColorspace
+  YIQColorspace YPbPrColorspace YUVColorspace CMYKColorspace sRGBColorspace
+  HSBColorspace HSLColorspace HWBColorspace Rec601LumaColorspace
+  Rec601YCbCrColorspace Rec709LumaColorspace Rec709YCbCrColorspace
+  LogColorspace CMYColorspace)
 
 (define-foreign-enum-type (compressiontype (enum CompressionType))
   (compressiontype->int int->compressiontype)
@@ -1022,8 +1005,8 @@
 (define magick-set-background-color
   (foreign-lambda bool MagickSetBackgroundColor magickwand (const pixelwand)))
 
-;;(define magick-set-colorspace
-;;  (foreign-lambda bool MagickSetColorspace magickwand (const colorspace)))
+(define magick-set-colorspace
+  (foreign-lambda bool MagickSetColorspace magickwand (const colorspace)))
 
 ;;(define magick-set-compression
 ;;  (foreign-lambda bool MagickSetCompression magickwand (const compressiontype)))
@@ -1853,17 +1836,17 @@
 (define magick-previous-image
   (foreign-lambda bool MagickPreviousImage magickwand))
 
-;;(define magick-quantize-image
-;;  (foreign-lambda bool MagickQuantizeImage
-;;                  magickwand (const size_t) (const colorspace)
-;;                  (const size_t) (const bool)
-;;                  (const bool)))
+(define magick-quantize-image
+ (foreign-lambda bool MagickQuantizeImage
+                 magickwand (const size_t) (const colorspace)
+                 (const size_t) (const bool)
+                 (const bool)))
 
-;;(define magick-quantize-images
-;;  (foreign-lambda bool MagickQuantizeImages
-;;                  magickwand (const size_t) (const colorspace)
-;;                  (const size_t) (const bool)
-;;                  (const bool)))
+(define magick-quantize-images
+ (foreign-lambda bool MagickQuantizeImages
+                 magickwand (const size_t) (const colorspace)
+                 (const size_t) (const bool)
+                 (const bool)))
 
 (define magick-radial-blur-image
   (foreign-lambda bool MagickRadialBlurImage
@@ -1936,10 +1919,10 @@
   (foreign-lambda bool MagickScaleImage
                   magickwand (const size_t) (const size_t)))
 
-;;(define magick-segment-image
-;;  (foreign-lambda bool MagickSegmentImage
-;;                  magickwand (const colorspace) (const bool)
-;;                  (const double) (const double)))
+(define magick-segment-image
+ (foreign-lambda bool MagickSegmentImage
+                 magickwand (const colorspace) (const bool)
+                 (const double) (const double)))
 
 (define magick-selective-blur-image
   (foreign-lambda bool MagickSelectiveBlurImage
@@ -1998,9 +1981,9 @@
   (foreign-lambda bool MagickSetImageColormapColor
                   magickwand (const size_t) (const pixelwand)))
 
-;;(define magick-set-image-colorspace
-;;  (foreign-lambda bool MagickSetImageColorspace
-;;                  magickwand (const colorspace)))
+(define magick-set-image-colorspace
+ (foreign-lambda bool MagickSetImageColorspace
+                 magickwand (const colorspace)))
 
 ;;(define magick-set-image-compose
 ;;  (foreign-lambda bool MagickSetImageCompose
@@ -2245,9 +2228,9 @@
   (foreign-lambda magickwand MagickTransformImage
                   magickwand (const c-string) (const c-string)))
 
-;;(define magick-transform-image-colorspace
-;;  (foreign-lambda bool MagickTransformImageColorspace
-;;                  magickwand (const colorspace)))
+(define magick-transform-image-colorspace
+ (foreign-lambda bool MagickTransformImageColorspace
+                 magickwand (const colorspace)))
 
 (define magick-transparent-paint-image
  (foreign-lambda bool MagickTransparentPaintImage
