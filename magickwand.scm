@@ -3010,12 +3010,12 @@
                   drawingwand (const double)))
 
 (define draw-set-text-alignment
- (foreign-lambda void DrawSetTextAlignment
-                 drawingwand (const aligntype)))
+  (foreign-lambda void DrawSetTextAlignment
+                  drawingwand (const aligntype)))
 
 (define draw-set-text-antialias
- (foreign-lambda void DrawSetTextAntialias
-                 drawingwand (const bool)))
+  (foreign-lambda void DrawSetTextAntialias
+                  drawingwand (const bool)))
 
 (define draw-set-text-decoration
   (foreign-lambda void DrawSetTextDecoration
