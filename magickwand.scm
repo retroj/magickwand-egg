@@ -1068,8 +1068,16 @@
 (define magick-get-type
   (foreign-lambda imagetype MagickGetType magickwand))
 
-(define magick-get-version
-  (foreign-lambda c-string MagickGetVersion (c-pointer size_t)))
+(define (magick-get-version)
+  (let-location ((ignored size_t))
+    ((foreign-lambda c-string MagickGetVersion (c-pointer size_t))
+     (location ignored))))
+
+(define (magick-get-version-as-number)
+  (let-location ((version size_t))
+    ((foreign-lambda c-string MagickGetVersion (c-pointer size_t))
+     (location version))
+    version))
 
 (define magick-profile-image
   (foreign-lambda bool MagickProfileImage
