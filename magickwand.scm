@@ -181,7 +181,7 @@
   ((SyncChannels) SyncChannels)
   ((DefaultChannels) DefaultChannels))
 
-(define-foreign-enum-type (noisetype (enum NoiseType))
+(define-foreign-enum-type (noisetype int)
   (noisetype->int int->noisetype)
   ((UndefinedNoise) UndefinedNoise)
   ((UniformNoise) UniformNoise)
@@ -1133,13 +1133,13 @@
   (foreign-lambda bool MagickAddImage
                   magickwand (const magickwand)))
 
-;;(define magick-add-noise-image
-;;  (foreign-lambda bool MagickAddNoiseImage
-;;                  magickwand (const noisetype)))
+(define magick-add-noise-image
+ (foreign-lambda bool MagickAddNoiseImage
+                 magickwand (const noisetype)))
 
-;;(define magick-add-noise-image-channel
-;;  (foreign-lambda bool MagickAddNoiseImageChannel
-;;                  magickwand (const channeltype) (const noisetype)))
+(define magick-add-noise-image-channel
+ (foreign-lambda bool MagickAddNoiseImageChannel
+                 magickwand (const channeltype) (const noisetype)))
 
 (define magick-affine-transform-image
   (foreign-lambda bool MagickAffineTransformImage
