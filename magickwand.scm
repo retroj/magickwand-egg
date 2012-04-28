@@ -1479,13 +1479,13 @@
                   magickwand (const size_t) (const size_t)
                   (const ssize_t) (const ssize_t)))
 
-;;(define magick-filter-image
-;;  (foreign-lambda bool MagickFilterImage
-;;                  magickwand (const kernelinfo)))
+(define magick-filter-image
+  (foreign-lambda bool MagickFilterImage
+                  magickwand (const kernelinfo)))
 
-;;(define magick-filter-image-channel
-;;  (foreign-lambda bool MagickFilterImageChannel
-;;                  magickwand (const channeltype) (const kernelinfo)))
+(define magick-filter-image-channel
+  (foreign-lambda bool MagickFilterImageChannel
+                  magickwand (const channeltype) (const kernelinfo)))
 
 (define magick-flip-image
   (foreign-lambda bool MagickFlipImage magickwand))
