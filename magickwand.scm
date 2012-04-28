@@ -840,7 +840,7 @@
 
 (define-foreign-type wandview (c-pointer (struct _WandView)))
 
-(define-foreign-record-type AffineMatrix
+(define-foreign-record-type (affinematrix AffineMatrix)
   (double sx affinematrix-sx)
   (double rx affinematrix-rx)
   (double ry affinematrix-ry)
@@ -2662,8 +2662,8 @@
 (define destroy-drawing-wand
   (foreign-lambda drawingwand DestroyDrawingWand drawingwand))
 
-;;(define draw-affine
-;;  (foreign-lambda void DrawAffine drawingwand (const AffineMatrix)))
+(define draw-affine
+  (foreign-lambda void DrawAffine drawingwand (const affinematrix)))
 
 (define draw-annotation
   (foreign-lambda void DrawAnnotation
