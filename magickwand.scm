@@ -600,7 +600,7 @@
   ((DirectClass) DirectClass)
   ((PseudoClass) PseudoClass))
 
-(define-foreign-enum-type (paintmethod (enum PaintMethod))
+(define-foreign-enum-type (paintmethod int)
   (paintmethod->int int->paintmethod)
   ((UndefinedMethod) UndefinedMethod)
   ((PointMethod) PointMethod)
@@ -2614,10 +2614,10 @@
                  (const double) (const double)
                  magickwand))
 
-;;(define draw-color
-;;  (foreign-lambda void DrawColor
-;;                  drawingwand (const double)
-;;                  (const double) (const paintmethod)))
+(define draw-color
+ (foreign-lambda void DrawColor
+                 drawingwand (const double)
+                 (const double) (const paintmethod)))
 
 (define draw-comment
   (foreign-lambda void DrawComment drawingwand (const c-string)))
@@ -2749,10 +2749,10 @@
                   drawingwand (const double) (const double)
                   (const double) (const double)))
 
-;;(define draw-matte
-;;  (foreign-lambda void DrawMatte
-;;                  drawingwand (const double) (const double)
-;;                  (const paintmethod)))
+(define draw-matte
+ (foreign-lambda void DrawMatte
+                 drawingwand (const double) (const double)
+                 (const paintmethod)))
 
 (define draw-path-close
   (foreign-lambda void DrawPathClose drawingwand))
