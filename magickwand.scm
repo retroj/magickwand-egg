@@ -412,7 +412,7 @@
   ((ArcsinFunction) ArcsinFunction)
   ((ArctanFunction) ArctanFunction))
 
-(define-foreign-enum-type (disposetype (enum DisposeType))
+(define-foreign-enum-type (disposetype int)
   (disposetype-> int->disposetype)
   ((UnrecognizedDispose) UnrecognizedDispose)
   ((UndefinedDispose) UndefinedDispose)
@@ -2004,9 +2004,9 @@
   (foreign-lambda bool MagickSetImageDepth
                   magickwand (const size_t)))
 
-;;(define magick-set-image-dispose
-;;  (foreign-lambda bool MagickSetImageDispose
-;;                  magickwand (const disposetype)))
+(define magick-set-image-dispose
+ (foreign-lambda bool MagickSetImageDispose
+                 magickwand (const disposetype)))
 
 (define magick-set-image-extent
   (foreign-lambda bool MagickSetImageExtent
