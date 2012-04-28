@@ -615,7 +615,7 @@
   ((EvenOddRule) EvenOddRule)
   ((NonZeroRule) NonZeroRule))
 
-(define-foreign-enum-type (clippathunits (enum ClipPathUnits))
+(define-foreign-enum-type (clippathunits int)
   (clippathunits->int int->clippathunits)
   ((UndefinedPathUnits) UndefinedPathUnits)
   ((UserSpace) UserSpace)
@@ -2914,9 +2914,9 @@
  (foreign-lambda void DrawSetClipRule
                  drawingwand (const fillrule)))
 
-;;(define draw-set-clip-units
-;;  (foreign-lambda void DrawSetClipUnits
-;;                  drawingwand (const clippathunits)))
+(define draw-set-clip-units
+ (foreign-lambda void DrawSetClipUnits
+                 drawingwand (const clippathunits)))
 
 (define draw-set-fill-color
   (foreign-lambda void DrawSetFillColor
