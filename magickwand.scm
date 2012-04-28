@@ -609,7 +609,7 @@
   ((FillToBorderMethod) FillToBorderMethod)
   ((ResetMethod) ResetMethod))
 
-(define-foreign-enum-type (fillrule (enum FillRule))
+(define-foreign-enum-type (fillrule int)
   (fillrule->int int->fillrule)
   ((UndefinedRule) UndefinedRule)
   ((EvenOddRule) EvenOddRule)
@@ -2910,9 +2910,9 @@
   (foreign-lambda bool DrawSetClipPath
                   drawingwand (const c-string)))
 
-;;(define draw-set-clip-rule
-;;  (foreign-lambda void DrawSetClipRule
-;;                  drawingwand (const fillrule)))
+(define draw-set-clip-rule
+ (foreign-lambda void DrawSetClipRule
+                 drawingwand (const fillrule)))
 
 ;;(define draw-set-clip-units
 ;;  (foreign-lambda void DrawSetClipUnits
@@ -2937,8 +2937,8 @@
   (foreign-lambda bool DrawSetFillPatternURL
                   drawingwand (const c-string)))
 
-;;(define draw-set-fill-rule
-;;  (foreign-lambda void DrawSetFillRule drawingwand (const fillrule)))
+(define draw-set-fill-rule
+  (foreign-lambda void DrawSetFillRule drawingwand (const fillrule)))
 
 (define draw-set-font
   (foreign-lambda bool DrawSetFont
