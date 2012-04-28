@@ -527,7 +527,7 @@
   ((RiemersmaDitherMethod) RiemersmaDitherMethod)
   ((FloydSteinbergDitherMethod) FloydSteinbergDitherMethod))
 
-(define-foreign-enum-type (filtertypes (enum FilterTypes))
+(define-foreign-enum-type (filtertypes int)
   (filtertypes->int int->filtertypes)
   ((UndefinedFilter) UndefinedFilter)
   ((PointFilter) PointFilter)
@@ -1888,19 +1888,19 @@
 (define magick-remove-image
   (foreign-lambda bool MagickRemoveImage magickwand))
 
-;;(define magick-resample-image
-;;  (foreign-lambda bool MagickResampleImage
-;;                  magickwand (const double) (const double)
-;;                  (const filtertypes) (const double)))
+(define magick-resample-image
+ (foreign-lambda bool MagickResampleImage
+                 magickwand (const double) (const double)
+                 (const filtertypes) (const double)))
 
 (define magick-reset-image-page
   (foreign-lambda bool MagickResetImagePage
                   magickwand (const c-string)))
 
-;;(define magick-resize-image
-;;  (foreign-lambda bool MagickResizeImage
-;;                  magickwand (const size_t) (const size_t)
-;;                  (const filtertypes) (const double)))
+(define magick-resize-image
+ (foreign-lambda bool MagickResizeImage
+                 magickwand (const size_t) (const size_t)
+                 (const filtertypes) (const double)))
 
 (define magick-roll-image
   (foreign-lambda bool MagickRollImage
