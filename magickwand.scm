@@ -732,7 +732,7 @@
   (double kurtosis channelstatistics-kurtosis)
   (double skewness channelstatistics-skewness))
 
-(define-foreign-record-type RectangleInfo
+(define-foreign-record-type (rectangleinfo RectangleInfo)
   (size_t width rectangleinfo-width)
   (size_t height rectangleinfo-height)
   (ssize_t x rectangleinfo-x)
@@ -2146,10 +2146,10 @@
                  magickwand (const channeltype) (const bool)
                  (const double) (const double)))
 
-;;(define magick-similarity-image
-;;  (foreign-lambda magickwand MagickSimilarityImage
-;;                  magickwand (const magickwand) RectangleInfo
-;;                  (c-pointer double)))
+(define magick-similarity-image
+  (foreign-lambda magickwand MagickSimilarityImage
+                  magickwand (const magickwand) rectangleinfo
+                  (c-pointer double)))
 
 (define magick-sketch-image
   (foreign-lambda bool MagickSketchImage
