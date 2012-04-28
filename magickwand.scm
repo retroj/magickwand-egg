@@ -658,7 +658,7 @@
   ((RoundJoin) RoundJoin)
   ((BevelJoin) BevelJoin))
 
-(define-foreign-enum-type (aligntype (enum AlignType))
+(define-foreign-enum-type (aligntype int)
   (aligntype->int int->aligntype)
   ((UndefinedAlign) UndefinedAlign)
   ((LeftAlign) LeftAlign)
@@ -3009,9 +3009,9 @@
   (foreign-lambda void DrawSetStrokeWidth
                   drawingwand (const double)))
 
-;;(define draw-set-text-alignment
-;;  (foreign-lambda void DrawSetTextAlignment
-;;                  drawingwand (const aligntype)))
+(define draw-set-text-alignment
+ (foreign-lambda void DrawSetTextAlignment
+                 drawingwand (const aligntype)))
 
 (define draw-set-text-antialias
  (foreign-lambda void DrawSetTextAntialias
