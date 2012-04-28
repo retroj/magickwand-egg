@@ -818,17 +818,17 @@
 
 (define-foreign-type magickrealtype double)
 
-;;(define-foreign-record-type MagickPixelPacket
-;;  (classtype storage_class magickpixelpacket-storage_class)
-;;  (colorspace colorspace magickpixelpacket-colorspace)
-;;  (bool matte magickpixelpacket-matte)
-;;  (double fuzz magickpixelpacket-fuzz)
-;;  (size_t depth magickpixelpacket-depth)
-;;  (magickrealtype red magickpixelpacket-red)
-;;  (magickrealtype green magickpixelpacket-green)
-;;  (magickrealtype blue magickpixelpacket-blue)
-;;  (magickrealtype opacity magickpixelpacket-opacity)
-;;  (magickrealtype index magickpixelpacket-index))
+(define-foreign-record-type (magickpixelpacket MagickPixelPacket)
+  (classtype storage_class magickpixelpacket-storage_class)
+  (colorspace colorspace magickpixelpacket-colorspace)
+  (bool matte magickpixelpacket-matte)
+  (double fuzz magickpixelpacket-fuzz)
+  (size_t depth magickpixelpacket-depth)
+  (magickrealtype red magickpixelpacket-red)
+  (magickrealtype green magickpixelpacket-green)
+  (magickrealtype blue magickpixelpacket-blue)
+  (magickrealtype opacity magickpixelpacket-opacity)
+  (magickrealtype index magickpixelpacket-index))
 
 ;;XXX: would be nice to have a complete definition here
 (define-foreign-type pixelpacket (c-pointer (struct _PixelPacket)))
@@ -2543,9 +2543,9 @@
 ;;(define pixel-get-magenta-quantum
 ;;  (foreign-lambda quantum PixelGetMagentaQuantum (const pixelwand)))
 
-;;(define pixel-get-magick-color
-;;  (foreign-lambda void PixelGetMagickColor
-;;                  pixelwand magickpixelpacket))
+(define pixel-get-magick-color
+  (foreign-lambda void PixelGetMagickColor
+                  pixelwand magickpixelpacket))
 
 (define pixel-get-opacity
   (foreign-lambda double PixelGetOpacity (const pixelwand)))
@@ -2623,8 +2623,8 @@
 ;;(define pixel-set-magenta-quantum
 ;;  (foreign-lambda void PixelSetMagentaQuantum pixelwand (const quantum)))
 
-;;(define pixel-set-magick-color
-;;  (foreign-lambda void PixelSetMagickColor pixelwand (const magickpixelpacket)))
+(define pixel-set-magick-color
+  (foreign-lambda void PixelSetMagickColor pixelwand (const magickpixelpacket)))
 
 (define pixel-set-opacity
   (foreign-lambda void PixelSetOpacity pixelwand (const double)))
