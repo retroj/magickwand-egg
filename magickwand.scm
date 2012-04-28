@@ -61,7 +61,7 @@
   Rec601YCbCrColorspace Rec709LumaColorspace Rec709YCbCrColorspace
   LogColorspace CMYColorspace)
 
-(define-foreign-enum-type (compressiontype (enum CompressionType))
+(define-foreign-enum-type (compressiontype int)
   (compressiontype->int int->compressiontype)
   ((UndefinedCompression) UndefinedCompression)
   ((NoCompression) NoCompression)
@@ -1008,8 +1008,8 @@
 (define magick-set-colorspace
   (foreign-lambda bool MagickSetColorspace magickwand (const colorspace)))
 
-;;(define magick-set-compression
-;;  (foreign-lambda bool MagickSetCompression magickwand (const compressiontype)))
+(define magick-set-compression
+  (foreign-lambda bool MagickSetCompression magickwand (const compressiontype)))
 
 (define magick-set-compression-quality
   (foreign-lambda bool MagickSetCompressionQuality magickwand (const size_t)))
@@ -1989,9 +1989,9 @@
 ;;  (foreign-lambda bool MagickSetImageCompose
 ;;                  magickwand (const compositeoperator)))
 
-;;(define magick-set-image-compression
-;;  (foreign-lambda bool MagickSetImageCompression
-;;                  magickwand (const compressiontype)))
+(define magick-set-image-compression
+ (foreign-lambda bool MagickSetImageCompression
+                 magickwand (const compressiontype)))
 
 (define magick-set-image-compression-quality
   (foreign-lambda bool MagickSetImageCompressionQuality
