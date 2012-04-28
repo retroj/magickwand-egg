@@ -848,7 +848,7 @@
   (double tx affinematrix-tx)
   (double ty affinematrix-ty))
 
-(define-foreign-record-type PointInfo
+(define-foreign-record-type (pointinfo PointInfo)
   (double x pointinfo-x)
   (double y pointinfo-y))
 
@@ -2676,9 +2676,9 @@
                   (const double) (const double)
                   (const double) (const double)))
 
-;;(define draw-bezier
-;;  (foreign-lambda void DrawBezier
-;;                  drawingwand (const size_t) (const PointInfo)))
+(define draw-bezier
+  (foreign-lambda void DrawBezier
+                  drawingwand (const size_t) (const pointinfo)))
 
 (define draw-circle
   (foreign-lambda void DrawCircle
@@ -2932,13 +2932,13 @@
   (foreign-lambda void DrawPoint
                   drawingwand (const double) (const double)))
 
-;;(define draw-polygon
-;;  (foreign-lambda void DrawPolygon
-;;                  drawingwand (const size_t) (const PointInfo)))
+(define draw-polygon
+  (foreign-lambda void DrawPolygon
+                  drawingwand (const size_t) (const pointinfo)))
 
-;;(define draw-polyline
-;;  (foreign-lambda void DrawPolyline
-;;                  drawingwand (const size_t) (const PointInfo)))
+(define draw-polyline
+  (foreign-lambda void DrawPolyline
+                  drawingwand (const size_t) (const pointinfo)))
 
 (define draw-pop-clip-path
   (foreign-lambda void DrawPopClipPath drawingwand))
