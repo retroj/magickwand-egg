@@ -124,7 +124,7 @@
   ((NearestNeighborInterpolatePixel) NearestNeighborInterpolatePixel)
   ((SplineInterpolatePixel) SplineInterpolatePixel))
 
-(define-foreign-enum-type (orientation (enum OrientationType))
+(define-foreign-enum-type (orientation int)
   (orientation->int int->orientation)
   ((UndefinedOrientation) UndefinedOrientation)
   ((TopLeftOrientation) TopLeftOrientation)
@@ -1054,9 +1054,9 @@
   (foreign-lambda bool MagickSetOption
                   magickwand (const c-string) (const c-string)))
 
-;;(define magick-set-orientation
-;;  (foreign-lambda bool MagickSetOrientation
-;;                  magickwand (const orientation)))
+(define magick-set-orientation
+ (foreign-lambda bool MagickSetOrientation
+                 magickwand (const orientation)))
 
 (define magick-set-page
   (foreign-lambda bool MagickSetPage
@@ -2061,9 +2061,9 @@
   (foreign-lambda bool MagickSetImageOpacity
                   magickwand (const double)))
 
-;;(define magick-set-image-orientation
-;;  (foreign-lambda bool MagickSetImageOrientation
-;;                  magickwand (const orientation)))
+(define magick-set-image-orientation
+ (foreign-lambda bool MagickSetImageOrientation
+                 magickwand (const orientation)))
 
 (define magick-set-image-page
   (foreign-lambda bool MagickSetImagePage
