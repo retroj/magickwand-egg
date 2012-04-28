@@ -336,7 +336,7 @@
   ((DarkenIntensityCompositeOp) DarkenIntensityCompositeOp)
   ((LightenIntensityCompositeOp) LightenIntensityCompositeOp))
 
-(define-foreign-enum-type (storagetype (enum StorageType))
+(define-foreign-enum-type (storagetype int)
   (storagetype->int int->storagetype)
   ((UndefinedPixel) UndefinedPixel)
   ((CharPixel) CharPixel)
@@ -1314,10 +1314,10 @@
   (foreign-lambda bool MagickCycleColormapImage
                   magickwand (const ssize_t)))
 
-;;(define magick-constitute-image
-;;  (foreign-lambda bool MagickConstituteImage
-;;                  magickwand (const size_t) (const size_t)
-;;                  (const c-string) (const storagetype) c-pointer))
+(define magick-constitute-image
+ (foreign-lambda bool MagickConstituteImage
+                 magickwand (const size_t) (const size_t)
+                 (const c-string) (const storagetype) c-pointer))
 
 (define magick-decipher-image
   (foreign-lambda bool MagickDecipherImage
@@ -1389,12 +1389,12 @@
 ;;                  (const magickevaluateoperator)
 ;;                  (const double)))
 
-;;(define magick-export-image-pixels
-;;  (foreign-lambda bool MagickExportImagePixels
-;;                  magickwand (const ssize_t) (const ssize_t)
-;;                  (const size_t) (const size_t)
-;;                  (const c-string) (const storagetype)
-;;                  c-pointer))
+(define magick-export-image-pixels
+ (foreign-lambda bool MagickExportImagePixels
+                 magickwand (const ssize_t) (const ssize_t)
+                 (const size_t) (const size_t)
+                 (const c-string) (const storagetype)
+                 c-pointer))
 
 (define magick-extent-image
   (foreign-lambda bool MagickExtentImage
@@ -1680,12 +1680,12 @@
 (define magick-implode-image
   (foreign-lambda bool MagickImplodeImage magickwand (const double)))
 
-;;(define magick-import-image-pixels
-;;  (foreign-lambda bool MagickImportImagePixels
-;;                  magickwand (const ssize_t) (const ssize_t)
-;;                  (const size_t) (const size_t)
-;;                  (const c-string) (const storagetype)
-;;                  (const c-pointer)))
+(define magick-import-image-pixels
+ (foreign-lambda bool MagickImportImagePixels
+                 magickwand (const ssize_t) (const ssize_t)
+                 (const size_t) (const size_t)
+                 (const c-string) (const storagetype)
+                 (const c-pointer)))
 
 (define magick-inverse-fourier-transform-image
   (foreign-lambda bool MagickInverseFourierTransformImage
