@@ -455,7 +455,7 @@
   ((VerticalTileEdgeVirtualPixelMethod) VerticalTileEdgeVirtualPixelMethod)
   ((CheckerTileVirtualPixelMethod) CheckerTileVirtualPixelMethod))
 
-(define-foreign-enum-type (montagemode (enum MontageMode))
+(define-foreign-enum-type (montagemode int)
   (montagemode->int int->montagemode)
   ((UndefinedMode) UndefinedMode)
   ((FrameMode) FrameMode)
@@ -1729,11 +1729,11 @@
   (foreign-lambda bool MagickModulateImage
                   magickwand (const double) (const double) (const double)))
 
-;;(define magick-montage-image
-;;  (foreign-lambda magickwand MagickMontageImage
-;;                  magickwand (const drawingwand)
-;;                  (const c-string) (const c-string)
-;;                  (const montagemode) (const c-string)))
+(define magick-montage-image
+ (foreign-lambda magickwand MagickMontageImage
+                 magickwand (const drawingwand)
+                 (const c-string) (const c-string)
+                 (const montagemode) (const c-string)))
 
 (define magick-morph-images
   (foreign-lambda magickwand MagickMorphImages
