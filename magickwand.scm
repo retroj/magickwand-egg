@@ -2370,9 +2370,12 @@
   (foreign-lambda bool MagickWhiteThresholdImage
                   magickwand (const pixelwand)))
 
-(define magick-write-image
-  (foreign-lambda bool MagickWriteImage
-                  magickwand (const c-string)))
+(define (magick-write-image wand filename)
+  (unless ((foreign-lambda bool MagickWriteImage
+                           magickwand (const c-string))
+           wand filename)
+    (abort (magick-get-exception wand)))
+  #t)
 
 ;;(define magick-write-image-file
 ;;  (foreign-lambda bool MagickWriteImageFile
