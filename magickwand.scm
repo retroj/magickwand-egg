@@ -1817,15 +1817,15 @@
   (foreign-lambda magickwand MagickMorphImages
                   magickwand (const size_t)))
 
-;;(define magick-morphology-image
-;;  (foreign-lambda bool MagickMorphologyImage
-;;                  magickwand morphologymethod
-;;                  (const ssize_t) KernelInfo))
+(define magick-morphology-image
+  (foreign-lambda bool MagickMorphologyImage
+                  magickwand morphologymethod
+                  (const ssize_t) kernelinfo))
 
-;;(define magick-morphology-image-channel
-;;  (foreign-lambda bool MagickMorphologyImageChannel
-;;                  magickwand channeltype morphologymethod
-;;                  (const ssize_t) KernelInfo))
+(define magick-morphology-image-channel
+  (foreign-lambda bool MagickMorphologyImageChannel
+                  magickwand channeltype morphologymethod
+                  (const ssize_t) kernelinfo))
 
 (define magick-motion-blur-image
   (foreign-lambda bool MagickMotionBlurImage
