@@ -665,7 +665,7 @@
   ((CenterAlign) CenterAlign)
   ((RightAlign) RightAlign))
 
-(define-foreign-enum-type (decorationtype (enum DecorationType))
+(define-foreign-enum-type (decorationtype int)
   (decorationtype->int int->decorationtype)
   ((UndefinedDecoration) UndefinedDecoration)
   ((NoDecoration) NoDecoration)
@@ -3017,9 +3017,9 @@
  (foreign-lambda void DrawSetTextAntialias
                  drawingwand (const bool)))
 
-;;(define draw-set-text-decoration
-;;  (foreign-lambda void DrawSetTextDecoration
-;;                  drawingwand (const decorationtype)))
+(define draw-set-text-decoration
+  (foreign-lambda void DrawSetTextDecoration
+                  drawingwand (const decorationtype)))
 
 (define draw-set-text-encoding
   (foreign-lambda void DrawSetTextEncoding
