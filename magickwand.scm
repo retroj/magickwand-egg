@@ -232,7 +232,7 @@
   ((EuclideanKernel) EuclideanKernel)
   ((UserDefinedKernel) UserDefinedKernel))
 
-(define-foreign-enum-type (metrictype (enum MetricType))
+(define-foreign-enum-type (metrictype int)
   (metrictype->int int->metrictype)
   ((UndefinedMetric) UndefinedMetric)
   ((AbsoluteErrorMetric) AbsoluteErrorMetric)
@@ -1251,19 +1251,19 @@
   (foreign-lambda bool MagickCommentImage
                   magickwand (const c-string)))
 
-;;(define magick-compare-image-channels
-;;  (foreign-lambda magickwand MagickCompareImageChannels
-;;                  magickwand (const magickwand) (const channeltype)
-;;                  (const metrictype) (c-pointer double)))
+(define magick-compare-image-channels
+ (foreign-lambda magickwand MagickCompareImageChannels
+                 magickwand (const magickwand) (const channeltype)
+                 (const metrictype) (c-pointer double)))
 
 ;;(define magick-compare-image-layers
 ;;  (foreign-lambda magickwand MagickCompareImageLayers
 ;;                  magickwand (const imagelayermethod)))
 
-;;(define magick-compare-images
-;;  (foreign-lambda magickwand MagickCompareImages
-;;                  magickwand (const magickwand)
-;;                  (const metrictype) (c-pointer double)))
+(define magick-compare-images
+ (foreign-lambda magickwand MagickCompareImages
+                 magickwand (const magickwand)
+                 (const metrictype) (c-pointer double)))
 
 ;;(define magick-composite-image
 ;;  (foreign-lambda bool MagickCompositeImage
@@ -1493,14 +1493,14 @@
 (define magick-get-image-channel-depth
  (foreign-lambda size_t MagickGetImageChannelDepth magickwand (const channeltype)))
 
-;;(define magick-get-image-channel-distortion
-;;  (foreign-lambda bool MagickGetImageChannelDistortion
-;;                  magickwand (const magickwand) (const channeltype)
-;;                  (const metrictype) (c-pointer double)))
+(define magick-get-image-channel-distortion
+ (foreign-lambda bool MagickGetImageChannelDistortion
+                 magickwand (const magickwand) (const channeltype)
+                 (const metrictype) (c-pointer double)))
 
-;;(define magick-get-image-channel-distortions
-;;  (foreign-lambda (c-pointer double) MagickGetImageChannelDistortions
-;;                  magickwand (const magickwand) (const metrictype)))
+(define magick-get-image-channel-distortions
+ (foreign-lambda (c-pointer double) MagickGetImageChannelDistortions
+                 magickwand (const magickwand) (const metrictype)))
 
 (define magick-get-image-channel-features
   (foreign-lambda ChannelFeatures MagickGetImageChannelFeatures
@@ -1549,10 +1549,10 @@
 (define magick-get-image-depth
   (foreign-lambda size_t MagickGetImageDepth magickwand))
 
-;;(define magick-get-image-distortion
-;;  (foreign-lambda bool MagickGetImageDistortion
-;;                  magickwand (const magickwand) (const metrictype)
-;;                  (c-pointer double)))
+(define magick-get-image-distortion
+ (foreign-lambda bool MagickGetImageDistortion
+                 magickwand (const magickwand) (const metrictype)
+                 (c-pointer double)))
 
 (define magick-get-image-dispose
   (foreign-lambda disposetype MagickGetImageDispose magickwand))
