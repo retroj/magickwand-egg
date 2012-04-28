@@ -245,7 +245,7 @@
   ((NormalizedCrossCorrelationErrorMetric) NormalizedCrossCorrelationErrorMetric)
   ((FuzzErrorMetric) FuzzErrorMetric))
 
-(define-foreign-enum-type (imagelayermethod (enum ImageLayerMethod))
+(define-foreign-enum-type (imagelayermethod int)
   (imagelayermethod->int int->imagelayermethod)
   ((UndefinedLayer) UndefinedLayer)
   ((CoalesceLayer) CoalesceLayer)
@@ -1256,9 +1256,9 @@
                  magickwand (const magickwand) (const channeltype)
                  (const metrictype) (c-pointer double)))
 
-;;(define magick-compare-image-layers
-;;  (foreign-lambda magickwand MagickCompareImageLayers
-;;                  magickwand (const imagelayermethod)))
+(define magick-compare-image-layers
+ (foreign-lambda magickwand MagickCompareImageLayers
+                 magickwand (const imagelayermethod)))
 
 (define magick-compare-images
  (foreign-lambda magickwand MagickCompareImages
@@ -1718,9 +1718,9 @@
 (define magick-magnify-image
   (foreign-lambda bool MagickMagnifyImage magickwand))
 
-;;(define magick-merge-image-layers
-;;  (foreign-lambda magickwand MagickMergeImageLayers
-;;                  magickwand (const imagelayermethod)))
+(define magick-merge-image-layers
+ (foreign-lambda magickwand MagickMergeImageLayers
+                 magickwand (const imagelayermethod)))
 
 (define magick-minify-image
   (foreign-lambda bool MagickMinifyImage magickwand))
