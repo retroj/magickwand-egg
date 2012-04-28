@@ -112,7 +112,7 @@
   ((JPEGInterlace) JPEGInterlace)
   ((PNGInterlace) PNGInterlace))
 
-(define-foreign-enum-type (interpolatepixelmethod (enum InterpolatePixelMethod))
+(define-foreign-enum-type (interpolatepixelmethod int)
   (interpolatepixelmethod->int int->interpolatepixelmethod)
   ((UndefinedInterpolatePixel) UndefinedInterpolatePixel)
   ((AverageInterpolatePixel) AverageInterpolatePixel)
@@ -1047,8 +1047,8 @@
 (define magick-set-interlace-scheme
   (foreign-lambda bool MagickSetInterlaceScheme magickwand (const interlacetype)))
 
-;;(define magick-set-interpolate-method
-;;  (foreign-lambda bool MagickSetInterpolateMethod magickwand (const interpolatepixelmethod)))
+(define magick-set-interpolate-method
+ (foreign-lambda bool MagickSetInterpolateMethod magickwand (const interpolatepixelmethod)))
 
 (define magick-set-option
   (foreign-lambda bool MagickSetOption
@@ -2041,9 +2041,9 @@
  (foreign-lambda bool MagickSetImageInterlaceScheme
                  magickwand (const interlacetype)))
 
-;;(define magick-set-image-interpolate-method
-;;  (foreign-lambda bool MagickSetImageInterpolateMethod
-;;                  magickwand (const interpolatepixelmethod)))
+(define magick-set-image-interpolate-method
+ (foreign-lambda bool MagickSetImageInterpolateMethod
+                 magickwand (const interpolatepixelmethod)))
 
 (define magick-set-image-iterations
   (foreign-lambda bool MagickSetImageIterations
