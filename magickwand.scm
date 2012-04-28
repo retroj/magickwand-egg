@@ -192,7 +192,7 @@
   ((PoissonNoise) PoissonNoise)
   ((RandomNoise) RandomNoise))
 
-(define-foreign-enum-type (kernelinfotype (enum KernelInfoType))
+(define-foreign-enum-type (kernelinfotype int)
   (kernelinfotype->int int->kernelinfotype)
   ((UndefinedKernel) UndefinedKernel)
   ((UnityKernel) UnityKernel)
@@ -688,7 +688,7 @@
 ;;     const MagickSizeType,void *);
 
 (define-foreign-record-type (struct KernelInfo)
-  ((enum KernelInfoType) type kernelinfo-type)
+  (kernelinfotype type kernelinfo-type)
   (size_t width kernelinfo-width)
   (size_t height kernelinfo-height)
   (ssize_t x kernelinfo-x)
