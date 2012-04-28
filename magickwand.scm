@@ -878,7 +878,9 @@
                                 (const magickwand)
                                 (c-pointer "ExceptionType"))
                 wand (location typeout))))
-      (values str (int->exceptiontype typeout)))))
+      (make-property-condition
+       (int->exceptiontype typeout)
+       'message str))))
 
 (define magick-get-exception-type
   (foreign-lambda exceptiontype MagickGetExceptionType (const magickwand)))
@@ -1948,9 +1950,12 @@
                   magickwand (const channeltype)
                   (const double) (const double)))
 
-(define magick-read-image
-  (foreign-lambda bool MagickReadImage
-                  magickwand (const c-string)))
+(define (magick-read-image wand filename)
+  (unless ((foreign-lambda bool MagickReadImage
+                           magickwand (const c-string))
+           wand filename)
+    (abort (magick-get-exception wand)))
+  #t)
 
 (define magick-read-image-blob
   (foreign-lambda bool MagickReadImageBlob
