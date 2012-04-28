@@ -520,7 +520,7 @@
   ((CharcoalDrawingPreview) CharcoalDrawingPreview)
   ((JPEGPreview) JPEGPreview))
 
-(define-foreign-enum-type (dithermethod (enum DitherMethod))
+(define-foreign-enum-type (dithermethod int)
   (dithermethod->int int->dithermethod)
   ((UndefinedDitherMethod) UndefinedDitherMethod)
   ((NoDitherMethod) NoDitherMethod)
@@ -1881,9 +1881,9 @@
 ;;  (foreign-lambda bool MagickReadImageFile
 ;;                  magickwand (c-pointer FILE)))
 
-;;(define magick-remap-image
-;;  (foreign-lambda bool MagickRemapImage
-;;                  magickwand (const magickwand) (const dithermethod)))
+(define magick-remap-image
+ (foreign-lambda bool MagickRemapImage
+                 magickwand (const magickwand) (const dithermethod)))
 
 (define magick-remove-image
   (foreign-lambda bool MagickRemoveImage magickwand))
