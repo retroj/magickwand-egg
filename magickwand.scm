@@ -434,7 +434,7 @@
   ((PixelsPerInchResolution) PixelsPerInchResolution)
   ((PixelsPerCentimeterResolution) PixelsPerCentimeterResolution))
 
-(define-foreign-enum-type (virtualpixelmethod (enum VirtualPixelMethod))
+(define-foreign-enum-type (virtualpixelmethod int)
   (virtualpixelmethod->int int->virtualpixelmethod)
   ((UndefinedVirtualPixelMethod) UndefinedVirtualPixelMethod)
   ((BackgroundVirtualPixelMethod) BackgroundVirtualPixelMethod)
@@ -2100,9 +2100,9 @@
  (foreign-lambda bool MagickSetImageUnits
                  magickwand (const resolutiontype)))
 
-;;(define magick-set-image-virtual-pixel-method
-;;  (foreign-lambda virtualpixelmethod MagickSetImageVirtualPixelMethod
-;;                  magickwand (const virtualpixelmethod)))
+(define magick-set-image-virtual-pixel-method
+ (foreign-lambda virtualpixelmethod MagickSetImageVirtualPixelMethod
+                 magickwand (const virtualpixelmethod)))
 
 (define magick-set-image-white-point
   (foreign-lambda bool MagickSetImageWhitePoint
