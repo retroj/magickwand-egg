@@ -636,7 +636,7 @@
   ((UltraExpandedStretch) UltraExpandedStretch)
   ((AnyStretch) AnyStretch))
 
-(define-foreign-enum-type (styletype (enum StyleType))
+(define-foreign-enum-type (styletype int)
   (styletype->int int->styletype)
   ((UndefinedStyle) UndefinedStyle)
   ((NormalStyle) NormalStyle)
@@ -2956,9 +2956,9 @@
  (foreign-lambda void DrawSetFontStretch
                  drawingwand (const stretchtype)))
 
-;;(define draw-set-font-style
-;;  (foreign-lambda void DrawSetFontStyle
-;;                  drawingwand (const styletype)))
+(define draw-set-font-style
+ (foreign-lambda void DrawSetFontStyle
+                 drawingwand (const styletype)))
 
 (define draw-set-font-weight
   (foreign-lambda void DrawSetFontWeight
