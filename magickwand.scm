@@ -622,7 +622,7 @@
   ((UserSpaceOnUse) UserSpaceOnUse)
   ((ObjectBoundingBox) ObjectBoundingBox))
 
-(define-foreign-enum-type (stretchtype (enum StretchType))
+(define-foreign-enum-type (stretchtype int)
   (stretchtype->int int->stretchtype)
   ((UndefinedStretch) UndefinedStretch)
   ((NormalStretch) NormalStretch)
@@ -2952,9 +2952,9 @@
   (foreign-lambda void DrawSetFontSize
                   drawingwand (const double)))
 
-;;(define draw-set-font-stretch
-;;  (foreign-lambda void DrawSetFontStretch
-;;                  drawingwand (const stretchtype)))
+(define draw-set-font-stretch
+ (foreign-lambda void DrawSetFontStretch
+                 drawingwand (const stretchtype)))
 
 ;;(define draw-set-font-style
 ;;  (foreign-lambda void DrawSetFontStyle
