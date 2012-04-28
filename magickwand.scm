@@ -370,7 +370,7 @@
   ((ResizeDistortion) ResizeDistortion)
   ((SentinelDistortion) SentinelDistortion))
 
-(define-foreign-enum-type (magickevaluateoperator (enum MagickEvaluateOperator))
+(define-foreign-enum-type (magickevaluateoperator int)
   (magickevaluateoperator->int int->magickevaluateoperator)
   ((UndefinedEvaluateOperator) UndefinedEvaluateOperator)
   ((AddEvaluateOperator) AddEvaluateOperator)
@@ -1374,20 +1374,20 @@
  (foreign-lambda bool MagickEqualizeImageChannel
                  magickwand (const channeltype)))
 
-;;(define magick-evaluate-image
-;;  (foreign-lambda bool MagickEvaluateImage
-;;                  magickwand (const magickevaluateoperator)
-;;                  (const double)))
+(define magick-evaluate-image
+ (foreign-lambda bool MagickEvaluateImage
+                 magickwand (const magickevaluateoperator)
+                 (const double)))
 
-;;(define magick-evaluate-images
-;;  (foreign-lambda bool MagickEvaluateImages
-;;                  magickwand (const magickevaluateoperator)))
+(define magick-evaluate-images
+ (foreign-lambda bool MagickEvaluateImages
+                 magickwand (const magickevaluateoperator)))
 
-;;(define magick-evaluate-image-channel
-;;  (foreign-lambda bool MagickEvaluateImageChannel
-;;                  magickwand (const channeltype)
-;;                  (const magickevaluateoperator)
-;;                  (const double)))
+(define magick-evaluate-image-channel
+ (foreign-lambda bool MagickEvaluateImageChannel
+                 magickwand (const channeltype)
+                 (const magickevaluateoperator)
+                 (const double)))
 
 (define magick-export-image-pixels
  (foreign-lambda bool MagickExportImagePixels
