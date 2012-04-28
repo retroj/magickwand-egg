@@ -2378,9 +2378,12 @@
 ;;  (foreign-lambda bool MagickWriteImageFile
 ;;                  magickwand (c-pointer FILE)))
 
-(define magick-write-images
-  (foreign-lambda bool MagickWriteImages
-                  magickwand (const c-string) (const bool)))
+(define (magick-write-images wand filename adjoin)
+  (unless ((foreign-lambda bool MagickWriteImages
+                           magickwand (const c-string) (const bool))
+           wand filename adjoin)
+    (abort (magick-get-exception wand)))
+  #t)
 
 ;;(define magick-write-images-file
 ;;  (foreign-lambda bool MagickWriteImagesFile
