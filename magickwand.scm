@@ -2177,15 +2177,17 @@
   (foreign-lambda bool MagickSpreadImage
                   magickwand (const double)))
 
-(define magick-statistic-image
- (foreign-lambda bool MagickStatisticImage
-                 magickwand (const statistictype) (const double)
-                 (const size_t)))
+;;;XXX: type signature wrong in ImageMagick 6.7.4-0
+;; (define magick-statistic-image
+;;  (foreign-lambda bool MagickStatisticImage
+;;                  magickwand (const statistictype)
+;;                  (const size_t) (const size_t)))
 
-(define magick-statistic-image-channel
- (foreign-lambda bool MagickStatisticImageChannel
-                 magickwand (const channeltype) (const statistictype)
-                 (const double) (const size_t)))
+;;;XXX: type signature wrong in ImageMagick 6.7.4-0
+;; (define magick-statistic-image-channel
+;;  (foreign-lambda bool MagickStatisticImageChannel
+;;                  magickwand (const channeltype) (const statistictype)
+;;                  (const size_t) (const size_t)))
 
 (define magick-stegano-image
   (foreign-lambda magickwand MagickSteganoImage
