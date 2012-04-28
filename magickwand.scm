@@ -558,7 +558,7 @@
   ((RobidouxFilter) RobidouxFilter)
   ((SentinelFilter) SentinelFilter))
 
-(define-foreign-enum-type (alphachanneltype (enum AlphaChannelType))
+(define-foreign-enum-type (alphachanneltype int)
   (alphachanneltype->int int->alphachanneltype)
   ((UndefinedAlphaChannel) UndefinedAlphaChannel)
   ((ActivateAlphaChannel) ActivateAlphaChannel)
@@ -1944,9 +1944,9 @@
   (foreign-lambda bool MagickSetImage
                   magickwand (const magickwand)))
 
-;;(define magick-set-image-alpha-channel
-;;  (foreign-lambda bool MagickSetImageAlphaChannel
-;;                  magickwand (const alphachanneltype)))
+(define magick-set-image-alpha-channel
+ (foreign-lambda bool MagickSetImageAlphaChannel
+                 magickwand (const alphachanneltype)))
 
 (define magick-set-image-background-color
   (foreign-lambda bool MagickSetImageBackgroundColor
