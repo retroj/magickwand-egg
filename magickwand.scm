@@ -1671,8 +1671,9 @@
 (define magick-get-image-iterations
   (foreign-lambda size_t MagickGetImageIterations magickwand))
 
-;;(define magick-get-image-length
-;;  (foreign-lambda bool MagickGetImageLength magickwand (c-pointer magicksize)))
+(define magick-get-image-length
+  (foreign-lambda bool MagickGetImageLength
+                  magickwand (c-pointer "MagickSizeType")))
 
 (define magick-get-image-matte-color
   (foreign-lambda bool MagickGetImageMatteColor
