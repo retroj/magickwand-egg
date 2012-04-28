@@ -347,7 +347,7 @@
   ((QuantumPixel) QuantumPixel)
   ((ShortPixel) ShortPixel))
 
-(define-foreign-enum-type (distortimagemethod (enum DistortImageMethod))
+(define-foreign-enum-type (distortimagemethod int)
   (distortimagemethod-> int->distortimagemethod)
   ((UndefinedDistortion) UndefinedDistortion)
   ((AffineDistortion) AffineDistortion)
@@ -1342,11 +1342,11 @@
 (define magick-display-images
   (foreign-lambda bool MagickDisplayImages magickwand (const c-string)))
 
-;;(define magick-distort-image
-;;  (foreign-lambda bool MagickDistortImage
-;;                  magickwand (const distortimagemethod)
-;;                  (const size_t) (const (c-pointer double))
-;;                  (const bool)))
+(define magick-distort-image
+ (foreign-lambda bool MagickDistortImage
+                 magickwand (const distortimagemethod)
+                 (const size_t) (const (c-pointer double))
+                 (const bool)))
 
 (define magick-draw-image
   (foreign-lambda bool MagickDrawImage
