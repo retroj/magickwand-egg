@@ -582,7 +582,7 @@
   ((VoronoiColorInterpolate) VoronoiColorInterpolate)
   ((InverseColorInterpolate) InverseColorInterpolate))
 
-(define-foreign-enum-type (statistictype (enum StatisticType))
+(define-foreign-enum-type (statistictype int)
   (statistictype->int int->statistictype)
   ((UndefinedStatistic) UndefinedStatistic)
   ((GradientStatistic) GradientStatistic)
@@ -2177,15 +2177,15 @@
   (foreign-lambda bool MagickSpreadImage
                   magickwand (const double)))
 
-;;(define magick-statistic-image
-;;  (foreign-lambda bool MagickStatisticImage
-;;                  magickwand (const statistictype) (const double)
-;;                  (const size_t)))
+(define magick-statistic-image
+ (foreign-lambda bool MagickStatisticImage
+                 magickwand (const statistictype) (const double)
+                 (const size_t)))
 
-;;(define magick-statistic-image-channel
-;;  (foreign-lambda bool MagickStatisticImageChannel
-;;                  magickwand (const channeltype) (const statistictype)
-;;                  (const double) (const size_t)))
+(define magick-statistic-image-channel
+ (foreign-lambda bool MagickStatisticImageChannel
+                 magickwand (const channeltype) (const statistictype)
+                 (const double) (const size_t)))
 
 (define magick-stegano-image
   (foreign-lambda magickwand MagickSteganoImage
