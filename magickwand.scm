@@ -2403,8 +2403,12 @@
 (define pixel-iterator?
   (foreign-lambda bool IsPixelIterator (const pixeliterator)))
 
-(define new-pixel-iterator
-  (foreign-lambda pixeliterator NewPixelIterator magickwand))
+(define (new-pixel-iterator wand)
+  (let ((iterator
+         ((foreign-lambda pixeliterator NewPixelIterator magickwand)
+          wand)))
+    (set-finalizer! iterator destroy-pixel-iterator)
+    iterator))
 
 (define pixel-clear-iterator-exception
   (foreign-lambda bool PixelClearIteratorException pixeliterator))
