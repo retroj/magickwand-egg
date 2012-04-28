@@ -765,7 +765,7 @@
 ;;   (*MagickProgressMonitor)(const char *,const MagickOffsetType,
 ;;     const MagickSizeType,void *);
 
-(define-foreign-record-type (struct KernelInfo)
+(define-foreign-record-type (kernelinfo KernelInfo)
   (kernelinfotype type kernelinfo-type)
   (size_t width kernelinfo-width)
   (size_t height kernelinfo-height)
@@ -777,7 +777,7 @@
   (double negative_range kernelinfo-negative-range)
   (double positive_range kernelinfo-positive-range)
   (double angle kernelinfo-angle)
-  ((c-pointer (struct KernelInfo)) next kernelinfo-next)
+  ((c-pointer kernelinfo) next kernelinfo-next)
   (size_t signature kernelinfo-signature))
 
 (define-foreign-record-type ChannelFeatures
@@ -1317,9 +1317,9 @@
   (foreign-lambda bool MagickColorizeImage
                   magickwand (const pixelwand) (const pixelwand)))
 
-;;(define magick-color-matrix-image
-;;  (foreign-lambda bool MagickColorMatrixImage
-;;                  magickwand (const KernelInfo)))
+(define magick-color-matrix-image
+  (foreign-lambda bool MagickColorMatrixImage
+                  magickwand (const kernelinfo)))
 
 (define magick-combine-images
  (foreign-lambda magickwand MagickCombineImages
