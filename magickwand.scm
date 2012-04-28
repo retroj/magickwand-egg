@@ -155,17 +155,10 @@
 
 (define-foreign-type magicksize unsigned-long)
 
-(define-foreign-enum-type (resourcetype (enum ResourceType))
+(define-foreign-enum-type (resourcetype int)
   (resourcetype->int int->resourcetype)
-  ((UndefinedResource) UndefinedResource)
-  ((AreaResource) AreaResource)
-  ((DiskResource) DiskResource)
-  ((FileResource) FileResource)
-  ((MapResource) MapResource)
-  ((MemoryResource) MemoryResource)
-  ((ThreadResource) ThreadResource)
-  ((TimeResource) TimeResource)
-  ((ThrottleResource) ThrottleResource))
+  UndefinedResource AreaResource DiskResource FileResource MapResource
+  MemoryResource ThreadResource TimeResource ThrottleResource)
 
 (define-foreign-enum-type (imagetype (enum ImageType))
   (imagetype->int int->imagetype)
@@ -991,11 +984,11 @@
   (foreign-lambda bool MagickGetResolution
                   magickwand (c-pointer double) (c-pointer double)))
 
-;;(define magick-get-resource
-;;  (foreign-lambda magicksize MagickGetResource (const resourcetype)))
+(define magick-get-resource
+  (foreign-lambda magicksize MagickGetResource (const resourcetype)))
 
-;;(define magick-get-resource-limit
-;;  (foreign-lambda magicksize MagickGetResourceLimit (const resourcetype)))
+(define magick-get-resource-limit
+  (foreign-lambda magicksize MagickGetResourceLimit (const resourcetype)))
 
 (define magick-get-sampling-factors
   (foreign-lambda (c-pointer double) MagickGetSamplingFactors
@@ -1097,9 +1090,9 @@
 ;;  (foreign-lambda magickprogressmonitor MagickSetProgressMonitor
 ;;                  magickwand (const magickprogressmonitor) c-pointer))
 
-;;(define magick-set-resource-limit
-;;  (foreign-lambda bool MagickSetResourceLimit
-;;                  (const resourcetype) (const magicksize)))
+(define magick-set-resource-limit
+  (foreign-lambda bool MagickSetResourceLimit
+                  (const resourcetype) (const magicksize)))
 
 (define magick-set-resolution
   (foreign-lambda bool MagickSetResolution
