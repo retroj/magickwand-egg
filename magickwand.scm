@@ -143,7 +143,7 @@
   UndefinedResource AreaResource DiskResource FileResource MapResource
   MemoryResource ThreadResource TimeResource ThrottleResource)
 
-(define-foreign-enum-type (imagetype (enum ImageType))
+(define-foreign-enum-type (imagetype int)
   (imagetype->int int->imagetype)
   ((UndefinedType) UndefinedType)
   ((BilevelType) BilevelType)
@@ -1094,9 +1094,8 @@
                   magickwand (const size_t) (const size_t)
                   (const ssize_t)))
 
-;;(define magick-set-type
-;;  (foreign-lambda bool MagickSetType
-;;                  magickwand (const imagetype)))
+(define magick-set-type
+ (foreign-lambda bool MagickSetType magickwand (const imagetype)))
 
 
 ;;;
@@ -2094,9 +2093,8 @@
   (foreign-lambda bool MagickSetImageTicksPerSecond
                   magickwand (const ssize_t)))
 
-;;(define magick-set-image-type
-;;  (foreign-lambda bool MagickSetImageType
-;;                  magickwand (const imagetype)))
+(define magick-set-image-type
+ (foreign-lambda bool MagickSetImageType magickwand (const imagetype)))
 
 ;;(define magick-set-image-units
 ;;  (foreign-lambda bool MagickSetImageUnits
