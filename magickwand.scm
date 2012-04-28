@@ -651,7 +651,7 @@
   ((RoundCap) RoundCap)
   ((SquareCap) SquareCap))
 
-(define-foreign-enum-type (linejoin (enum LineJoin))
+(define-foreign-enum-type (linejoin int)
   (linejoin->int int->linejoin)
   ((UndefinedJoin) UndefinedJoin)
   ((MiterJoin) MiterJoin)
@@ -2993,9 +2993,9 @@
  (foreign-lambda void DrawSetStrokeLineCap
                  drawingwand (const linecap)))
 
-;;(define draw-set-stroke-line-join
-;;  (foreign-lambda void DrawSetStrokeLineJoin
-;;                  drawingwand (const linejoin)))
+(define draw-set-stroke-line-join
+  (foreign-lambda void DrawSetStrokeLineJoin
+                  drawingwand (const linejoin)))
 
 (define draw-set-stroke-miter-limit
   (foreign-lambda void DrawSetStrokeMiterLimit
