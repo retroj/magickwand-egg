@@ -594,7 +594,7 @@
   ((NonpeakStatistic) NonpeakStatistic)
   ((StandardDeviationStatistic) StandardDeviationStatistic))
 
-(define-foreign-enum-type (classtype (enum ClassType))
+(define-foreign-enum-type (classtype int)
   (classtype->int int->classtype)
   ((UndefinedClass) UndefinedClass)
   ((DirectClass) DirectClass)
