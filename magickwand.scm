@@ -929,11 +929,16 @@
 (define magickwand-terminus
   (foreign-lambda void MagickWandTerminus))
 
-(define new-magickwand
-  (foreign-lambda magickwand NewMagickWand))
+(define (new-magickwand)
+  (let ((w ((foreign-lambda magickwand NewMagickWand))))
+    (set-finalizer! w magickwand-destroy)
+    w))
 
-(define new-magickwand-from-image
-  (foreign-lambda magickwand NewMagickWandFromImage (const image)))
+(define (new-magickwand-from-image image)
+  (let ((w ((foreign-lambda magickwand NewMagickWandFromImage (const image))
+            image)))
+    (set-finalizer! w magickwand-destroy)
+    w))
 
 
 ;;;
