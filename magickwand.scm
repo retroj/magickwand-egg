@@ -404,7 +404,7 @@
   ((ExponentialEvaluateOperator) ExponentialEvaluateOperator)
   ((MedianEvaluateOperator) MedianEvaluateOperator))
 
-(define-foreign-enum-type (magickfunction (enum MagickFunction))
+(define-foreign-enum-type (magickfunction int)
   (magickfunction->int int->magickfunction)
   ((UndefinedFunction) UndefinedFunction)
   ((PolynomialFunction) PolynomialFunction)
@@ -1432,15 +1432,15 @@
                   (const size_t) (const size_t)
                   (const ssize_t) (const ssize_t)))
 
-;;(define magick-function-image
-;;  (foreign-lambda bool MagickFunctionImage
-;;                  magickwand (const magickfunction)
-;;                  (const size_t) (const (c-pointer double))))
+(define magick-function-image
+ (foreign-lambda bool MagickFunctionImage
+                 magickwand (const magickfunction)
+                 (const size_t) (const (c-pointer double))))
 
-;;(define magick-function-image-channel
-;;  (foreign-lambda bool MagickFunctionImageChannel
-;;                  magickwand (const channeltype) (const magickfunction)
-;;                  (const size_t) (const (c-pointer double))))
+(define magick-function-image-channel
+ (foreign-lambda bool MagickFunctionImageChannel
+                 magickwand (const channeltype) (const magickfunction)
+                 (const size_t) (const (c-pointer double))))
 
 (define magick-fx-image
   (foreign-lambda magickwand MagickFxImage magickwand (const c-string)))
