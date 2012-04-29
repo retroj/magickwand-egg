@@ -2607,33 +2607,40 @@
                   (const double) (const double)
                   (const double) (const double)))
 
-(define draw-set-border-color
+(define %drawingwand-border-color-set!
   (foreign-lambda void DrawSetBorderColor
                   drawingwand (const pixelwand)))
 
-(define draw-get-border-color
-  (foreign-lambda void DrawGetBorderColor
-                  (const drawingwand) pixelwand))
+(define (%drawingwand-border-color wand)
+  (let ((p (make-pixelwand)))
+    ((foreign-lambda void DrawGetBorderColor
+                     (const drawingwand) pixelwand)
+     wand p)
+    p))
+
+(define drawingwand-border-color
+  (getter-with-setter %drawingwand-border-color
+                      %drawingwand-border-color-set!))
 
 (define draw-set-clip-path
   (foreign-lambda bool DrawSetClipPath
                   drawingwand (const c-string)))
 
-(define draw-get-clip-path
+(define drawingwand-clip-path
   (foreign-lambda c-string DrawGetClipPath (const drawingwand)))
 
 (define draw-set-clip-rule
   (foreign-lambda void DrawSetClipRule
                   drawingwand (const fillrule)))
 
-(define draw-get-clip-rule
+(define drawingwand-clip-rule
   (foreign-lambda fillrule DrawGetClipRule (const drawingwand)))
 
 (define draw-set-clip-units
   (foreign-lambda void DrawSetClipUnits
                   drawingwand (const clippathunits)))
 
-(define draw-get-clip-units
+(define drawingwand-clip-units
   (foreign-lambda clippathunits DrawGetClipUnits (const drawingwand)))
 
 (define (draw-get-exception wand)
@@ -2651,27 +2658,27 @@
   (foreign-lambda void DrawSetFillColor
                   drawingwand (const pixelwand)))
 
-(define draw-get-fill-color
+(define drawingwand-fill-color
   (foreign-lambda void DrawGetFillColor (const drawingwand) pixelwand))
 
 (define draw-set-fill-opacity
   (foreign-lambda void DrawSetFillOpacity
                   drawingwand (const double)))
 
-(define draw-get-fill-opacity
+(define drawingwand-fill-opacity
   (foreign-lambda double DrawGetFillOpacity (const drawingwand)))
 
 (define draw-set-fill-rule
   (foreign-lambda void DrawSetFillRule drawingwand (const fillrule)))
 
-(define draw-get-fill-rule
+(define drawingwand-fill-rule
   (foreign-lambda fillrule DrawGetFillRule (const drawingwand)))
 
 (define draw-set-font
   (foreign-lambda bool DrawSetFont
                   drawingwand (const c-string)))
 
-(define draw-get-font
+(define drawingwand-font
   (foreign-lambda c-string DrawGetFont (const drawingwand)))
 
 (define draw-set-font-resolution
@@ -2682,10 +2689,10 @@
   (foreign-lambda bool DrawSetFontFamily
                   drawingwand (const c-string)))
 
-(define draw-get-font-family
+(define drawingwand-font-family
   (foreign-lambda c-string DrawGetFontFamily (const drawingwand)))
 
-(define draw-get-font-resolution
+(define drawingwand-font-resolution
   (foreign-lambda bool DrawGetFontResolution
                   (const drawingwand) (c-pointer double) (c-pointer double)))
 
@@ -2693,55 +2700,55 @@
   (foreign-lambda void DrawSetFontSize
                   drawingwand (const double)))
 
-(define draw-get-font-size
+(define drawingwand-font-size
   (foreign-lambda double DrawGetFontSize (const drawingwand)))
 
 (define draw-set-font-stretch
   (foreign-lambda void DrawSetFontStretch
                   drawingwand (const stretchtype)))
 
-(define draw-get-font-stretch
+(define drawingwand-font-stretch
   (foreign-lambda stretchtype DrawGetFontStretch (const drawingwand)))
 
 (define draw-set-font-style
   (foreign-lambda void DrawSetFontStyle
                   drawingwand (const styletype)))
 
-(define draw-get-font-style
+(define drawingwand-font-style
   (foreign-lambda styletype DrawGetFontStyle (const drawingwand)))
 
 (define draw-set-font-weight
   (foreign-lambda void DrawSetFontWeight
                   drawingwand (const size_t)))
 
-(define draw-get-font-weight
+(define drawingwand-font-weight
   (foreign-lambda size_t DrawGetFontWeight (const drawingwand)))
 
 (define draw-set-gravity
   (foreign-lambda void DrawSetGravity
                   drawingwand (const gravity)))
 
-(define draw-get-gravity
+(define drawingwand-gravity
   (foreign-lambda gravity DrawGetGravity (const drawingwand)))
 
 (define draw-set-opacity
   (foreign-lambda void DrawSetOpacity drawingwand (const double)))
 
-(define draw-get-opacity
+(define drawingwand-opacity
   (foreign-lambda double DrawGetOpacity (const drawingwand)))
 
 (define draw-set-stroke-antialias
   (foreign-lambda void DrawSetStrokeAntialias
                   drawingwand (const bool)))
 
-(define draw-get-stroke-antialias
+(define drawingwand-stroke-antialias
   (foreign-lambda bool DrawGetStrokeAntialias (const drawingwand)))
 
 (define draw-set-stroke-color
   (foreign-lambda void DrawSetStrokeColor
                   drawingwand (const pixelwand)))
 
-(define draw-get-stroke-color
+(define drawingwand-stroke-color
   (foreign-lambda void DrawGetStrokeColor (const drawingwand) pixelwand))
 
 (define draw-set-stroke-dash-array
@@ -2749,7 +2756,7 @@
                   drawingwand (const size_t)
                   (const (c-pointer double))))
 
-(define draw-get-stroke-dash-array
+(define drawingwand-stroke-dash-array
   (foreign-lambda (c-pointer double) DrawGetStrokeDashArray
                   (const drawingwand) (c-pointer size_t)))
 
@@ -2757,105 +2764,105 @@
   (foreign-lambda void DrawSetStrokeDashOffset
                   drawingwand (const double)))
 
-(define draw-get-stroke-dash-offset
+(define drawingwand-stroke-dash-offset
   (foreign-lambda double DrawGetStrokeDashOffset (const drawingwand)))
 
 (define draw-set-stroke-line-cap
   (foreign-lambda void DrawSetStrokeLineCap
                   drawingwand (const linecap)))
 
-(define draw-get-stroke-line-cap
+(define drawingwand-stroke-line-cap
   (foreign-lambda linecap DrawGetStrokeLineCap (const drawingwand)))
 
 (define draw-set-stroke-line-join
   (foreign-lambda void DrawSetStrokeLineJoin
                   drawingwand (const linejoin)))
 
-(define draw-get-stroke-line-join
+(define drawingwand-stroke-line-join
   (foreign-lambda linejoin DrawGetStrokeLineJoin (const drawingwand)))
 
 (define draw-set-stroke-miter-limit
   (foreign-lambda void DrawSetStrokeMiterLimit
                   drawingwand (const size_t)))
 
-(define draw-get-stroke-miter-limit
+(define drawingwand-stroke-miter-limit
   (foreign-lambda size_t DrawGetStrokeMiterLimit (const drawingwand)))
 
 (define draw-set-stroke-opacity
   (foreign-lambda void DrawSetStrokeOpacity
                   drawingwand (const double)))
 
-(define draw-get-stroke-opacity
+(define drawingwand-stroke-opacity
   (foreign-lambda double DrawGetStrokeOpacity (const drawingwand)))
 
 (define draw-set-stroke-width
   (foreign-lambda void DrawSetStrokeWidth
                   drawingwand (const double)))
 
-(define draw-get-stroke-width
+(define drawingwand-stroke-width
   (foreign-lambda double DrawGetStrokeWidth (const drawingwand)))
 
 (define draw-set-text-alignment
   (foreign-lambda void DrawSetTextAlignment
                   drawingwand (const aligntype)))
 
-(define draw-get-text-alignment
+(define drawingwand-text-alignment
   (foreign-lambda aligntype DrawGetTextAlignment (const drawingwand)))
 
 (define draw-set-text-antialias
   (foreign-lambda void DrawSetTextAntialias
                   drawingwand (const bool)))
 
-(define draw-get-text-antialias
+(define drawingwand-text-antialias
   (foreign-lambda bool DrawGetTextAntialias (const drawingwand)))
 
 (define draw-set-text-decoration
   (foreign-lambda void DrawSetTextDecoration
                   drawingwand (const decorationtype)))
 
-(define draw-get-text-decoration
+(define drawingwand-text-decoration
   (foreign-lambda decorationtype DrawGetTextDecoration (const drawingwand)))
 
 (define draw-set-text-encoding
   (foreign-lambda void DrawSetTextEncoding
                   drawingwand (const c-string)))
 
-(define draw-get-text-encoding
+(define drawingwand-text-encoding
   (foreign-lambda c-string DrawGetTextEncoding (const drawingwand)))
 
 (define draw-set-text-kerning
   (foreign-lambda void DrawSetTextKerning
                   drawingwand (const double)))
 
-(define draw-get-text-kerning
+(define drawingwand-text-kerning
   (foreign-lambda double DrawGetTextKerning drawingwand))
 
 (define draw-set-text-interline-spacing
   (foreign-lambda void DrawSetTextInterlineSpacing
                   drawingwand (const double)))
 
-(define draw-get-text-interline-spacing
+(define drawingwand-text-interline-spacing
   (foreign-lambda double DrawGetTextInterlineSpacing drawingwand))
 
 (define draw-set-text-interword-spacing
   (foreign-lambda void DrawSetTextInterwordSpacing
                   drawingwand (const double)))
 
-(define draw-get-text-interword-spacing
+(define drawingwand-text-interword-spacing
   (foreign-lambda double DrawGetTextInterwordSpacing drawingwand))
 
 (define draw-set-vector-graphics
   (foreign-lambda bool DrawSetVectorGraphics
                   drawingwand (const c-string)))
 
-(define draw-get-vector-graphics
+(define drawingwand-vector-graphics
   (foreign-lambda c-string DrawGetVectorGraphics drawingwand))
 
 (define draw-set-text-under-color
   (foreign-lambda void DrawSetTextUnderColor
                   drawingwand (const pixelwand)))
 
-(define draw-get-text-under-color
+(define drawingwand-text-under-color
   (foreign-lambda void DrawGetTextUnderColor (const drawingwand) pixelwand))
 
 (define draw-line
