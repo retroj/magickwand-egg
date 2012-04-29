@@ -29,6 +29,8 @@
 
 (import chicken scheme foreign foreigners)
 
+(use matchable)
+
 (foreign-declare "#include <wand/MagickWand.h>")
 
 (define-foreign-type ssize_t long)
@@ -2272,46 +2274,51 @@
 
 
 ;;;
-;;; Pixel-wand methods
+;;; Pixelwand methods
 ;;;
 
-(define clear-pixel-wand
+(define clear-pixelwand
   (foreign-lambda void ClearPixelWand pixelwand))
 
-(define clone-pixel-wand
+(define clone-pixelwand
   (foreign-lambda pixelwand ClonePixelWand (const pixelwand)))
 
-(define clone-pixel-wands
+(define clone-pixelwands
   (foreign-lambda (c-pointer pixelwand) ClonePixelWands
                   (const (c-pointer pixelwand)) (const size_t)))
 
-(define destroy-pixel-wand
+(define destroy-pixelwand
   (foreign-lambda pixelwand DestroyPixelWand pixelwand))
 
-(define destroy-pixel-wands
+(define destroy-pixelwands
   (foreign-lambda (c-pointer pixelwand) DestroyPixelWands
                   (c-pointer pixelwand) (const size_t)))
 
-(define is-pixel-wand-similar
+(define is-pixelwand-similar
   (foreign-lambda bool IsPixelWandSimilar
                   pixelwand pixelwand (const double)))
 
-(define pixel-wand?
+(define pixelwand?
   (foreign-lambda bool IsPixelWand (const pixelwand)))
 
-;; finalizer: destroy-pixel-wand
+;; finalizer: destroy-pixelwand
 ;; string color
-;; color count (what is this?)
-;; another pixelwand
 ;; fuzz
 ;; hsl color, given by 3 doubles
 ;; colormap index
 ;; color by magickpixelpacket
-;; to set RGB, RGBA, or CMYK, set each value independently, or use a *packet type
-(define new-pixel-wand
-  (foreign-lambda pixelwand NewPixelWand))
+(define make-pixelwand
+  (match-lambda*
+   (((? string? x))
+    (let ((p (make-pixelwand)))
+      (pixel-set-color p x)
+      p))
+   (()
+    (let ((p ((foreign-lambda pixelwand NewPixelWand))))
+      (set-finalizer! p destroy-pixelwand)
+      p))))
 
-(define new-pixel-wands
+(define new-pixelwands
   (foreign-lambda (c-pointer pixelwand) NewPixelWands (const size_t)))
 
 (define pixel-clear-exception
@@ -2341,6 +2348,7 @@
 (define pixel-get-color-as-normalized-string
   (foreign-lambda c-string PixelGetColorAsNormalizedString pixelwand))
 
+;; color-count is set by MagickGetImageHistogram
 (define pixel-get-color-count
   (foreign-lambda size_t PixelGetColorCount (const pixelwand)))
 
