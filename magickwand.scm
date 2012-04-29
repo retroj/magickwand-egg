@@ -2322,7 +2322,7 @@
   (match-lambda*
    (((? string? x))
     (let ((p (make-pixelwand)))
-      (pixelwand-color-set! p x)
+      (set! (pixelwand-color p) x)
       p))
    (()
     (let ((p ((foreign-lambda pixelwand NewPixelWand))))
@@ -2386,14 +2386,16 @@
 (define pixelwand-color-set!
   (foreign-lambda bool PixelSetColor pixelwand (const c-string)))
 
-;;XXX: awkward name, probably means we need an abstraction
+(define pixelwand-color
+  (foreign-lambda c-string PixelGetColorAsString pixelwand))
+
+(set! (setter pixelwand-color) pixelwand-color-set!)
+
+;;XXX: awkward name, probably means we need an abstraction with pixelwand-color-set!
 (define pixelwand-color-from-wand-set!
   (foreign-lambda void PixelSetColorFromWand pixelwand (const pixelwand)))
 
-(define pixelwand-color-as-string
-  (foreign-lambda c-string PixelGetColorAsString pixelwand))
-
-(define pixelwand-color-as-normalized-string
+(define pixelwand-color/normalized
   (foreign-lambda c-string PixelGetColorAsNormalizedString pixelwand))
 
 (define pixelwand-color-count-set!
