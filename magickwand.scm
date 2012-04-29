@@ -2548,16 +2548,16 @@
 
 
 ;;;
-;;; Drawing-wand methods
+;;; Drawingwand methods
 ;;;
 
-(define clear-drawing-wand
+(define drawingwand-clear
   (foreign-lambda void ClearDrawingWand drawingwand))
 
-(define clone-drawing-wand
+(define drawingwand-clone
   (foreign-lambda drawingwand CloneDrawingWand (const drawingwand)))
 
-(define destroy-drawing-wand
+(define drawingwand-destroy
   (foreign-lambda drawingwand DestroyDrawingWand drawingwand))
 
 (define draw-affine
@@ -3036,20 +3036,21 @@
   (foreign-lambda void DrawSetViewbox
                   drawingwand ssize_t ssize_t ssize_t ssize_t))
 
-(define drawing-wand?
+(define drawingwand?
   (foreign-lambda bool IsDrawingWand (const drawingwand)))
 
-;; finalizer: destroy-drawing-wand
-(define new-drawing-wand
-  (foreign-lambda drawingwand NewDrawingWand))
+(define (make-drawingwand)
+  (let ((d (foreign-lambda drawingwand NewDrawingWand)))
+    (set-finalizer! d drawingwand-destroy)
+    d))
 
-(define peek-drawing-wand
+(define peek-drawingwand
   (foreign-lambda drawinfo PeekDrawingWand (const drawingwand)))
 
-(define pop-drawing-wand
+(define pop-drawingwand
   (foreign-lambda bool PopDrawingWand drawingwand))
 
-(define push-drawing-wand
+(define push-drawingwand
   (foreign-lambda bool PushDrawingWand drawingwand))
 
 
