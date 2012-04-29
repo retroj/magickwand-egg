@@ -831,7 +831,7 @@
   (magickrealtype index magickpixelpacket-index))
 
 ;;XXX: would be nice to have a complete definition here
-(define-foreign-type pixelpacket (c-pointer (struct _PixelPacket)))
+;; (define-foreign-type pixelpacket (c-pointer (struct _PixelPacket)))
 
 ;;XXX: would be nice to have a complete definition here
 (define-foreign-type drawinfo (c-pointer (struct _DrawInfo)))
@@ -2307,7 +2307,6 @@
 ;; hsl color, given by 3 doubles
 ;; colormap index
 ;; color by magickpixelpacket
-;; color by pixelpacket (PixelSetQuantumColor) (not what this is)
 ;; to set RGB, RGBA, or CMYK, set each value independently, or use a *packet type
 (define new-pixel-wand
   (foreign-lambda pixelwand NewPixelWand))
@@ -2395,8 +2394,8 @@
 ;;(define pixel-get-opacity-quantum
 ;;  (foreign-lambda quantum PixelGetOpacityQuantum (const pixelwand)))
 
-(define pixel-get-quantum-color
-  (foreign-lambda void PixelGetQuantumColor pixelwand pixelpacket))
+;; (define pixel-get-quantum-color
+;;   (foreign-lambda void PixelGetQuantumColor pixelwand pixelpacket))
 
 (define pixel-get-red
   (foreign-lambda double PixelGetRed (const pixelwand)))
@@ -2474,8 +2473,8 @@
 ;;(define pixel-set-opacity-quantum
 ;;  (foreign-lambda void PixelSetOpacityQuantum pixelwand (const quantum)))
 
-(define pixel-set-quantum-color
-  (foreign-lambda void PixelSetQuantumColor pixelwand (const pixelpacket)))
+;; (define pixel-set-quantum-color
+;;   (foreign-lambda void PixelSetQuantumColor pixelwand (const pixelpacket)))
 
 (define pixel-set-red
   (foreign-lambda void PixelSetRed pixelwand (const double)))
