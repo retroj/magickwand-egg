@@ -960,6 +960,26 @@
 ;;; Magick-property methods
 ;;;
 
+(define magick-get-copyright
+  (foreign-lambda c-string MagickGetCopyright))
+
+(define magick-get-home-url
+  (foreign-lambda c-string MagickGetHomeURL))
+
+(define magick-get-release-date
+  (foreign-lambda c-string MagickGetReleaseDate))
+
+(define (magick-get-version)
+  (let-location ((ignored size_t))
+    ((foreign-lambda c-string MagickGetVersion (c-pointer size_t))
+     (location ignored))))
+
+(define (magick-get-version-as-number)
+  (let-location ((version size_t))
+    ((foreign-lambda c-string MagickGetVersion (c-pointer size_t))
+     (location version))
+    version))
+
 (define magick-delete-image-artifact
   (foreign-lambda bool MagickDeleteImageArtifact
                   magickwand (const c-string)))
@@ -1002,9 +1022,6 @@
 (define magick-get-compression-quality
   (foreign-lambda size_t MagickGetCompressionQuality magickwand))
 
-(define magick-get-copyright
-  (foreign-lambda c-string MagickGetCopyright))
-
 (define magick-set-filename
   (foreign-lambda bool MagickSetFilename magickwand (const c-string)))
 
@@ -1028,9 +1045,6 @@
 
 (define magick-get-gravity
   (foreign-lambda gravity MagickGetGravity magickwand))
-
-(define magick-get-home-url
-  (foreign-lambda c-string MagickGetHomeURL))
 
 (define magick-set-image-artifact
   (foreign-lambda bool MagickSetImageArtifact
@@ -1116,9 +1130,6 @@
 (define magick-get-quantum-range
   (foreign-lambda c-string MagickGetQuantumRange (c-pointer size_t)))
 
-(define magick-get-release-date
-  (foreign-lambda c-string MagickGetReleaseDate))
-
 (define magick-set-resolution
   (foreign-lambda bool MagickSetResolution
                   magickwand (const double) (const double)))
@@ -1159,17 +1170,6 @@
 
 (define magick-get-type
   (foreign-lambda imagetype MagickGetType magickwand))
-
-(define (magick-get-version)
-  (let-location ((ignored size_t))
-    ((foreign-lambda c-string MagickGetVersion (c-pointer size_t))
-     (location ignored))))
-
-(define (magick-get-version-as-number)
-  (let-location ((version size_t))
-    ((foreign-lambda c-string MagickGetVersion (c-pointer size_t))
-     (location version))
-    version))
 
 (define magick-profile-image
   (foreign-lambda bool MagickProfileImage
