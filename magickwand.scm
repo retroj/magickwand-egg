@@ -2277,6 +2277,17 @@
 ;;; Pixelwand methods
 ;;;
 
+(define (pixelwand-get-exception wand)
+  (let-location ((typeout int))
+    (let ((str ((foreign-lambda c-string PixelGetException
+                                (const pixelwand)
+                                (c-pointer "ExceptionType"))
+                wand (location typeout))))
+      (values str (int->exceptiontype typeout)))))
+
+(define pixelwand-get-exception-type
+  (foreign-lambda exceptiontype PixelGetExceptionType (const pixelwand)))
+
 (define clear-pixelwand
   (foreign-lambda void ClearPixelWand pixelwand))
 
@@ -2330,11 +2341,15 @@
 (define pixelwand-alpha
   (foreign-lambda double PixelGetAlpha (const pixelwand)))
 
+(set! (setter pixelwand-alpha) pixelwand-alpha-set!)
+
 ;;(define pixelwand-alpha-quantum-set!
 ;;  (foreign-lambda void PixelSetAlphaQuantum pixelwand (const quantum)))
 
 ;;(define pixelwand-alpha-quantum
 ;;  (foreign-lambda quantum PixelGetAlphaQuantum (const pixelwand)))
+
+;;(set! (setter pixelwand-alpha-quantum) pixelwand-alpha-quantum-set!)
 
 (define pixelwand-black-set!
   (foreign-lambda void PixelSetBlack pixelwand (const double)))
@@ -2342,11 +2357,15 @@
 (define pixelwand-black
   (foreign-lambda double PixelGetBlack (const pixelwand)))
 
+(set! (setter pixelwand-black) pixelwand-black-set!)
+
 ;;(define pixelwand-black-quantum-set!
 ;;  (foreign-lambda void PixelSetBlackQuantum pixelwand (const quantum)))
 
 ;;(define pixelwand-black-quantum
 ;;  (foreign-lambda quantum PixelGetBlackQuantum (const pixelwand)))
+
+;;(set! (setter pixelwand-black-quantum) pixelwand-black-quantum-set!)
 
 (define pixelwand-blue-set!
   (foreign-lambda void PixelSetBlue pixelwand (const double)))
@@ -2354,11 +2373,15 @@
 (define pixelwand-blue
   (foreign-lambda double PixelGetBlue (const pixelwand)))
 
+(set! (setter pixelwand-blue) pixelwand-blue-set!)
+
 ;;(define pixelwand-blue-quantum-set!
 ;;  (foreign-lambda void PixelSetBlueQuantum pixelwand (const quantum)))
 
 ;;(define pixelwand-blue-quantum
 ;;  (foreign-lambda quantum PixelGetBlueQuantum (const pixelwand)))
+
+;;(set! (setter pixelwand-blue-quantum) pixelwand-blue-quantum-set!)
 
 (define pixelwand-color-set!
   (foreign-lambda bool PixelSetColor pixelwand (const c-string)))
@@ -2380,11 +2403,15 @@
 (define pixelwand-color-count
   (foreign-lambda size_t PixelGetColorCount (const pixelwand)))
 
+(set! (setter pixelwand-color-count) pixelwand-color-count-set!)
+
 (define pixelwand-cyan-set!
   (foreign-lambda void PixelSetCyan pixelwand (const double)))
 
 (define pixelwand-cyan
   (foreign-lambda double PixelGetCyan (const pixelwand)))
+
+(set! (setter pixelwand-cyan) pixelwand-cyan-set!)
 
 ;;(define pixelwand-cyan-quantum-set!
 ;;  (foreign-lambda void PixelSetCyanQuantum pixelwand (const quantum)))
@@ -2392,16 +2419,7 @@
 ;;(define pixelwand-cyan-quantum
 ;;  (foreign-lambda quantum PixelGetCyanQuantum (const pixelwand)))
 
-(define (pixelwand-exception wand)
-  (let-location ((typeout int))
-    (let ((str ((foreign-lambda c-string PixelGetException
-                                (const pixelwand)
-                                (c-pointer "ExceptionType"))
-                wand (location typeout))))
-      (values str (int->exceptiontype typeout)))))
-
-(define pixelwand-exception-type
-  (foreign-lambda exceptiontype PixelGetExceptionType (const pixelwand)))
+;;(set! (setter pixelwand-cyan-quantum) pixelwand-cyan-quantum-set!)
 
 (define pixelwand-fuzz-set!
   (foreign-lambda void PixelSetFuzz pixelwand (const double)))
@@ -2409,11 +2427,15 @@
 (define pixelwand-fuzz
   (foreign-lambda double PixelGetFuzz (const pixelwand)))
 
+(set! (setter pixelwand-fuzz) pixelwand-fuzz-set!)
+
 (define pixelwand-green-set!
   (foreign-lambda void PixelSetGreen pixelwand (const double)))
 
 (define pixelwand-green
   (foreign-lambda double PixelGetGreen (const pixelwand)))
+
+(set! (setter pixelwand-green) pixelwand-green-set!)
 
 ;;(define pixelwand-green-quantum-set!
 ;;  (foreign-lambda void PixelSetGreenQuantum pixelwand (const quantum)))
@@ -2421,6 +2443,9 @@
 ;;(define pixelwand-green-quantum
 ;;  (foreign-lambda quantum PixelGetGreenQuantum (const pixelwand)))
 
+;;(set! (setter pixelwand-green-quantum) pixelwand-green-quantum-set!)
+
+;;XXX: will need an hsl-color object if want a generalized setter
 (define pixelwand-hsl-set!
   (foreign-lambda void PixelSetHSL
                   pixelwand (const double) (const double) (const double)))
@@ -2436,17 +2461,23 @@
 ;;(define pixelwand-index
 ;;  (foreign-lambda indexpacket PixelGetIndex (c-pointer double)))
 
+;;(set! (setter pixelwand-index) pixelwand-index-set!)
+
 (define pixelwand-magenta-set!
   (foreign-lambda void PixelSetMagenta pixelwand (const double)))
 
 (define pixelwand-magenta
   (foreign-lambda double PixelGetMagenta (const pixelwand)))
 
+(set! (setter pixelwand-magenta) pixelwand-magenta-set!)
+
 ;;(define pixelwand-magenta-quantum-set!
 ;;  (foreign-lambda void PixelSetMagentaQuantum pixelwand (const quantum)))
 
 ;;(define pixelwand-magenta-quantum
 ;;  (foreign-lambda quantum PixelGetMagentaQuantum (const pixelwand)))
+
+;;(set! (setter pixelwand-magenta-quantum) pixelwand-magenta-quantum-set!)
 
 ;; perhaps magickcolor should be grouped with the normal color
 ;; setter.. type dispatch
@@ -2457,11 +2488,15 @@
   (foreign-lambda void PixelGetMagickColor
                   pixelwand magickpixelpacket))
 
+(set! (setter pixelwand-magick-color) pixelwand-magick-color-set!)
+
 (define pixelwand-opacity-set!
   (foreign-lambda void PixelSetOpacity pixelwand (const double)))
 
 (define pixelwand-opacity
   (foreign-lambda double PixelGetOpacity (const pixelwand)))
+
+(set! (setter pixelwand-opacity) pixelwand-opacity-set!)
 
 ;;(define pixelwand-opacity-quantum-set!
 ;;  (foreign-lambda void PixelSetOpacityQuantum pixelwand (const quantum)))
@@ -2469,8 +2504,15 @@
 ;;(define pixelwand-opacity-quantum
 ;;  (foreign-lambda quantum PixelGetOpacityQuantum (const pixelwand)))
 
+;;(set! (setter pixelwand-opacity-quantum) pixelwand-opacity-quantum-set!)
+
+;; (define pixelwand-quantum-color-set!
+;;   (foreign-lambda void PixelSetQuantumColor pixelwand (const pixelpacket)))
+
 ;; (define pixelwand-quantum-color
 ;;   (foreign-lambda void PixelGetQuantumColor pixelwand pixelpacket))
+
+;; (set! (setter pixelwand-quantum-color) pixelwand-quantum-color-set!)
 
 (define pixelwand-red-set!
   (foreign-lambda void PixelSetRed pixelwand (const double)))
@@ -2478,11 +2520,15 @@
 (define pixelwand-red
   (foreign-lambda double PixelGetRed (const pixelwand)))
 
+(set! (setter pixelwand-red) pixelwand-red-set!)
+
 ;;(define pixelwand-red-quantum-set!
 ;;  (foreign-lambda void PixelSetRedQuantum pixelwand (const quantum)))
 
 ;;(define pixelwand-red-quantum
 ;;  (foreign-lambda quantum PixelGetRedQuantum (const pixelwand)))
+
+;;(set! (setter pixelwand-red-quantum) pixelwand-red-quantum-set!)
 
 (define pixelwand-yellow-set!
   (foreign-lambda void PixelSetYellow pixelwand (const double)))
@@ -2490,14 +2536,15 @@
 (define pixelwand-yellow
   (foreign-lambda double PixelGetYellow (const pixelwand)))
 
+(set! (setter pixelwand-yellow) pixelwand-yellow-set!)
+
 ;;(define pixelwand-yellow-quantum-set!
 ;;  (foreign-lambda void PixelSetYellowQuantum pixelwand (const quantum)))
 
 ;;(define pixelwand-yellow-quantum
 ;;  (foreign-lambda quantum PixelGetYellowQuantum (const pixelwand)))
 
-;; (define pixelwand-quantum-color-set!
-;;   (foreign-lambda void PixelSetQuantumColor pixelwand (const pixelpacket)))
+;;(set! (setter pixelwand-yellow-quantum) pixelwand-yellow-quantum-set!)
 
 
 ;;;
