@@ -2288,17 +2288,17 @@
 (define pixelwand-get-exception-type
   (foreign-lambda exceptiontype PixelGetExceptionType (const pixelwand)))
 
-(define clear-pixelwand
+(define pixelwand-clear
   (foreign-lambda void ClearPixelWand pixelwand))
 
-(define clone-pixelwand
+(define pixelwand-clone
   (foreign-lambda pixelwand ClonePixelWand (const pixelwand)))
 
 (define clone-pixelwands
   (foreign-lambda (c-pointer pixelwand) ClonePixelWands
                   (const (c-pointer pixelwand)) (const size_t)))
 
-(define destroy-pixelwand
+(define pixelwand-destroy
   (foreign-lambda pixelwand DestroyPixelWand pixelwand))
 
 (define destroy-pixelwands
@@ -2312,8 +2312,6 @@
 (define pixelwand?
   (foreign-lambda bool IsPixelWand (const pixelwand)))
 
-;; finalizer: destroy-pixelwand
-;; string color
 ;; fuzz
 ;; hsl color, given by 3 doubles
 ;; colormap index
@@ -2326,7 +2324,7 @@
       p))
    (()
     (let ((p ((foreign-lambda pixelwand NewPixelWand))))
-      (set-finalizer! p destroy-pixelwand)
+      (set-finalizer! p pixelwand-destroy)
       p))))
 
 (define new-pixelwands
