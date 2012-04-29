@@ -2210,6 +2210,8 @@
 (define pixel-iterator?
   (foreign-lambda bool IsPixelIterator (const pixeliterator)))
 
+;; NewPixelIterator may return NULL, in which case we should check for an
+;; exception with MagickGetException
 (define (new-pixel-iterator wand)
   (let ((iterator
          ((foreign-lambda pixeliterator NewPixelIterator magickwand)
@@ -2297,6 +2299,16 @@
 (define pixel-wand?
   (foreign-lambda bool IsPixelWand (const pixelwand)))
 
+;; finalizer: destroy-pixel-wand
+;; string color
+;; color count (what is this?)
+;; another pixelwand
+;; fuzz
+;; hsl color, given by 3 doubles
+;; colormap index
+;; color by magickpixelpacket
+;; color by pixelpacket (PixelSetQuantumColor) (not what this is)
+;; to set RGB, RGBA, or CMYK, set each value independently, or use a *packet type
 (define new-pixel-wand
   (foreign-lambda pixelwand NewPixelWand))
 
@@ -2970,6 +2982,7 @@
 (define drawing-wand?
   (foreign-lambda bool IsDrawingWand (const drawingwand)))
 
+;; finalizer: destroy-drawing-wand
 (define new-drawing-wand
   (foreign-lambda drawingwand NewDrawingWand))
 
@@ -3039,6 +3052,8 @@
 (define wand-view?
   (foreign-lambda bool IsWandView (const wandview)))
 
+;; NewWandView may return NULL, in which case we check for an exception
+;; with ThrowWandException
 (define new-wand-view
   (foreign-lambda wandview NewWandView magickwand))
 
@@ -3065,6 +3080,7 @@
 ;;                  transferwandviewmethod
 ;;                  c-pointer))
 
+;; MagickGetException on false
 ;;(define update-wand-view-iterator
 ;;  (foreign-lambda bool UpdateWandViewIterator
 ;;                  wandview updatewandviewmethod c-pointer))
