@@ -3040,7 +3040,7 @@
   (foreign-lambda bool IsDrawingWand (const drawingwand)))
 
 (define (make-drawingwand)
-  (let ((d (foreign-lambda drawingwand NewDrawingWand)))
+  (let ((d ((foreign-lambda drawingwand NewDrawingWand))))
     (set-finalizer! d drawingwand-destroy)
     d))
 
