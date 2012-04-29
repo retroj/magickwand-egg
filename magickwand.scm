@@ -928,6 +928,8 @@
 (define magick-set-first-iterator
   (foreign-lambda void MagickSetFirstIterator magickwand))
 
+;; can return false, but does not raise an exception.
+;; maybe we should use a continuable condition?
 (define magick-set-iterator-index
   (foreign-lambda bool MagickSetIteratorIndex magickwand (const ssize_t)))
 
@@ -1209,151 +1211,122 @@
 (define get-image-from-magick-wand
   (foreign-lambda image GetImageFromMagickWand magickwand))
 
-(define magick-adaptive-blur-image
-  (foreign-lambda bool MagickAdaptiveBlurImage
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-adaptive-blur-image wand radius sigma)
+  (MagickAdaptiveBlurImage magickwand (const double) (const double)))
 
-(define magick-adaptive-blur-image-channel
-  (foreign-lambda bool MagickAdaptiveBlurImageChannel
-                  magickwand (const channeltype) (const double) (const double)))
+(define-magick-image-op (magick-adaptive-blur-image-channel wand channel radius sigma)
+  (MagickAdaptiveBlurImageChannel magickwand (const channeltype) (const double) (const double)))
 
-(define magick-adaptive-resize-image
-  (foreign-lambda bool MagickAdaptiveResizeImage
-                  magickwand (const size_t) (const size_t)))
+(define-magick-image-op (magick-adaptive-resize-image wand columns rows)
+  (MagickAdaptiveResizeImage magickwand (const size_t) (const size_t)))
 
-(define magick-adaptive-sharpen-image
-  (foreign-lambda bool MagickAdaptiveSharpenImage
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-adaptive-sharpen-image wand radius sigma)
+  (MagickAdaptiveSharpenImage magickwand (const double) (const double)))
 
-(define magick-adaptive-sharpen-image-channel
-  (foreign-lambda bool MagickAdaptiveSharpenImageChannel
-                  magickwand (const channeltype) (const double) (const double)))
+(define-magick-image-op (magick-adaptive-sharpen-image-channel wand channel radius sigma)
+  (MagickAdaptiveSharpenImageChannel magickwand (const channeltype) (const double) (const double)))
 
-(define magick-adaptive-threshold-image
-  (foreign-lambda bool MagickAdaptiveThresholdImage
-                  magickwand (const size_t) (const size_t) (const ssize_t)))
+(define-magick-image-op (magick-adaptive-threshold-image wand width height offset)
+  (MagickAdaptiveThresholdImage magickwand (const size_t) (const size_t) (const ssize_t)))
 
-(define magick-add-image
-  (foreign-lambda bool MagickAddImage
-                  magickwand (const magickwand)))
+(define-magick-image-op (magick-add-image wand add_wand)
+  (MagickAddImage magickwand (const magickwand)))
 
-(define magick-add-noise-image
-  (foreign-lambda bool MagickAddNoiseImage
-                  magickwand (const noisetype)))
+(define-magick-image-op (magick-add-noise-image wand noise-type)
+  (MagickAddNoiseImage magickwand (const noisetype)))
 
-(define magick-add-noise-image-channel
-  (foreign-lambda bool MagickAddNoiseImageChannel
-                  magickwand (const channeltype) (const noisetype)))
+(define-magick-image-op (magick-add-noise-image-channel wand channel noise-type)
+  (MagickAddNoiseImageChannel magickwand (const channeltype) (const noisetype)))
 
-(define magick-affine-transform-image
-  (foreign-lambda bool MagickAffineTransformImage
-                  magickwand (const drawingwand)))
+(define-magick-image-op (magick-affine-transform-image wand drawing-wand)
+  (MagickAffineTransformImage magickwand (const drawingwand)))
 
-(define magick-annotate-image
-  (foreign-lambda bool MagickAnnotateImage
-                  magickwand (const drawingwand) (const double) (const double)
-                  (const double) (const c-string)))
+(define-magick-image-op (magick-annotate-image wand drawing-wand x y angle text)
+  (MagickAnnotateImage magickwand (const drawingwand) (const double) (const double)
+                       (const double) (const c-string)))
 
-(define magick-animate-images
-  (foreign-lambda bool MagickAnimateImages magickwand (const c-string)))
+(define-magick-image-op (magick-animate-images wand server-name)
+  (MagickAnimateImages magickwand (const c-string)))
 
 (define magick-append-images
   (foreign-lambda magickwand MagickAppendImages magickwand (const bool)))
 
-(define magick-auto-gamma-image
-  (foreign-lambda bool MagickAutoGammaImage magickwand))
+(define-magick-image-op (magick-auto-gamma-image wand)
+  (MagickAutoGammaImage magickwand))
 
-(define magick-auto-gamma-image-channel
-  (foreign-lambda bool MagickAutoGammaImageChannel
-                  magickwand (const channeltype)))
+(define-magick-image-op (magick-auto-gamma-image-channel wand channel)
+  (MagickAutoGammaImageChannel magickwand (const channeltype)))
 
-(define magick-auto-level-image
-  (foreign-lambda bool MagickAutoLevelImage magickwand))
+(define-magick-image-op (magick-auto-level-image wand)
+  (MagickAutoLevelImage magickwand))
 
-(define magick-auto-level-image-channel
-  (foreign-lambda bool MagickAutoLevelImageChannel
-                  magickwand (const channeltype)))
+(define-magick-image-op (magick-auto-level-image-channel wand channel)
+  (MagickAutoLevelImageChannel magickwand (const channeltype)))
 
-(define magick-black-threshold-image
-  (foreign-lambda bool MagickBlackThresholdImage
-                  magickwand (const pixelwand)))
+(define-magick-image-op (magick-black-threshold-image wand threshold)
+  (MagickBlackThresholdImage magickwand (const pixelwand)))
 
-(define magick-blue-shift-image
-  (foreign-lambda bool MagickBlueShiftImage magickwand (const double)))
+(define-magick-image-op (magick-blue-shift-image wand factor)
+  (MagickBlueShiftImage magickwand (const double)))
 
-(define magick-blur-image
-  (foreign-lambda bool MagickBlurImage
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-blur-image wand radius sigma)
+  (MagickBlurImage magickwand (const double) (const double)))
 
-(define magick-blur-image-channel
-  (foreign-lambda bool MagickBlurImageChannel
-                  magickwand (const channeltype)
-                  (const double) (const double)))
+(define-magick-image-op (magick-blur-image-channel wand channel radius sigma)
+  (MagickBlurImageChannel magickwand (const channeltype) (const double) (const double)))
 
-(define magick-border-image
-  (foreign-lambda bool MagickBorderImage
-                  magickwand (const pixelwand) (const size_t) (const size_t)))
+(define-magick-image-op (magick-border-image wand bordercolor width height)
+  (MagickBorderImage magickwand (const pixelwand) (const size_t) (const size_t)))
 
-(define magick-brightness-contrast-image
-  (foreign-lambda bool MagickBrightnessContrastImage
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-brightness-contrast-image wand brightness contrast)
+  (MagickBrightnessContrastImage magickwand (const double) (const double)))
 
-(define magick-brightness-contrast-image-channel
-  (foreign-lambda bool MagickBrightnessContrastImageChannel
-                  magickwand (const channeltype) (const double) (const double)))
+(define-magick-image-op (magick-brightness-contrast-image-channel wand channel brightness contrast)
+  (MagickBrightnessContrastImageChannel magickwand (const channeltype) (const double) (const double)))
 
-(define magick-charcoal-image
-  (foreign-lambda bool MagickCharcoalImage
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-charcoal-image wand radius sigma)
+  (MagickCharcoalImage magickwand (const double) (const double)))
 
-(define magick-chop-image
-  (foreign-lambda bool MagickChopImage
-                  magickwand (const size_t) (const size_t)
-                  (const ssize_t) (const ssize_t)))
+(define-magick-image-op (magick-chop-image wand width height x y)
+  (MagickChopImage magickwand (const size_t) (const size_t)
+                   (const ssize_t) (const ssize_t)))
 
-(define magick-clamp-image
-  (foreign-lambda bool MagickClampImage magickwand))
+(define-magick-image-op (magick-clamp-image wand)
+  (MagickClampImage magickwand))
 
-(define magick-clamp-image-channel
-  (foreign-lambda bool MagickClampImageChannel magickwand (const channeltype)))
+(define-magick-image-op (magick-clamp-image-channel wand channel)
+  (MagickClampImageChannel magickwand (const channeltype)))
 
-(define magick-clip-image
-  (foreign-lambda bool MagickClipImage magickwand))
+(define-magick-image-op (magick-clip-image wand)
+  (MagickClipImage magickwand))
 
-(define magick-clip-image-path
-  (foreign-lambda bool MagickClipImagePath
-                  magickwand (const c-string) (const bool)))
+(define-magick-image-op (magick-clip-image-path wand pathname inside)
+  (MagickClipImagePath magickwand (const c-string) (const bool)))
 
-(define magick-clut-image
-  (foreign-lambda bool MagickClutImage
-                  magickwand (const magickwand)))
+(define-magick-image-op (magick-clut-image wand clut-wand)
+  (MagickClutImage magickwand (const magickwand)))
 
-(define magick-clut-image-channel
-  (foreign-lambda bool MagickClutImageChannel
-                  magickwand (const channeltype) (const magickwand)))
+(define-magick-image-op (magick-clut-image-channel wand channel clut-wand)
+  (MagickClutImageChannel magickwand (const channeltype) (const magickwand)))
 
 (define magick-coalesce-images
   (foreign-lambda magickwand MagickCoalesceImages magickwand))
 
-(define magick-color-decision-list-image
-  (foreign-lambda bool MagickColorDecisionListImage
-                  magickwand (const c-string)))
+(define-magick-image-op (magick-color-decision-list-image wand color-correction-collection)
+  (MagickColorDecisionListImage magickwand (const c-string)))
 
-(define magick-colorize-image
-  (foreign-lambda bool MagickColorizeImage
-                  magickwand (const pixelwand) (const pixelwand)))
+(define-magick-image-op (magick-colorize-image wand colorize opacity)
+  (MagickColorizeImage magickwand (const pixelwand) (const pixelwand)))
 
-(define magick-color-matrix-image
-  (foreign-lambda bool MagickColorMatrixImage
-                  magickwand (const kernelinfo)))
+(define-magick-image-op (magick-color-matrix-image wand color-matrix)
+  (MagickColorMatrixImage magickwand (const kernelinfo)))
 
 (define magick-combine-images
   (foreign-lambda magickwand MagickCombineImages
                   magickwand (const channeltype)))
 
-(define magick-comment-image
-  (foreign-lambda bool MagickCommentImage
-                  magickwand (const c-string)))
+(define-magick-image-op (magick-comment-image wand comment)
+  (MagickCommentImage magickwand (const c-string)))
 
 (define magick-compare-image-channels
   (foreign-lambda magickwand MagickCompareImageChannels
@@ -1369,205 +1342,159 @@
                   magickwand (const magickwand)
                   (const metrictype) (c-pointer double)))
 
-(define magick-composite-image
-  (foreign-lambda bool MagickCompositeImage
-                  magickwand (const magickwand)
-                  (const compositeoperator)
-                  (const ssize_t) (const ssize_t)))
+(define-magick-image-op (magick-composite-image wand source-wand compose x y)
+  (MagickCompositeImage magickwand (const magickwand) (const compositeoperator)
+                        (const ssize_t) (const ssize_t)))
 
-(define magick-composite-image-channel
-  (foreign-lambda bool MagickCompositeImageChannel
-                  magickwand (const channeltype) (const magickwand)
-                  (const compositeoperator)
-                  (const ssize_t) (const ssize_t)))
+(define-magick-image-op (magick-composite-image-channel wand channel source-wand compose x y)
+  (MagickCompositeImageChannel magickwand (const channeltype) (const magickwand)
+                               (const compositeoperator) (const ssize_t) (const ssize_t)))
 
-(define magick-composite-layers
-  (foreign-lambda bool MagickCompositeLayers
-                  magickwand (const magickwand)
-                  (const compositeoperator)
-                  (const ssize_t) (const ssize_t)))
+(define-magick-image-op (magick-composite-layers wand source-wand compose x y)
+  (MagickCompositeLayers magickwand (const magickwand) (const compositeoperator)
+                         (const ssize_t) (const ssize_t)))
 
-(define magick-contrast-image
-  (foreign-lambda bool MagickContrastImage
-                  magickwand (const bool)))
+(define-magick-image-op (magick-contrast-image wand sharpen)
+  (MagickContrastImage magickwand (const bool)))
 
-(define magick-contrast-stretch-image
-  (foreign-lambda bool MagickContrastStretchImage
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-contrast-stretch-image wand black-point white-point)
+  (MagickContrastStretchImage magickwand (const double) (const double)))
 
-(define magick-contrast-stretch-image-channel
-  (foreign-lambda bool MagickContrastStretchImageChannel
-                  magickwand (const channeltype)
-                  (const double) (const double)))
+(define-magick-image-op (magick-contrast-stretch-image-channel wand channel black-point white-point)
+  (MagickContrastStretchImageChannel magickwand (const channeltype) (const double) (const double)))
 
-(define magick-convolve-image
-  (foreign-lambda bool MagickConvolveImage
-                  magickwand (const size_t) (const (c-pointer double))))
+(define-magick-image-op (magick-convolve-image wand order kernel)
+  (MagickConvolveImage magickwand (const size_t) (const (c-pointer double))))
 
-(define magick-convolve-image-channel
-  (foreign-lambda bool MagickConvolveImageChannel
-                  magickwand (const channeltype)
-                  (const size_t) (const (c-pointer double))))
+(define-magick-image-op (magick-convolve-image-channel wand channel order kernel)
+  (MagickConvolveImageChannel magickwand (const channeltype) (const size_t)
+                              (const (c-pointer double))))
 
-(define magick-crop-image
-  (foreign-lambda bool MagickCropImage
-                  magickwand (const size_t) (const size_t)
-                  (const ssize_t) (const ssize_t)))
+(define-magick-image-op (magick-crop-image wand width height x y)
+  (MagickCropImage magickwand (const size_t) (const size_t)
+                   (const ssize_t) (const ssize_t)))
 
-(define magick-cycle-colormap-image
-  (foreign-lambda bool MagickCycleColormapImage
-                  magickwand (const ssize_t)))
+(define-magick-image-op (magick-cycle-colormap-image wand displace)
+  (MagickCycleColormapImage magickwand (const ssize_t)))
 
-(define magick-constitute-image
-  (foreign-lambda bool MagickConstituteImage
-                  magickwand (const size_t) (const size_t)
-                  (const c-string) (const storagetype) c-pointer))
+(define-magick-image-op (magick-constitute-image wand columns rows map storage pixels)
+  (MagickConstituteImage magickwand (const size_t) (const size_t) (const c-string)
+                         (const storagetype) c-pointer))
 
-(define magick-decipher-image
-  (foreign-lambda bool MagickDecipherImage
-                  magickwand (const c-string)))
+(define-magick-image-op (magick-decipher-image wand passphrase)
+  (MagickDecipherImage magickwand (const c-string)))
 
 (define magick-deconstruct-images
   (foreign-lambda magickwand MagickDeconstructImages magickwand))
 
-(define magick-deskew-image
-  (foreign-lambda bool MagickDeskewImage
-                  magickwand (const double)))
+(define-magick-image-op (magick-deskew-image wand threshold)
+  (MagickDeskewImage magickwand (const double)))
 
-(define magick-despeckle-image
-  (foreign-lambda bool MagickDespeckleImage magickwand))
+(define-magick-image-op (magick-despeckle-image wand)
+  (MagickDespeckleImage magickwand))
 
 (define magick-destroy-image
   (foreign-lambda image MagickDestroyImage image))
 
-(define magick-display-image
-  (foreign-lambda bool MagickDisplayImage magickwand (const c-string)))
+(define-magick-image-op (magick-display-image wand server-name)
+  (MagickDisplayImage magickwand (const c-string)))
 
-(define magick-display-images
-  (foreign-lambda bool MagickDisplayImages magickwand (const c-string)))
+(define-magick-image-op (magick-display-images wand server-name)
+  (MagickDisplayImages magickwand (const c-string)))
 
-(define magick-distort-image
-  (foreign-lambda bool MagickDistortImage
-                  magickwand (const distortimagemethod)
-                  (const size_t) (const (c-pointer double))
-                  (const bool)))
+(define-magick-image-op (magick-distort-image wand method number-arguments arguments bestfit)
+  (MagickDistortImage magickwand (const distortimagemethod) (const size_t)
+                      (const (c-pointer double)) (const bool)))
 
-(define magick-draw-image
-  (foreign-lambda bool MagickDrawImage
-                  magickwand (const drawingwand)))
+(define-magick-image-op (magick-draw-image wand drawing-wand)
+  (MagickDrawImage magickwand (const drawingwand)))
 
-(define magick-edge-image
-  (foreign-lambda bool MagickEdgeImage
-                  magickwand (const double)))
+(define-magick-image-op (magick-edge-image wand radius)
+  (MagickEdgeImage magickwand (const double)))
 
-(define magick-emboss-image
-  (foreign-lambda bool MagickEmbossImage
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-emboss-image wand radius sigma)
+  (MagickEmbossImage magickwand (const double) (const double)))
 
-(define magick-encipher-image
-  (foreign-lambda bool MagickEncipherImage
-                  magickwand (const c-string)))
+(define-magick-image-op (magick-encipher-image wand passphrase)
+  (MagickEncipherImage magickwand (const c-string)))
 
-(define magick-enhance-image
-  (foreign-lambda bool MagickEnhanceImage magickwand))
+(define-magick-image-op (magick-enhance-image wand)
+  (MagickEnhanceImage magickwand))
 
-(define magick-equalize-image
-  (foreign-lambda bool MagickEqualizeImage magickwand))
+(define-magick-image-op (magick-equalize-image wand)
+  (MagickEqualizeImage magickwand))
 
-(define magick-equalize-image-channel
-  (foreign-lambda bool MagickEqualizeImageChannel
-                  magickwand (const channeltype)))
+(define-magick-image-op (magick-equalize-image-channel wand channel)
+  (MagickEqualizeImageChannel magickwand (const channeltype)))
 
-(define magick-evaluate-image
-  (foreign-lambda bool MagickEvaluateImage
-                  magickwand (const magickevaluateoperator)
-                  (const double)))
+(define-magick-image-op (magick-evaluate-image wand operator value)
+  (MagickEvaluateImage magickwand (const magickevaluateoperator) (const double)))
 
-(define magick-evaluate-images
-  (foreign-lambda bool MagickEvaluateImages
-                  magickwand (const magickevaluateoperator)))
+(define-magick-image-op (magick-evaluate-images wand operator)
+  (MagickEvaluateImages magickwand (const magickevaluateoperator)))
 
-(define magick-evaluate-image-channel
-  (foreign-lambda bool MagickEvaluateImageChannel
-                  magickwand (const channeltype)
-                  (const magickevaluateoperator)
-                  (const double)))
+(define-magick-image-op (magick-evaluate-image-channel wand channel operator value)
+  (MagickEvaluateImageChannel magickwand (const channeltype)
+                              (const magickevaluateoperator)
+                              (const double)))
 
-(define magick-export-image-pixels
-  (foreign-lambda bool MagickExportImagePixels
-                  magickwand (const ssize_t) (const ssize_t)
-                  (const size_t) (const size_t)
-                  (const c-string) (const storagetype)
-                  c-pointer))
+(define-magick-image-op (magick-export-image-pixels wand x y columns rows map storage pixels)
+  (MagickExportImagePixels magickwand (const ssize_t) (const ssize_t) (const size_t)
+                           (const size_t) (const c-string) (const storagetype) c-pointer))
 
-(define magick-extent-image
-  (foreign-lambda bool MagickExtentImage
-                  magickwand (const size_t) (const size_t)
-                  (const ssize_t) (const ssize_t)))
+(define-magick-image-op (magick-extent-image wand width height x y)
+  (MagickExtentImage magickwand (const size_t) (const size_t)
+                     (const ssize_t) (const ssize_t)))
 
-(define magick-filter-image
-  (foreign-lambda bool MagickFilterImage
-                  magickwand (const kernelinfo)))
+(define-magick-image-op (magick-filter-image wand kernel)
+  (MagickFilterImage magickwand (const kernelinfo)))
 
-(define magick-filter-image-channel
-  (foreign-lambda bool MagickFilterImageChannel
-                  magickwand (const channeltype) (const kernelinfo)))
+(define-magick-image-op (magick-filter-image-channel wand channel kernel)
+  (MagickFilterImageChannel magickwand (const channeltype) (const kernelinfo)))
 
-(define magick-flip-image
-  (foreign-lambda bool MagickFlipImage magickwand))
+(define-magick-image-op (magick-flip-image wand)
+  (MagickFlipImage magickwand))
 
-(define magick-floodfill-paint-image
-  (foreign-lambda bool MagickFloodfillPaintImage
-                  magickwand (const channeltype) (const pixelwand)
-                  (const double) (const pixelwand)
-                  (const ssize_t) (const ssize_t)
-                  (const bool)))
+(define-magick-image-op (magick-floodfill-paint-image wand channel fill fuzz bordercolor x y invert)
+  (MagickFloodfillPaintImage magickwand (const channeltype) (const pixelwand) (const double)
+                             (const pixelwand) (const ssize_t) (const ssize_t) (const bool)))
 
-(define magick-flop-image
-  (foreign-lambda bool MagickFlopImage magickwand))
+(define-magick-image-op (magick-flop-image wand)
+  (MagickFlopImage magickwand))
 
-(define magick-forward-fourier-transform-image
-  (foreign-lambda bool MagickForwardFourierTransformImage
-                  magickwand (const bool)))
+(define-magick-image-op (magick-forward-fourier-transform-image wand magnitude)
+  (MagickForwardFourierTransformImage magickwand (const bool)))
 
-(define magick-frame-image
-  (foreign-lambda bool MagickFrameImage
-                  magickwand (const pixelwand)
-                  (const size_t) (const size_t)
-                  (const ssize_t) (const ssize_t)))
+(define-magick-image-op (magick-frame-image wand matte-color width height inner-bevel outer-bevel)
+  (MagickFrameImage magickwand (const pixelwand) (const size_t) (const size_t)
+                    (const ssize_t) (const ssize_t)))
 
-(define magick-function-image
-  (foreign-lambda bool MagickFunctionImage
-                  magickwand (const magickfunction)
-                  (const size_t) (const (c-pointer double))))
+(define-magick-image-op (magick-function-image wand function number-arguments arguments)
+  (MagickFunctionImage magickwand (const magickfunction) (const size_t)
+                       (const (c-pointer double))))
 
-(define magick-function-image-channel
-  (foreign-lambda bool MagickFunctionImageChannel
-                  magickwand (const channeltype) (const magickfunction)
-                  (const size_t) (const (c-pointer double))))
+(define-magick-image-op (magick-function-image-channel wand channel function number-arguments arguments)
+  (MagickFunctionImageChannel magickwand (const channeltype) (const magickfunction) (const size_t)
+                              (const (c-pointer double))))
 
-(define magick-fx-image
-  (foreign-lambda magickwand MagickFxImage magickwand (const c-string)))
+(define-magick-image-op (magick-fx-image wand expression)
+  (MagickFxImage magickwand (const c-string)))
 
-(define magick-fx-image-channel
-  (foreign-lambda magickwand MagickFxImageChannel
-                  magickwand (const channeltype) (const c-string)))
+(define-magick-image-op (magick-fx-image-channel wand channel expression)
+  (MagickFxImageChannel magickwand (const channeltype) (const c-string)))
 
-(define magick-gamma-image
-  (foreign-lambda bool MagickGammaImage magickwand (const double)))
+(define-magick-image-op (magick-gamma-image wand gamma)
+  (MagickGammaImage magickwand (const double)))
 
-(define magick-gamma-image-channel
-  (foreign-lambda bool MagickGammaImageChannel
-                  magickwand (const channeltype) (const double)))
+(define-magick-image-op (magick-gamma-image-channel wand channel gamma)
+  (MagickGammaImageChannel magickwand (const channeltype) (const double)))
 
-(define magick-gaussian-blur-image
-  (foreign-lambda bool MagickGaussianBlurImage
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-gaussian-blur-image wand radius sigma)
+  (MagickGaussianBlurImage magickwand (const double) (const double)))
 
-(define magick-gaussian-blur-image-channel
-  (foreign-lambda bool MagickGaussianBlurImageChannel
-                  magickwand (const channeltype)
-                  (const double) (const double)))
+(define-magick-image-op (magick-gaussian-blur-image-channel wand channel radius sigmap)
+  (MagickGaussianBlurImageChannel magickwand (const channeltype) (const double)
+                                  (const double)))
 
 (define magick-get-image
   (foreign-lambda magickwand MagickGetImage magickwand))
@@ -1766,12 +1693,11 @@
 (define magick-get-image-total-ink-density
   (foreign-lambda double MagickGetImageTotalInkDensity magickwand))
 
-(define magick-hald-clut-image
-  (foreign-lambda bool MagickHaldClutImage magickwand (const magickwand)))
+(define-magick-image-op (magick-hald-clut-image wand hald-wand)
+  (MagickHaldClutImage magickwand (const magickwand)))
 
-(define magick-hald-clut-image-channel
- (foreign-lambda bool MagickHaldClutImageChannel
-                 magickwand (const channeltype) (const magickwand)))
+(define-magick-image-op (magick-hald-clut-image-channel wand channel hald-wand)
+  (MagickHaldClutImageChannel magickwand (const channeltype) (const magickwand)))
 
 (define magick-has-next-image
   (foreign-lambda bool MagickHasNextImage magickwand))
@@ -1782,9 +1708,10 @@
 (define magick-identify-image
   (foreign-lambda c-string MagickIdentifyImage magickwand))
 
-(define magick-implode-image
-  (foreign-lambda bool MagickImplodeImage magickwand (const double)))
+(define-magick-image-op (magick-implode-image wand amount)
+  (MagickImplodeImage magickwand (const double)))
 
+;; docs say this returns MagickFalse on success, MagickTrue on failure!?
 (define magick-import-image-pixels
   (foreign-lambda bool MagickImportImagePixels
                   magickwand (const ssize_t) (const ssize_t)
@@ -1792,47 +1719,38 @@
                   (const c-string) (const storagetype)
                   (const c-pointer)))
 
-(define magick-inverse-fourier-transform-image
-  (foreign-lambda bool MagickInverseFourierTransformImage
-                  magickwand magickwand (const bool)))
+(define-magick-image-op (magick-inverse-fourier-transform-image magnitude-wand phase-wand magnitude)
+  (MagickInverseFourierTransformImage magickwand magickwand (const bool)))
 
-(define magick-label-image
-  (foreign-lambda bool MagickLabelImage
-                  magickwand (const c-string)))
+(define-magick-image-op (magick-label-image wand label)
+  (MagickLabelImage magickwand (const c-string)))
 
-(define magick-level-image
-  (foreign-lambda bool MagickLevelImage
-                  magickwand (const double) (const double)
-                  (const double)))
+(define-magick-image-op (magick-level-image wand black-point gamma white-point)
+  (MagickLevelImage magickwand (const double) (const double) (const double)))
 
-(define magick-level-image-channel
-  (foreign-lambda bool MagickLevelImageChannel
-                  magickwand (const channeltype)
-                  (const double) (const double)
-                  (const double)))
+(define-magick-image-op (magick-level-image-channel wand channel black-point gamma white-point)
+  (MagickLevelImageChannel magickwand (const channeltype) (const double) (const double)
+                           (const double)))
 
-(define magick-linear-stretch-image
-  (foreign-lambda bool MagickLinearStretchImage
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-linear-stretch-image wand black-point white-point)
+  (MagickLinearStretchImage magickwand (const double) (const double)))
 
-(define magick-liquid-rescale-image
-  (foreign-lambda bool MagickLiquidRescaleImage
-                  magickwand (const size_t) (const size_t)
-                  (const double) (const double)))
+(define-magick-image-op (magick-liquid-rescale-image wand columns rows delta-x rigidity)
+  (MagickLiquidRescaleImage magickwand (const size_t) (const size_t)
+                            (const double) (const double)))
 
-(define magick-magnify-image
-  (foreign-lambda bool MagickMagnifyImage magickwand))
+(define-magick-image-op (magick-magnify-image wand)
+  (MagickMagnifyImage magickwand))
 
 (define magick-merge-image-layers
   (foreign-lambda magickwand MagickMergeImageLayers
                   magickwand (const imagelayermethod)))
 
-(define magick-minify-image
-  (foreign-lambda bool MagickMinifyImage magickwand))
+(define-magick-image-op (magick-minify-image wand)
+  (MagickMinifyImage magickwand))
 
-(define magick-modulate-image
-  (foreign-lambda bool MagickModulateImage
-                  magickwand (const double) (const double) (const double)))
+(define-magick-image-op (magick-modulate-image wand brightness saturation hue)
+  (MagickModulateImage magickwand (const double) (const double) (const double)))
 
 (define magick-montage-image
   (foreign-lambda magickwand MagickMontageImage
@@ -1844,94 +1762,72 @@
   (foreign-lambda magickwand MagickMorphImages
                   magickwand (const size_t)))
 
-(define magick-morphology-image
-  (foreign-lambda bool MagickMorphologyImage
-                  magickwand morphologymethod
-                  (const ssize_t) kernelinfo))
+(define-magick-image-op (magick-morphology-image wand method iterations kernel)
+  (MagickMorphologyImage magickwand morphologymethod (const ssize_t) kernelinfo))
 
-(define magick-morphology-image-channel
-  (foreign-lambda bool MagickMorphologyImageChannel
-                  magickwand channeltype morphologymethod
-                  (const ssize_t) kernelinfo))
+(define-magick-image-op (magick-morphology-image-channel wand channel method iterations kernel)
+  (MagickMorphologyImageChannel magickwand channeltype morphologymethod (const ssize_t) kernelinfo))
 
-(define magick-motion-blur-image
-  (foreign-lambda bool MagickMotionBlurImage
-                  magickwand
-                  (const double) (const double) (const double)))
+(define-magick-image-op (magick-motion-blur-image wand radius sigma angle)
+  (MagickMotionBlurImage magickwand (const double) (const double) (const double)))
 
-(define magick-motion-blur-image-channel
-  (foreign-lambda bool MagickMotionBlurImageChannel
-                  magickwand (const channeltype)
-                  (const double) (const double) (const double)))
+(define-magick-image-op (magick-motion-blur-image-channel wand channel radius sigma angle)
+  (MagickMotionBlurImageChannel magickwand (const channeltype) (const double)
+                                (const double) (const double)))
 
-(define magick-negate-image
-  (foreign-lambda bool MagickNegateImage
-                  magickwand (const bool)))
+(define-magick-image-op (magick-negate-image wand gray)
+  (MagickNegateImage magickwand (const bool)))
 
-(define magick-negate-image-channel
-  (foreign-lambda bool MagickNegateImageChannel
-                  magickwand (const channeltype)
-                  (const bool)))
+(define-magick-image-op (magick-negate-image-channel wand channel gray)
+  (MagickNegateImageChannel magickwand (const channeltype) (const bool)))
 
-(define magick-new-image
-  (foreign-lambda bool MagickNewImage
-                  magickwand (const size_t) (const size_t)
-                  (const pixelwand)))
+(define-magick-image-op (magick-new-image wand columns rows background)
+  (MagickNewImage magickwand (const size_t) (const size_t) (const pixelwand)))
 
 (define magick-next-image
   (foreign-lambda bool MagickNextImage magickwand))
 
-(define magick-normalize-image
-  (foreign-lambda bool MagickNormalizeImage magickwand))
+(define-magick-image-op (magick-normalize-image wand)
+  (MagickNormalizeImage magickwand))
 
-(define magick-normalize-image-channel
- (foreign-lambda bool MagickNormalizeImageChannel
-                 magickwand (const channeltype)))
+(define-magick-image-op (magick-normalize-image-channel wand channel)
+  (MagickNormalizeImageChannel magickwand (const channeltype)))
 
-(define magick-oil-paint-image
-  (foreign-lambda bool MagickOilPaintImage
-                  magickwand (const double)))
+(define-magick-image-op (magick-oil-paint-image wand radius)
+  (MagickOilPaintImage magickwand (const double)))
 
-(define magick-opaque-paint-image
-  (foreign-lambda bool MagickOpaquePaintImage
-                  magickwand (const pixelwand) (const pixelwand)
-                  (const double) (const bool)))
+(define-magick-image-op (magick-opaque-paint-image wand target fill fuzz invert)
+  (MagickOpaquePaintImage magickwand (const pixelwand) (const pixelwand)
+                          (const double) (const bool)))
 
-(define magick-opaque-paint-image-channel
-  (foreign-lambda bool MagickOpaquePaintImageChannel
-                  magickwand (const channeltype)
-                  (const pixelwand) (const pixelwand)
-                  (const double) (const bool)))
+(define-magick-image-op (magick-opaque-paint-image-channel wand channel target fill fuzz invert)
+  (MagickOpaquePaintImageChannel magickwand (const channeltype) (const pixelwand)
+                                 (const pixelwand) (const double) (const bool)))
 
 (define magick-optimize-image-layers
   (foreign-lambda magickwand MagickOptimizeImageLayers magickwand))
 
-(define magick-ordered-posterize-image
-  (foreign-lambda bool MagickOrderedPosterizeImage
-                  magickwand (const c-string)))
+(define-magick-image-op (magick-ordered-posterize-image wand threshold-map)
+  (MagickOrderedPosterizeImage magickwand (const c-string)))
 
-(define magick-ordered-posterize-image-channel
-  (foreign-lambda bool MagickOrderedPosterizeImageChannel
-                  magickwand (const channeltype) (const c-string)))
+(define-magick-image-op (magick-ordered-posterize-image-channel wand channel threshold-map)
+  (MagickOrderedPosterizeImageChannel magickwand (const channeltype) (const c-string)))
 
-(define magick-ping-image
-  (foreign-lambda bool MagickPingImage magickwand (const c-string)))
+(define-magick-image-op (magick-ping-image wand filename)
+  (MagickPingImage magickwand (const c-string)))
 
-(define magick-ping-image-blob
-  (foreign-lambda bool MagickPingImageBlob
-                  magickwand (const c-pointer) (const size_t)))
+(define-magick-image-op (magick-ping-image-blob wand blob length)
+  (MagickPingImageBlob magickwand (const c-pointer) (const size_t)))
 
 ;;(define magick-ping-image-file
 ;;  (foreign-lambda bool MagickPingImageFile
 ;;                  magickwand (c-pointer FILE)))
 
-(define magick-polaroid-image
-  (foreign-lambda bool MagickPolaroidImage
-                  magickwand (const drawingwand) (const double)))
+(define-magick-image-op (magick-polaroid-image wand drawing-wand angle)
+  (MagickPolaroidImage magickwand (const drawingwand) (const double)))
 
-(define magick-posterize-image
-  (foreign-lambda bool MagickPosterizeImage
-                  magickwand (const size_t) (const bool)))
+(define-magick-image-op (magick-posterize-image wand levels dither)
+  (MagickPosterizeImage magickwand (const size_t) (const bool)))
 
 (define magick-preview-images
   (foreign-lambda magickwand MagickPreviewImages
@@ -1940,346 +1836,265 @@
 (define magick-previous-image
   (foreign-lambda bool MagickPreviousImage magickwand))
 
-(define magick-quantize-image
-  (foreign-lambda bool MagickQuantizeImage
-                  magickwand (const size_t) (const colorspace)
-                  (const size_t) (const bool)
-                  (const bool)))
+(define-magick-image-op (magick-quantize-image wand number-colors colorspace treedepth dither measure-error)
+  (MagickQuantizeImage magickwand (const size_t) (const colorspace) (const size_t) (const bool) (const bool)))
 
-(define magick-quantize-images
-  (foreign-lambda bool MagickQuantizeImages
-                  magickwand (const size_t) (const colorspace)
-                  (const size_t) (const bool)
-                  (const bool)))
+(define-magick-image-op (magick-quantize-images wand number-colors colorspace treedepth dither measure-error)
+  (MagickQuantizeImages magickwand (const size_t) (const colorspace) (const size_t) (const bool) (const bool)))
 
-(define magick-radial-blur-image
-  (foreign-lambda bool MagickRadialBlurImage
-                  magickwand (const double)))
+(define-magick-image-op (magick-radial-blur-image wand angle)
+  (MagickRadialBlurImage magickwand (const double)))
 
-(define magick-radial-blur-image-channel
-  (foreign-lambda bool MagickRadialBlurImageChannel
-                  magickwand (const channeltype) (const double)))
+(define-magick-image-op (magick-radial-blur-image-channel wand channel angle)
+  (MagickRadialBlurImageChannel magickwand (const channeltype) (const double)))
 
-(define magick-raise-image
-  (foreign-lambda bool MagickRaiseImage
-                  magickwand (const size_t) (const size_t)
-                  (const ssize_t) (const ssize_t) (const bool)))
+(define-magick-image-op (magick-raise-image wand width height x y raise)
+  (MagickRaiseImage magickwand (const size_t) (const size_t)
+                    (const ssize_t) (const ssize_t) (const bool)))
 
-(define magick-random-threshold-image
-  (foreign-lambda bool MagickRandomThresholdImage
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-random-threshold-image wand low high)
+  (MagickRandomThresholdImage magickwand (const double) (const double)))
 
-(define magick-random-threshold-image-channel
-  (foreign-lambda bool MagickRandomThresholdImageChannel
-                  magickwand (const channeltype)
-                  (const double) (const double)))
+(define-magick-image-op (magick-random-threshold-image-channel wand channel low high)
+  (MagickRandomThresholdImageChannel magickwand (const channeltype)
+                                     (const double) (const double)))
 
 (define-magick-image-op (magick-read-image wand filename)
   (MagickReadImage magickwand (const c-string)))
 
-(define magick-read-image-blob
-  (foreign-lambda bool MagickReadImageBlob
-                  magickwand (const c-pointer) (const size_t)))
+(define-magick-image-op (magick-read-image-blob wand blob length)
+  (MagickReadImageBlob magickwand (const c-pointer) (const size_t)))
 
 ;;(define magick-read-image-file
 ;;  (foreign-lambda bool MagickReadImageFile
 ;;                  magickwand (c-pointer FILE)))
 
-(define magick-remap-image
-  (foreign-lambda bool MagickRemapImage
-                  magickwand (const magickwand) (const dithermethod)))
+(define-magick-image-op (magick-remap-image wand remap-wand method)
+  (MagickRemapImage magickwand (const magickwand) (const dithermethod)))
 
-(define magick-remove-image
-  (foreign-lambda bool MagickRemoveImage magickwand))
+(define-magick-image-op (magick-remove-image wand)
+  (MagickRemoveImage magickwand))
 
-(define magick-resample-image
-  (foreign-lambda bool MagickResampleImage
-                  magickwand (const double) (const double)
-                  (const filtertypes) (const double)))
+(define-magick-image-op (magick-resample-image wand x-resolution y-resolution filter blur)
+  (MagickResampleImage magickwand (const double) (const double)
+                       (const filtertypes) (const double)))
 
-(define magick-reset-image-page
-  (foreign-lambda bool MagickResetImagePage
-                  magickwand (const c-string)))
+(define-magick-image-op (magick-reset-image-page wand page)
+  (MagickResetImagePage magickwand (const c-string)))
 
-(define magick-resize-image
-  (foreign-lambda bool MagickResizeImage
-                  magickwand (const size_t) (const size_t)
-                  (const filtertypes) (const double)))
+(define-magick-image-op (magick-resize-image wand columns rows filter blur)
+  (MagickResizeImage magickwand (const size_t) (const size_t)
+                     (const filtertypes) (const double)))
 
-(define magick-roll-image
-  (foreign-lambda bool MagickRollImage
-                  magickwand (const ssize_t) (const ssize_t)))
+(define-magick-image-op (magick-roll-image wand x y)
+  (MagickRollImage magickwand (const ssize_t) (const ssize_t)))
 
-(define magick-rotate-image
-  (foreign-lambda bool MagickRotateImage
-                  magickwand (const pixelwand) (const double)))
+(define-magick-image-op (magick-rotate-image wand background degrees)
+  (MagickRotateImage magickwand (const pixelwand) (const double)))
 
-(define magick-sample-image
-  (foreign-lambda bool MagickSampleImage
-                  magickwand (const size_t) (const size_t)))
+(define-magick-image-op (magick-sample-image wand columns rows)
+  (MagickSampleImage magickwand (const size_t) (const size_t)))
 
-(define magick-scale-image
-  (foreign-lambda bool MagickScaleImage
-                  magickwand (const size_t) (const size_t)))
+(define-magick-image-op (magick-scale-image wand columns rows)
+  (MagickScaleImage magickwand (const size_t) (const size_t)))
 
-(define magick-segment-image
-  (foreign-lambda bool MagickSegmentImage
-                  magickwand (const colorspace) (const bool)
-                  (const double) (const double)))
+(define-magick-image-op (magick-segment-image wand colorspace verbose cluster-threshold smooth-threshold)
+  (MagickSegmentImage magickwand (const colorspace) (const bool) (const double) (const double)))
 
-(define magick-selective-blur-image
-  (foreign-lambda bool MagickSelectiveBlurImage
-                  magickwand (const double) (const double) (const double)))
+(define-magick-image-op (magick-selective-blur-image wand radius sigma threshold)
+  (MagickSelectiveBlurImage magickwand (const double) (const double) (const double)))
 
-(define magick-selective-blur-image-channel
-  (foreign-lambda bool MagickSelectiveBlurImageChannel
-                  magickwand (const channeltype)
-                  (const double) (const double) (const double)))
+(define-magick-image-op (magick-selective-blur-image-channel wand channel radius sigma threshold)
+  (MagickSelectiveBlurImageChannel magickwand (const channeltype) (const double)
+                                   (const double) (const double)))
 
-(define magick-separate-image-channel
-  (foreign-lambda bool MagickSeparateImageChannel
-                  magickwand (const channeltype)))
+(define-magick-image-op (magick-separate-image-channel wand channel)
+  (MagickSeparateImageChannel magickwand (const channeltype)))
 
-(define magick-sepia-tone-image
-  (foreign-lambda bool MagickSepiaToneImage
-                  magickwand (const double)))
+(define-magick-image-op (magick-sepia-tone-image wand threshold)
+  (MagickSepiaToneImage magickwand (const double)))
 
-(define magick-set-image
-  (foreign-lambda bool MagickSetImage
-                  magickwand (const magickwand)))
+(define-magick-image-op (magick-set-image wand set-wand)
+  (MagickSetImage magickwand (const magickwand)))
 
-(define magick-set-image-alpha-channel
-  (foreign-lambda bool MagickSetImageAlphaChannel
-                  magickwand (const alphachanneltype)))
+(define-magick-image-op (magick-set-image-alpha-channel wand alpha-type)
+  (MagickSetImageAlphaChannel magickwand (const alphachanneltype)))
 
-(define magick-set-image-background-color
-  (foreign-lambda bool MagickSetImageBackgroundColor
-                  magickwand (const pixelwand)))
+(define-magick-image-op (magick-set-image-background-color wand background)
+  (MagickSetImageBackgroundColor magickwand (const pixelwand)))
 
-(define magick-set-image-bias
-  (foreign-lambda bool MagickSetImageBias
-                  magickwand (const double)))
+(define-magick-image-op (magick-set-image-bias wand bias)
+  (MagickSetImageBias magickwand (const double)))
 
-(define magick-set-image-blue-primary
-  (foreign-lambda bool MagickSetImageBluePrimary
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-set-image-blue-primary wand x y)
+  (MagickSetImageBluePrimary magickwand (const double) (const double)))
 
-(define magick-set-image-border-color
-  (foreign-lambda bool MagickSetImageBorderColor
-                  magickwand (const pixelwand)))
+(define-magick-image-op (magick-set-image-border-color wand border)
+  (MagickSetImageBorderColor magickwand (const pixelwand)))
 
-(define magick-set-image-channel-depth
-  (foreign-lambda bool MagickSetImageChannelDepth
-                  magickwand (const channeltype) (const size_t)))
+(define-magick-image-op (magick-set-image-channel-depth wand channel depth)
+  (MagickSetImageChannelDepth magickwand (const channeltype) (const size_t)))
 
-(define magick-set-image-clip-mask
-  (foreign-lambda bool MagickSetImageClipMask
-                  magickwand (const magickwand)))
+(define-magick-image-op (magick-set-image-clip-mask wand clip-mask)
+  (MagickSetImageClipMask magickwand (const magickwand)))
 
-(define magick-set-image-color
-  (foreign-lambda bool MagickSetImageColor
-                  magickwand (const pixelwand)))
+(define-magick-image-op (magick-set-image-color wand color)
+  (MagickSetImageColor magickwand (const pixelwand)))
 
-(define magick-set-image-colormap-color
-  (foreign-lambda bool MagickSetImageColormapColor
-                  magickwand (const size_t) (const pixelwand)))
+(define-magick-image-op (magick-set-image-colormap-color wand index color)
+  (MagickSetImageColormapColor magickwand (const size_t) (const pixelwand)))
 
-(define magick-set-image-colorspace
-  (foreign-lambda bool MagickSetImageColorspace
-                  magickwand (const colorspace)))
+(define-magick-image-op (magick-set-image-colorspace wand colorspace)
+  (MagickSetImageColorspace magickwand (const colorspace)))
 
-(define magick-set-image-compose
-  (foreign-lambda bool MagickSetImageCompose
-                  magickwand (const compositeoperator)))
+(define-magick-image-op (magick-set-image-compose wand compose)
+  (MagickSetImageCompose magickwand (const compositeoperator)))
 
-(define magick-set-image-compression
-  (foreign-lambda bool MagickSetImageCompression
-                  magickwand (const compressiontype)))
+(define-magick-image-op (magick-set-image-compression wand compression)
+  (MagickSetImageCompression magickwand (const compressiontype)))
 
-(define magick-set-image-compression-quality
-  (foreign-lambda bool MagickSetImageCompressionQuality
-                  magickwand (const size_t)))
+(define-magick-image-op (magick-set-image-compression-quality wand quality)
+  (MagickSetImageCompressionQuality magickwand (const size_t)))
 
-(define magick-set-image-delay
-  (foreign-lambda bool MagickSetImageDelay
-                  magickwand (const size_t)))
+(define-magick-image-op (magick-set-image-delay wand delay)
+  (MagickSetImageDelay magickwand (const size_t)))
 
-(define magick-set-image-depth
-  (foreign-lambda bool MagickSetImageDepth
-                  magickwand (const size_t)))
+(define-magick-image-op (magick-set-image-depth wand depth)
+  (MagickSetImageDepth magickwand (const size_t)))
 
-(define magick-set-image-dispose
-  (foreign-lambda bool MagickSetImageDispose
-                  magickwand (const disposetype)))
+(define-magick-image-op (magick-set-image-dispose wand dispose)
+  (MagickSetImageDispose magickwand (const disposetype)))
 
-(define magick-set-image-extent
-  (foreign-lambda bool MagickSetImageExtent
-                  magickwand (const size_t) (const size_t)))
+(define-magick-image-op (magick-set-image-extent wand columns rows)
+  (MagickSetImageExtent magickwand (const size_t) (const size_t)))
 
-(define magick-set-image-filename
-  (foreign-lambda bool MagickSetImageFilename
-                  magickwand (const c-string)))
+(define-magick-image-op (magick-set-image-filename wand filename)
+  (MagickSetImageFilename magickwand (const c-string)))
 
-(define magick-set-image-format
-  (foreign-lambda bool MagickSetImageFormat
-                  magickwand (const c-string)))
+(define-magick-image-op (magick-set-image-format wand format)
+  (MagickSetImageFormat magickwand (const c-string)))
 
-(define magick-set-image-fuzz
-  (foreign-lambda bool MagickSetImageFuzz
-                  magickwand (const double)))
+(define-magick-image-op (magick-set-image-fuzz wand fuzz)
+  (MagickSetImageFuzz magickwand (const double)))
 
-(define magick-set-image-gamma
-  (foreign-lambda bool MagickSetImageGamma
-                  magickwand (const double)))
+(define-magick-image-op (magick-set-image-gamma wand gamma)
+  (MagickSetImageGamma magickwand (const double)))
 
-(define magick-set-image-gravity
-  (foreign-lambda bool MagickSetImageGravity
-                  magickwand (const gravity)))
+(define-magick-image-op (magick-set-image-gravity wand gravity)
+  (MagickSetImageGravity magickwand (const gravity)))
 
-(define magick-set-image-green-primary
-  (foreign-lambda bool MagickSetImageGreenPrimary
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-set-image-green-primary wand x y)
+  (MagickSetImageGreenPrimary magickwand (const double) (const double)))
 
-(define magick-set-image-interlace-scheme
-  (foreign-lambda bool MagickSetImageInterlaceScheme
-                  magickwand (const interlacetype)))
+(define-magick-image-op (magick-set-image-interlace-scheme wand interlace)
+  (MagickSetImageInterlaceScheme magickwand (const interlacetype)))
 
-(define magick-set-image-interpolate-method
-  (foreign-lambda bool MagickSetImageInterpolateMethod
-                  magickwand (const interpolatepixelmethod)))
+(define-magick-image-op (magick-set-image-interpolate-method wand method)
+  (MagickSetImageInterpolateMethod magickwand (const interpolatepixelmethod)))
 
-(define magick-set-image-iterations
-  (foreign-lambda bool MagickSetImageIterations
-                  magickwand (const size_t)))
+(define-magick-image-op (magick-set-image-iterations wand iterations)
+  (MagickSetImageIterations magickwand (const size_t)))
 
-(define magick-set-image-matte
-  (foreign-lambda bool MagickSetImageMatte
-                  magickwand (const bool)))
+(define-magick-image-op (magick-set-image-matte wand matte)
+  (MagickSetImageMatte magickwand (const bool)))
 
-(define magick-set-image-matte-color
-  (foreign-lambda bool MagickSetImageMatteColor
-                  magickwand (const pixelwand)))
+(define-magick-image-op (magick-set-image-matte-color wand matte)
+  (MagickSetImageMatteColor magickwand (const pixelwand)))
 
-(define magick-set-image-opacity
-  (foreign-lambda bool MagickSetImageOpacity
-                  magickwand (const double)))
+(define-magick-image-op (magick-set-image-opacity wand alpha)
+  (MagickSetImageOpacity magickwand (const double)))
 
-(define magick-set-image-orientation
-  (foreign-lambda bool MagickSetImageOrientation
-                  magickwand (const orientation)))
+(define-magick-image-op (magick-set-image-orientation wand orientation)
+  (MagickSetImageOrientation magickwand (const orientation)))
 
-(define magick-set-image-page
-  (foreign-lambda bool MagickSetImagePage
-                  magickwand (const size_t) (const size_t)
-                  (const ssize_t) (const ssize_t)))
+(define-magick-image-op (magick-set-image-page wand width height x y)
+  (MagickSetImagePage magickwand (const size_t) (const size_t)
+                      (const ssize_t) (const ssize_t)))
 
 ;;(define magick-set-image-progress-monitor
 ;;  (foreign-lambda magickprogressmonitor MagickSetImageProgressMonitor
 ;;                  magickwand (const magickprogressmonitor) c-pointer))
 
-(define magick-set-image-red-primary
-  (foreign-lambda bool MagickSetImageRedPrimary
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-set-image-red-primary wand x y)
+  (MagickSetImageRedPrimary magickwand (const double) (const double)))
 
-(define magick-set-image-rendering-intent
-  (foreign-lambda bool MagickSetImageRenderingIntent
-                  magickwand (const renderingintent)))
+(define-magick-image-op (magick-set-image-rendering-intent wand rendering-intent)
+  (MagickSetImageRenderingIntent magickwand (const renderingintent)))
 
-(define magick-set-image-resolution
-  (foreign-lambda bool MagickSetImageResolution
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-set-image-resolution wand x-resolution y-resolution)
+  (MagickSetImageResolution magickwand (const double) (const double)))
 
-(define magick-set-image-scene
-  (foreign-lambda bool MagickSetImageScene
-                  magickwand (const size_t)))
+(define-magick-image-op (magick-set-image-scene wand scene)
+  (MagickSetImageScene magickwand (const size_t)))
 
-(define magick-set-image-ticks-per-second
-  (foreign-lambda bool MagickSetImageTicksPerSecond
-                  magickwand (const ssize_t)))
+(define-magick-image-op (magick-set-image-ticks-per-second wand ticks-per-second)
+  (MagickSetImageTicksPerSecond magickwand (const ssize_t)))
 
-(define magick-set-image-type
-  (foreign-lambda bool MagickSetImageType magickwand (const imagetype)))
+(define-magick-image-op (magick-set-image-type wand image-type)
+  (MagickSetImageType magickwand (const imagetype)))
 
-(define magick-set-image-units
-  (foreign-lambda bool MagickSetImageUnits
-                  magickwand (const resolutiontype)))
+(define-magick-image-op (magick-set-image-units wand units)
+  (MagickSetImageUnits magickwand (const resolutiontype)))
 
 (define magick-set-image-virtual-pixel-method
   (foreign-lambda virtualpixelmethod MagickSetImageVirtualPixelMethod
                   magickwand (const virtualpixelmethod)))
 
-(define magick-set-image-white-point
-  (foreign-lambda bool MagickSetImageWhitePoint
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-set-image-white-point wand x y)
+  (MagickSetImageWhitePoint magickwand (const double) (const double)))
 
-(define magick-shade-image
-  (foreign-lambda bool MagickShadeImage
-                  magickwand (const bool)
-                  (const double) (const double)))
+(define-magick-image-op (magick-shade-image wand gray azimuth elevation)
+  (MagickShadeImage magickwand (const bool) (const double) (const double)))
 
-(define magick-shadow-image
-  (foreign-lambda bool MagickShadowImage
-                  magickwand (const double) (const double)
-                  (const ssize_t) (const ssize_t)))
+(define-magick-image-op (magick-shadow-image wand opacity sigma x y)
+  (MagickShadowImage magickwand (const double) (const double)
+                     (const ssize_t) (const ssize_t)))
 
-(define magick-sharpen-image
-  (foreign-lambda bool MagickSharpenImage
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-sharpen-image wand radius sigma)
+  (MagickSharpenImage magickwand (const double) (const double)))
 
-(define magick-sharpen-image-channel
-  (foreign-lambda bool MagickSharpenImageChannel
-                  magickwand (const channeltype)
-                  (const double) (const double)))
+(define-magick-image-op (magick-sharpen-image-channel wand channel radius sigma)
+  (MagickSharpenImageChannel magickwand (const channeltype)
+                             (const double) (const double)))
 
-(define magick-shave-image
-  (foreign-lambda bool MagickShaveImage
-                  magickwand (const size_t) (const size_t)))
+(define-magick-image-op (magick-shave-image wand columns rows)
+  (MagickShaveImage magickwand (const size_t) (const size_t)))
 
-(define magick-shear-image
-  (foreign-lambda bool MagickShearImage
-                  magickwand (const pixelwand)
-                  (const double) (const double)))
+(define-magick-image-op (magick-shear-image wand background x-shear y-shear)
+  (MagickShearImage magickwand (const pixelwand) (const double) (const double)))
 
-(define magick-sigmoidal-contrast-image
-  (foreign-lambda bool MagickSigmoidalContrastImage
-                  magickwand (const bool)
-                  (const double) (const double)))
+(define-magick-image-op (magick-sigmoidal-contrast-image wand sharpen alpha beta)
+  (MagickSigmoidalContrastImage magickwand (const bool) (const double) (const double)))
 
-(define magick-sigmoidal-contrast-image-channel
-  (foreign-lambda bool MagickSigmoidalContrastImageChannel
-                  magickwand (const channeltype) (const bool)
-                  (const double) (const double)))
+(define-magick-image-op (magick-sigmoidal-contrast-image-channel wand channel sharpen alpha beta)
+  (MagickSigmoidalContrastImageChannel magickwand (const channeltype) (const bool)
+                                       (const double) (const double)))
 
 (define magick-similarity-image
   (foreign-lambda magickwand MagickSimilarityImage
                   magickwand (const magickwand) rectangleinfo
                   (c-pointer double)))
 
-(define magick-sketch-image
-  (foreign-lambda bool MagickSketchImage
-                  magickwand (const double) (const double) (const double)))
+(define-magick-image-op (magick-sketch-image wand radius sigma angle)
+  (MagickSketchImage magickwand (const double) (const double) (const double)))
 
 (define magick-smush-images
   (foreign-lambda magickwand MagickSmushImages
                   magickwand (const bool) (const ssize_t)))
 
-(define magick-solarize-image
-  (foreign-lambda bool MagickSolarizeImage
-                  magickwand (const double)))
+(define-magick-image-op (magick-solarize-image wand threshold)
+  (MagickSolarizeImage magickwand (const double)))
 
-(define magick-sparse-color-image
-  (foreign-lambda bool MagickSparseColorImage
-                  magickwand (const channeltype) (const sparsecolormethod)
-                  (const size_t) (const (c-pointer double))))
+(define-magick-image-op (magick-sparse-color-image wand channel method number-arguments arguments)
+  (MagickSparseColorImage magickwand (const channeltype) (const sparsecolormethod)
+                          (const size_t) (const (c-pointer double))))
 
-(define magick-splice-image
-  (foreign-lambda bool MagickSpliceImage
-                  magickwand (const size_t) (const size_t)
-                  (const ssize_t) (const ssize_t)))
+(define-magick-image-op (magick-splice-image wand width height x y)
+  (MagickSpliceImage magickwand (const size_t) (const size_t)
+                     (const ssize_t) (const ssize_t)))
 
-(define magick-spread-image
-  (foreign-lambda bool MagickSpreadImage
-                  magickwand (const double)))
+(define-magick-image-op (magick-spread-image wand radius)
+  (MagickSpreadImage magickwand (const double)))
 
 ;;;XXX: type signature wrong in ImageMagick 6.7.4-0
 ;; (define magick-statistic-image
@@ -2301,81 +2116,68 @@
   (foreign-lambda magickwand MagickStereoImage
                   magickwand (const magickwand)))
 
-(define magick-strip-image
-  (foreign-lambda bool MagickStripImage magickwand))
+(define-magick-image-op (magick-strip-image wand)
+  (MagickStripImage magickwand))
 
-(define magick-swirl-image
-  (foreign-lambda bool MagickSwirlImage
-                  magickwand (const double)))
+(define-magick-image-op (magick-swirl-image wand degrees)
+  (MagickSwirlImage magickwand (const double)))
 
 (define magick-texture-image
   (foreign-lambda magickwand MagickTextureImage
                   magickwand (const magickwand)))
 
-(define magick-threshold-image
-  (foreign-lambda bool MagickThresholdImage
-                  magickwand (const double)))
+(define-magick-image-op (magick-threshold-image wand threshold)
+  (MagickThresholdImage magickwand (const double)))
 
-(define magick-threshold-image-channel
-  (foreign-lambda bool MagickThresholdImageChannel
-                  magickwand (const channeltype) (const double)))
+(define-magick-image-op (magick-threshold-image-channel wand channel threshold)
+  (MagickThresholdImageChannel magickwand (const channeltype) (const double)))
 
-(define magick-thumbnail-image
-  (foreign-lambda bool MagickThumbnailImage
-                  magickwand (const size_t) (const size_t)))
+(define-magick-image-op (magick-thumbnail-image wand columns rows)
+  (MagickThumbnailImage magickwand (const size_t) (const size_t)))
 
-(define magick-tint-image
-  (foreign-lambda bool MagickTintImage
-                  magickwand (const pixelwand) (const pixelwand)))
+(define-magick-image-op (magick-tint-image wand tint opacity)
+  (MagickTintImage magickwand (const pixelwand) (const pixelwand)))
 
 (define magick-transform-image
   (foreign-lambda magickwand MagickTransformImage
                   magickwand (const c-string) (const c-string)))
 
-(define magick-transform-image-colorspace
-  (foreign-lambda bool MagickTransformImageColorspace
-                  magickwand (const colorspace)))
+(define-magick-image-op (magick-transform-image-colorspace wand colorspace)
+  (MagickTransformImageColorspace magickwand (const colorspace)))
 
-(define magick-transparent-paint-image
-  (foreign-lambda bool MagickTransparentPaintImage
-                  magickwand (const pixelwand) (const double)
-                  (const double) (const bool)))
+(define-magick-image-op (magick-transparent-paint-image wand target alpha fuzz invert)
+  (MagickTransparentPaintImage magickwand (const pixelwand) (const double)
+                               (const double) (const bool)))
 
-(define magick-transpose-image
-  (foreign-lambda bool MagickTransposeImage magickwand))
+(define-magick-image-op (magick-transpose-image wand)
+  (MagickTransposeImage magickwand))
 
-(define magick-transverse-image
-  (foreign-lambda bool MagickTransverseImage magickwand))
+(define-magick-image-op (magick-transverse-image wand)
+  (MagickTransverseImage magickwand))
 
-(define magick-trim-image
-  (foreign-lambda bool MagickTrimImage
-                  magickwand (const double)))
+(define-magick-image-op (magick-trim-image wand fuzz)
+  (MagickTrimImage magickwand (const double)))
 
-(define magick-unique-image-colors
-  (foreign-lambda bool MagickUniqueImageColors magickwand))
+(define-magick-image-op (magick-unique-image-colors wand)
+  (MagickUniqueImageColors magickwand))
 
-(define magick-unsharp-mask-image
-  (foreign-lambda bool MagickUnsharpMaskImage
-                  magickwand (const double) (const double)
-                  (const double) (const double)))
+(define-magick-image-op (magick-unsharp-mask-image wand radius sigma amount threshold)
+  (MagickUnsharpMaskImage magickwand (const double) (const double)
+                          (const double) (const double)))
 
-(define magick-unsharp-mask-image-channel
-  (foreign-lambda bool MagickUnsharpMaskImageChannel
-                  magickwand (const channeltype) (const double)
-                  (const double) (const double) (const double)))
+(define-magick-image-op (magick-unsharp-mask-image-channel wand channel radius sigma amount threshold)
+  (MagickUnsharpMaskImageChannel magickwand (const channeltype) (const double)
+                                 (const double) (const double) (const double)))
 
-(define magick-vignette-image
-  (foreign-lambda bool MagickVignetteImage
-                  magickwand (const double) (const double)
-                  (const ssize_t) (const ssize_t)))
+(define-magick-image-op (magick-vignette-image wand black-point white-point x y)
+  (MagickVignetteImage magickwand (const double) (const double)
+                       (const ssize_t) (const ssize_t)))
 
-(define magick-wave-image
-  (foreign-lambda bool MagickWaveImage
-                  magickwand (const double) (const double)))
+(define-magick-image-op (magick-wave-image wand amplitude wave-length)
+  (MagickWaveImage magickwand (const double) (const double)))
 
-(define magick-white-threshold-image
-  (foreign-lambda bool MagickWhiteThresholdImage
-                  magickwand (const pixelwand)))
+(define-magick-image-op (magick-white-threshold-image wand threshold)
+  (MagickWhiteThresholdImage magickwand (const pixelwand)))
 
 (define-magick-image-op (magick-write-image wand filename)
   (MagickWriteImage magickwand (const c-string)))
