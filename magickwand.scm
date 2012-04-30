@@ -988,20 +988,91 @@
 
 
 ;;;
-;;; Magick-property methods
+;;; Magickwand Property Methods
 ;;;
+
+(define magick-set-image-artifact
+  (foreign-lambda bool MagickSetImageArtifact
+                  magickwand (const c-string) (const c-string)))
+
+(define magick-get-image-artifact
+  (foreign-lambda c-string MagickGetImageArtifact magickwand (const c-string)))
+
+(define magick-get-image-artifacts
+  (foreign-lambda c-string MagickGetImageArtifacts
+                  magickwand (const c-string) (c-pointer size_t)))
 
 (define magick-delete-image-artifact
   (foreign-lambda bool MagickDeleteImageArtifact
                   magickwand (const c-string)))
 
+;; profiles should probably be a record type
+(define (magic-set-image-profile wand name vec)
+  (let* ((len (u8vector-length vec))
+         (blob ((foreign-lambda* c-pointer ((u8vector fro) (size_t len))
+                  "unsigned char *to = malloc(len);"
+                  "size_t i;"
+                  "for (i = 0; i < len; ++i) {"
+                  "    to[i] = fro[i];"
+                  "}"
+                  "C_return(to);")
+                vec len)))
+    ((foreign-lambda bool MagickSetImageProfile
+                     magickwand (const c-string) (const c-pointer) (const size_t))
+     wand name blob len)))
+
+(define (magick-get-image-profile wand name)
+  (let-location ((len size_t))
+    (let* ((p ((foreign-lambda unsigned-c-string MagickGetImageProfile
+                               magickwand (const c-string) (c-pointer size_t))
+               wand name (location len)))
+           (result (make-u8vector len)))
+      ((foreign-lambda* void ((unsigned-c-string fro) (u8vector to) (size_t len))
+         "size_t i;"
+         "for (i = 0; i < len; ++i) {"
+         "    to[i] = fro[i];"
+         "}")
+       p result len)
+      result)))
+
+(define magick-get-image-profiles
+  (foreign-lambda c-string MagickGetImageProfiles
+                  magickwand (const c-string) (c-pointer size_t)))
+
+(define magick-set-image-property
+  (foreign-lambda bool MagickSetImageProperty
+                  magickwand (const c-string) (const c-string)))
+
+(define magick-get-image-property
+  (foreign-lambda c-string MagickGetImageProperty magickwand (const c-string)))
+
+(define magick-get-image-properties
+  (foreign-lambda c-string MagickGetImageProperties
+                  magickwand (const c-string) (c-pointer size_t)))
+
 (define magick-delete-image-property
   (foreign-lambda bool MagickDeleteImageProperty
                   magickwand (const c-string)))
 
+(define magick-set-option
+  (foreign-lambda bool MagickSetOption
+                  magickwand (const c-string) (const c-string)))
+
+(define magick-get-option
+  (foreign-lambda c-string MagickGetOption magickwand (const c-string)))
+
+(define magick-get-options
+  (foreign-lambda c-string MagickGetOptions
+                  magickwand (const c-string) (c-pointer size_t)))
+
 (define magick-delete-option
   (foreign-lambda bool MagickDeleteOption
                   magickwand (const c-string)))
+
+
+;;;
+;;; Magickwand Property Getters & Setters
+;;;
 
 (define magickwand-antialias-set!
   (foreign-lambda bool MagickSetAntialias magickwand (const bool)))
@@ -1075,63 +1146,6 @@
    (foreign-lambda gravity MagickGetGravity magickwand)
    magickwand-gravity-set!))
 
-(define magickwand-image-artifact-set!
-  (foreign-lambda bool MagickSetImageArtifact
-                  magickwand (const c-string) (const c-string)))
-
-(define magickwand-image-artifact
-  (getter-with-setter
-   (foreign-lambda c-string MagickGetImageArtifact magickwand (const c-string))
-   (lambda (wand args) (apply magickwand-image-artifact-set! wand args))))
-
-(define magick-get-image-artifacts
-  (foreign-lambda c-string MagickGetImageArtifacts
-                  magickwand (const c-string) (c-pointer size_t)))
-
-;; profiles should probably be a record type
-(define (magic-set-image-profile wand name vec)
-  (let* ((len (u8vector-length vec))
-         (blob ((foreign-lambda* c-pointer ((u8vector fro) (size_t len))
-                  "unsigned char *to = malloc(len);"
-                  "size_t i;"
-                  "for (i = 0; i < len; ++i) {"
-                  "    to[i] = fro[i];"
-                  "}"
-                  "C_return(to);")
-                vec len)))
-    ((foreign-lambda bool MagickSetImageProfile
-                     magickwand (const c-string) (const c-pointer) (const size_t))
-     wand name blob len)))
-
-(define (magick-get-image-profile wand name)
-  (let-location ((len size_t))
-    (let* ((p ((foreign-lambda unsigned-c-string MagickGetImageProfile
-                               magickwand (const c-string) (c-pointer size_t))
-               wand name (location len)))
-           (result (make-u8vector len)))
-      ((foreign-lambda* void ((unsigned-c-string fro) (u8vector to) (size_t len))
-         "size_t i;"
-         "for (i = 0; i < len; ++i) {"
-         "    to[i] = fro[i];"
-         "}")
-       p result len)
-      result)))
-
-(define magick-get-image-profiles
-  (foreign-lambda c-string MagickGetImageProfiles
-                  magickwand (const c-string) (c-pointer size_t)))
-
-(define magick-set-image-property
-  (foreign-lambda bool MagickSetImageProperty
-                  magickwand (const c-string) (const c-string)))
-
-(define magick-get-image-property
-  (foreign-lambda c-string MagickGetImageProperty magickwand (const c-string)))
-
-(define magick-get-image-properties
-  (foreign-lambda c-string MagickGetImageProperties
-                  magickwand (const c-string) (c-pointer size_t)))
-
 (define magickwand-interlace-scheme-set!
   (foreign-lambda bool MagickSetInterlaceScheme magickwand (const interlacetype)))
 
@@ -1147,17 +1161,6 @@
   (getter-with-setter
    (foreign-lambda interpolatepixelmethod MagickGetInterpolateMethod magickwand)
    magickwand-interpolate-method-set!))
-
-(define magick-set-option
-  (foreign-lambda bool MagickSetOption
-                  magickwand (const c-string) (const c-string)))
-
-(define magick-get-option
-  (foreign-lambda c-string MagickGetOption magickwand (const c-string)))
-
-(define magick-get-options
-  (foreign-lambda c-string MagickGetOptions
-                  magickwand (const c-string) (c-pointer size_t)))
 
 (define magickwand-orientation-set!
   (foreign-lambda bool MagickSetOrientation magickwand (const orientation)))
