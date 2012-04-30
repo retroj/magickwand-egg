@@ -1539,6 +1539,11 @@
   (foreign-lambda bool MagickGetImageWhitePoint
                   magickwand (c-pointer double) (c-pointer double)))
 
+
+;;;
+;;; Magickwand Image Getters/Setters, Unpaired
+;;;
+
 (define magick-get-image-blob
   (foreign-lambda unsigned-c-string MagickGetImageBlob magickwand (c-pointer size_t)))
 
