@@ -1067,26 +1067,49 @@
 (define magickwand-gravity
   (getter-with-setter
    (foreign-lambda gravity MagickGetGravity magickwand)
-   magick-get-gravity-set!))
+   magickwand-gravity-set!))
 
-(define magick-set-image-artifact
+(define magickwand-image-artifact-set!
   (foreign-lambda bool MagickSetImageArtifact
                   magickwand (const c-string) (const c-string)))
 
-(define magick-get-image-artifact
-  (foreign-lambda c-string MagickGetImageArtifact magickwand (const c-string)))
+(define magickwand-image-artifact
+  (getter-with-setter
+   (foreign-lambda c-string MagickGetImageArtifact magickwand (const c-string))
+   (lambda (wand args) (apply magickwand-image-artifact-set! wand args))))
 
 (define magick-get-image-artifacts
   (foreign-lambda c-string MagickGetImageArtifacts
                   magickwand (const c-string) (c-pointer size_t)))
 
-(define magick-set-image-profile
-  (foreign-lambda bool MagickSetImageProfile
-                  magickwand (const c-string) (const c-pointer) (const size_t)))
+;; profiles should probably be a record type
+(define (magic-set-image-profile wand name vec)
+  (let* ((len (u8vector-length vec))
+         (blob ((foreign-lambda* c-pointer ((u8vector fro) (size_t len))
+                  "unsigned char *to = malloc(len);"
+                  "size_t i;"
+                  "for (i = 0; i < len; ++i) {"
+                  "    to[i] = fro[i];"
+                  "}"
+                  "C_return(to);")
+                vec len)))
+    ((foreign-lambda bool MagickSetImageProfile
+                     magickwand (const c-string) (const c-pointer) (const size_t))
+     wand name blob len)))
 
-(define magick-get-image-profile
-  (foreign-lambda unsigned-c-string MagickGetImageProfile
-                  magickwand (const c-string) (c-pointer size_t)))
+(define (magick-get-image-profile wand name)
+  (let-location ((len size_t))
+    (let* ((p ((foreign-lambda unsigned-c-string MagickGetImageProfile
+                               magickwand (const c-string) (c-pointer size_t))
+               wand name (location len)))
+           (result (make-u8vector len)))
+      ((foreign-lambda* void ((unsigned-c-string fro) (u8vector to) (size_t len))
+         "size_t i;"
+         "for (i = 0; i < len; ++i) {"
+         "    to[i] = fro[i];"
+         "}")
+       p result len)
+      result)))
 
 (define magick-get-image-profiles
   (foreign-lambda c-string MagickGetImageProfiles
