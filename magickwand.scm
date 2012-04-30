@@ -29,7 +29,9 @@
 
 (import chicken scheme foreign foreigners)
 
-(use matchable)
+(use
+ srfi-4
+ matchable)
 
 (foreign-declare "#include <wand/MagickWand.h>")
 
@@ -2782,19 +2784,29 @@
   (getter-with-setter %drawingwand-stroke-color
                       %drawingwand-stroke-color-set!))
 
-;;XXX: need argument conversion
-;; (define %drawingwand-stroke-dash-array-set!
-;;   (foreign-lambda bool DrawSetStrokeDashArray
-;;                   drawingwand (const size_t)
-;;                   (const (c-pointer double))))
+(define (%drawingwand-stroke-dash-array-set! wand dash-array)
+  ((foreign-lambda bool DrawSetStrokeDashArray
+                   drawingwand (const size_t)
+                   (const f64vector))
+   wand (length dash-array) (list->f64vector dash-array)))
 
-;; (define %drawingwand-stroke-dash-array
-;;   (foreign-lambda (c-pointer double) DrawGetStrokeDashArray
-;;                   (const drawingwand) (c-pointer size_t)))
+(define (%drawingwand-stroke-dash-array wand)
+  (let-location ((n size_t))
+    (let* ((p ((foreign-lambda (c-pointer double) DrawGetStrokeDashArray
+                               (const drawingwand) (c-pointer size_t))
+               wand (location n)))
+           (result (make-f64vector n)))
+      ((foreign-lambda* void (((c-pointer double) fro) (f64vector to) (size_t len))
+         "size_t i;"
+         "for (i = 0; i < len; ++i) {"
+         "    to[i] = fro[i];"
+         "}")
+       p result n)
+      (f64vector->list result))))
 
-;; (define drawingwand-stroke-dash-array
-;;   (getter-with-setter %drawingwand-stroke-dash-array
-;;                       %drawingwand-stroke-dash-array-set!))
+(define drawingwand-stroke-dash-array
+  (getter-with-setter %drawingwand-stroke-dash-array
+                      %drawingwand-stroke-dash-array-set!))
 
 (define %drawingwand-stroke-dash-offset-set!
   (foreign-lambda void DrawSetStrokeDashOffset
