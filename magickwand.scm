@@ -982,6 +982,9 @@
      (location version))
     version))
 
+(define magick-get-package-name
+  (foreign-lambda c-string MagickGetPackageName))
+
 (define magick-delete-image-artifact
   (foreign-lambda bool MagickDeleteImageArtifact
                   magickwand (const c-string)))
@@ -1134,9 +1137,6 @@
   (getter-with-setter
    (foreign-lambda orientation MagickGetOrientation magickwand)
    magickwand-orientation-set!))
-
-(define magick-get-package-name
-  (foreign-lambda c-string MagickGetPackageName))
 
 (define magick-set-page
   (foreign-lambda bool MagickSetPage
