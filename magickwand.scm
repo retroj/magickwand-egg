@@ -1243,6 +1243,7 @@
        (list columns rows)))
    (lambda (wand args) (apply magickwand-size-set! wand args))))
 
+;;XXX: the size-offset setter sets 3 values, but the getter gets only one.
 (define magick-set-size-offset
   (foreign-lambda bool MagickSetSizeOffset
                   magickwand (const size_t) (const size_t)
