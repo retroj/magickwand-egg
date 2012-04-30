@@ -1228,13 +1228,20 @@
        (list x-res y-res)))
    (lamdba (wand args) (apply magickwand-resolution-set! wand args))))
 
-(define magick-set-size
+(define magickwand-size-set!
   (foreign-lambda bool MagickSetSize
                   magickwand (const size_t) (const size_t)))
 
-(define magick-get-size
-  (foreign-lambda bool MagickGetSize
-                  magickwand (c-pointer size_t) (c-pointer size_t)))
+(define magickwand-size
+  (getter-with-setter
+   (lambda (wand)
+     (let-location ((columns size_t)
+                    (rows size_t))
+       ((foreign-lambda bool MagickGetSize
+                        magickwand (c-pointer size_t) (c-pointer size_t))
+        wand (location columns) (location rows))
+       (list columns rows)))
+   (lambda (wand args) (apply magickwand-size-set! wand args))))
 
 (define magick-set-size-offset
   (foreign-lambda bool MagickSetSizeOffset
