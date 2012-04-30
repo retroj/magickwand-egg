@@ -872,6 +872,12 @@
 ;;; MagickWand methods
 ;;;
 
+(define magickwand-genesis
+  (foreign-lambda void MagickWandGenesis))
+
+(define magickwand-terminus
+  (foreign-lambda void MagickWandTerminus))
+
 (define magickwand-clear
   (foreign-lambda void ClearMagickWand magickwand))
 
@@ -899,12 +905,6 @@
 
 (define magick-get-exception-type
   (foreign-lambda exceptiontype MagickGetExceptionType (const magickwand)))
-
-(define magickwand-genesis
-  (foreign-lambda void MagickWandGenesis))
-
-(define magickwand-terminus
-  (foreign-lambda void MagickWandTerminus))
 
 (define make-magickwand
   (case-lambda
