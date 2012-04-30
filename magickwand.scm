@@ -906,16 +906,17 @@
 (define magickwand-terminus
   (foreign-lambda void MagickWandTerminus))
 
-(define (new-magickwand)
-  (let ((w ((foreign-lambda magickwand NewMagickWand))))
-    (set-finalizer! w magickwand-destroy)
-    w))
-
-(define (new-magickwand-from-image image)
-  (let ((w ((foreign-lambda magickwand NewMagickWandFromImage (const image))
-            image)))
-    (set-finalizer! w magickwand-destroy)
-    w))
+(define make-magickwand
+  (case-lambda
+   ((image)
+    (let ((w ((foreign-lambda magickwand NewMagickWandFromImage (const image))
+              image)))
+      (set-finalizer! w magickwand-destroy)
+      w))
+   (()
+    (let ((w ((foreign-lambda magickwand NewMagickWand))))
+      (set-finalizer! w magickwand-destroy)
+      w))))
 
 (define magick-query-configure-option
   (foreign-lambda c-string MagickQueryConfigureOption (const c-string)))
