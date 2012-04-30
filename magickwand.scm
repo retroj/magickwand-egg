@@ -900,8 +900,22 @@
 (define magick-get-exception-type
   (foreign-lambda exceptiontype MagickGetExceptionType (const magickwand)))
 
-(define magick-get-iterator-index
-  (foreign-lambda ssize_t MagickGetIteratorIndex magickwand))
+(define magickwand-genesis
+  (foreign-lambda void MagickWandGenesis))
+
+(define magickwand-terminus
+  (foreign-lambda void MagickWandTerminus))
+
+(define (new-magickwand)
+  (let ((w ((foreign-lambda magickwand NewMagickWand))))
+    (set-finalizer! w magickwand-destroy)
+    w))
+
+(define (new-magickwand-from-image image)
+  (let ((w ((foreign-lambda magickwand NewMagickWandFromImage (const image))
+            image)))
+    (set-finalizer! w magickwand-destroy)
+    w))
 
 (define magick-query-configure-option
   (foreign-lambda c-string MagickQueryConfigureOption (const c-string)))
@@ -932,30 +946,16 @@
 (define magick-set-first-iterator
   (foreign-lambda void MagickSetFirstIterator magickwand))
 
+(define magick-set-last-iterator
+  (foreign-lambda void MagickSetLastIterator magickwand))
+
 ;; can return false, but does not raise an exception.
 ;; maybe we should use a continuable condition?
 (define magick-set-iterator-index
   (foreign-lambda bool MagickSetIteratorIndex magickwand (const ssize_t)))
 
-(define magick-set-last-iterator
-  (foreign-lambda void MagickSetLastIterator magickwand))
-
-(define magickwand-genesis
-  (foreign-lambda void MagickWandGenesis))
-
-(define magickwand-terminus
-  (foreign-lambda void MagickWandTerminus))
-
-(define (new-magickwand)
-  (let ((w ((foreign-lambda magickwand NewMagickWand))))
-    (set-finalizer! w magickwand-destroy)
-    w))
-
-(define (new-magickwand-from-image image)
-  (let ((w ((foreign-lambda magickwand NewMagickWandFromImage (const image))
-            image)))
-    (set-finalizer! w magickwand-destroy)
-    w))
+(define magick-get-iterator-index
+  (foreign-lambda ssize_t MagickGetIteratorIndex magickwand))
 
 
 ;;;
