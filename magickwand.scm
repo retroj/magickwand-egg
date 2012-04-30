@@ -869,7 +869,7 @@
 
 
 ;;;
-;;; MagickWand methods
+;;; General
 ;;;
 
 (define magickwand-genesis
@@ -877,6 +877,49 @@
 
 (define magickwand-terminus
   (foreign-lambda void MagickWandTerminus))
+
+(define magick-query-configure-option
+  (foreign-lambda c-string MagickQueryConfigureOption (const c-string)))
+
+(define magick-query-configure-options
+  (foreign-lambda c-string-list MagickQueryConfigureOptions
+                  (const c-string) (c-pointer size_t)))
+
+(define magick-query-fonts
+  (foreign-lambda c-string-list MagickQueryFonts
+                  (const c-string)
+                  (c-pointer size_t)))
+
+(define magick-get-copyright
+  (foreign-lambda c-string MagickGetCopyright))
+
+(define magick-get-home-url
+  (foreign-lambda c-string MagickGetHomeURL))
+
+(define magick-get-release-date
+  (foreign-lambda c-string MagickGetReleaseDate))
+
+(define (magick-get-version)
+  (let-location ((ignored size_t))
+    ((foreign-lambda c-string MagickGetVersion (c-pointer size_t))
+     (location ignored))))
+
+(define (magick-get-version-as-number)
+  (let-location ((version size_t))
+    ((foreign-lambda c-string MagickGetVersion (c-pointer size_t))
+     (location version))
+    version))
+
+(define magick-get-package-name
+  (foreign-lambda c-string MagickGetPackageName))
+
+(define magick-relinquish-memory
+  (foreign-lambda c-pointer MagickRelinquishMemory c-pointer))
+
+
+;;;
+;;; MagickWand methods
+;;;
 
 (define magickwand-clear
   (foreign-lambda void ClearMagickWand magickwand))
@@ -918,13 +961,6 @@
       (set-finalizer! w magickwand-destroy)
       w))))
 
-(define magick-query-configure-option
-  (foreign-lambda c-string MagickQueryConfigureOption (const c-string)))
-
-(define magick-query-configure-options
-  (foreign-lambda c-string-list MagickQueryConfigureOptions
-                  (const c-string) (c-pointer size_t)))
-
 (define magick-query-font-metrics
   (foreign-lambda (c-pointer double) MagickQueryFontMetrics
                   magickwand (const drawingwand) (const c-string)))
@@ -932,14 +968,6 @@
 (define magick-query-multiline-font-metrics
   (foreign-lambda (c-pointer double) MagickQueryMultilineFontMetrics
                   magickwand (const drawingwand) (const c-string)))
-
-(define magick-query-fonts
-  (foreign-lambda c-string-list MagickQueryFonts
-                  (const c-string)
-                  (c-pointer size_t)))
-
-(define magick-relinquish-memory
-  (foreign-lambda c-pointer MagickRelinquishMemory c-pointer))
 
 (define magick-reset-iterator
   (foreign-lambda void MagickResetIterator magickwand))
@@ -962,29 +990,6 @@
 ;;;
 ;;; Magick-property methods
 ;;;
-
-(define magick-get-copyright
-  (foreign-lambda c-string MagickGetCopyright))
-
-(define magick-get-home-url
-  (foreign-lambda c-string MagickGetHomeURL))
-
-(define magick-get-release-date
-  (foreign-lambda c-string MagickGetReleaseDate))
-
-(define (magick-get-version)
-  (let-location ((ignored size_t))
-    ((foreign-lambda c-string MagickGetVersion (c-pointer size_t))
-     (location ignored))))
-
-(define (magick-get-version-as-number)
-  (let-location ((version size_t))
-    ((foreign-lambda c-string MagickGetVersion (c-pointer size_t))
-     (location version))
-    version))
-
-(define magick-get-package-name
-  (foreign-lambda c-string MagickGetPackageName))
 
 (define magick-delete-image-artifact
   (foreign-lambda bool MagickDeleteImageArtifact
