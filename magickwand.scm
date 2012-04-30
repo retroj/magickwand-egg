@@ -1085,6 +1085,27 @@
 (define magick-get-resource-limit
   (foreign-lambda magicksize MagickGetResourceLimit (const resourcetype)))
 
+(define magick-profile-image
+  (foreign-lambda bool MagickProfileImage
+                  magickwand (const c-string) (const c-pointer) (const size_t)))
+
+(define magick-remove-image-profile
+  (foreign-lambda unsigned-c-string MagickRemoveImageProfile
+                  magickwand (const c-string) (c-pointer size_t)))
+
+(define magick-set-depth
+  (foreign-lambda bool MagickSetDepth magickwand (const size_t)))
+
+(define magick-set-extract
+  (foreign-lambda bool MagickSetExtract magickwand (const c-string)))
+
+(define magick-set-passphrase
+  (foreign-lambda bool MagickSetPassphrase magickwand (const c-string)))
+
+;;(define magick-set-progress-monitor
+;;  (foreign-lambda magickprogressmonitor MagickSetProgressMonitor
+;;                  magickwand (const magickprogressmonitor) c-pointer))
+
 
 ;;;
 ;;; Magickwand Property Getters & Setters
@@ -1226,7 +1247,7 @@
                         magickwand (c-pointer double) (c-pointer double))
         wand (location x-res) (location y-res))
        (list x-res y-res)))
-   (lamdba (wand args) (apply magickwand-resolution-set! wand args))))
+   (lambda (wand args) (apply magickwand-resolution-set! wand args))))
 
 (define magickwand-size-set!
   (foreign-lambda bool MagickSetSize
@@ -1261,34 +1282,27 @@
    (foreign-lambda imagetype MagickGetType magickwand)
    magickwand-type-set!))
 
-(define magick-profile-image
-  (foreign-lambda bool MagickProfileImage
-                  magickwand (const c-string) (const c-pointer) (const size_t)))
+(define (magick-sampling-factors-set! wand factors)
+  ((foreign-lambda bool MagickSetSamplingFactors magickwand
+                   (const size_t) (const f64vector))
+   wand (length factors) (list->f64vector factors)))
 
-(define magick-remove-image-profile
-  (foreign-lambda unsigned-c-string MagickRemoveImageProfile
-                  magickwand (const c-string) (c-pointer size_t)))
-
-(define magick-set-depth
-  (foreign-lambda bool MagickSetDepth magickwand (const size_t)))
-
-(define magick-set-extract
-  (foreign-lambda bool MagickSetExtract magickwand (const c-string)))
-
-(define magick-set-passphrase
-  (foreign-lambda bool MagickSetPassphrase magickwand (const c-string)))
-
-;;(define magick-set-progress-monitor
-;;  (foreign-lambda magickprogressmonitor MagickSetProgressMonitor
-;;                  magickwand (const magickprogressmonitor) c-pointer))
-
-(define magick-set-sampling-factors
-  (foreign-lambda bool MagickSetSamplingFactors
-                  magickwand (const size_t) (const (c-pointer double))))
-
-(define magick-get-sampling-factors
-  (foreign-lambda (c-pointer double) MagickGetSamplingFactors
-                  magickwand (c-pointer size_t)))
+(define magick-sampling-factors
+  (getter-with-setter
+   (lambda (wand)
+     (let-location ((count size_t))
+       (let ((p ((foreign-lambda (c-pointer double) MagickGetSamplingFactors
+                                 magickwand (c-pointer size_t))
+                 wand (location count)))
+             (result (make-f64vector count)))
+         ((foreign-lambda* void (((c-pointer double) fro) (f64vector to) (size_t len))
+            "size_t i;"
+            "for (i = 0; i < len; ++i) {"
+            "    to[i] = fro[i];"
+            "}")
+          p result count)
+         (f64vector->list result))))
+   magick-sampling-factors-set!))
 
 
 ;;;
