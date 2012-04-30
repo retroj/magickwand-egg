@@ -1069,6 +1069,12 @@
   (foreign-lambda bool MagickDeleteOption
                   magickwand (const c-string)))
 
+(define magick-get-quantum-depth
+  (foreign-lambda c-string MagickGetQuantumDepth (c-pointer size_t)))
+
+(define magick-get-quantum-range
+  (foreign-lambda c-string MagickGetQuantumRange (c-pointer size_t)))
+
 
 ;;;
 ;;; Magickwand Property Getters & Setters
@@ -1170,15 +1176,24 @@
    (foreign-lambda orientation MagickGetOrientation magickwand)
    magickwand-orientation-set!))
 
-(define magick-set-page
+(define magickwand-page-set!
   (foreign-lambda bool MagickSetPage
                   magickwand (const size_t) (const size_t)
-                  (const size_t) (const size_t)))
+                  (const ssize_t) (const ssize_t)))
 
-(define magick-get-page
-  (foreign-lambda bool MagickGetPage
-                  magickwand (c-pointer size_t) (c-pointer size_t)
-                  (c-pointer size_t) (c-pointer size_t)))
+(define magickwand-page
+  (getter-with-setter
+   (lambda (wand)
+     (let-location ((width size_t)
+                    (height size_t)
+                    (x ssize_t)
+                    (y ssize_t))
+       ((foreign-lambda bool MagickGetPage
+                        magickwand (c-pointer size_t) (c-pointer size_t)
+                        (c-pointer ssize_t) (c-pointer ssize_t))
+        wand (location width) (location height) (location x) (location y))
+       (list width height x y)))
+   (lambda (wand args) (apply magickwand-page-set! wand args))))
 
 (define magickwand-pointsize-set!
   (foreign-lambda bool MagickSetPointsize magickwand (const double)))
@@ -1188,19 +1203,20 @@
    (foreign-lambda double MagickGetPointsize magickwand)
    magickwand-pointsize-set!))
 
-(define magick-get-quantum-depth
-  (foreign-lambda c-string MagickGetQuantumDepth (c-pointer size_t)))
-
-(define magick-get-quantum-range
-  (foreign-lambda c-string MagickGetQuantumRange (c-pointer size_t)))
-
-(define magick-set-resolution
+(define magickwand-resolution-set!
   (foreign-lambda bool MagickSetResolution
                   magickwand (const double) (const double)))
 
-(define magick-get-resolution
-  (foreign-lambda bool MagickGetResolution
-                  magickwand (c-pointer double) (c-pointer double)))
+(define magickwand-resolution
+  (getter-with-setter
+   (lambda (wand)
+     (let-location ((x-res double)
+                    (y-res double))
+       ((foreign-lambda bool MagickGetResolution
+                        magickwand (c-pointer double) (c-pointer double))
+        wand (location x-res) (location y-res))
+       (list x-res y-res)))
+   (lamdba (wand args) (apply magickwand-resolution-set! wand args))))
 
 (define magick-get-resource
   (foreign-lambda magicksize MagickGetResource (const resourcetype)))
