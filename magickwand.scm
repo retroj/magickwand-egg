@@ -1061,10 +1061,10 @@
    (foreign-lambda char MagickGetFormat magickwand)
    magickwand-format-set!))
 
-(define magick-get-gravity-set!
+(define magickwand-gravity-set!
   (foreign-lambda bool MagickSetGravity magickwand (const gravity)))
 
-(define magick-get-gravity
+(define magickwand-gravity
   (getter-with-setter
    (foreign-lambda gravity MagickGetGravity magickwand)
    magick-get-gravity-set!))
