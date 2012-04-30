@@ -1075,6 +1075,9 @@
 (define magick-get-quantum-range
   (foreign-lambda c-string MagickGetQuantumRange (c-pointer size_t)))
 
+(define magick-get-resource
+  (foreign-lambda magicksize MagickGetResource (const resourcetype)))
+
 (define magick-set-resource-limit
   (foreign-lambda bool MagickSetResourceLimit
                   (const resourcetype) (const magicksize)))
@@ -1224,9 +1227,6 @@
         wand (location x-res) (location y-res))
        (list x-res y-res)))
    (lamdba (wand args) (apply magickwand-resolution-set! wand args))))
-
-(define magick-get-resource
-  (foreign-lambda magicksize MagickGetResource (const resourcetype)))
 
 (define magick-set-size
   (foreign-lambda bool MagickSetSize
