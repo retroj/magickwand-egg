@@ -994,59 +994,50 @@
   (foreign-lambda bool MagickDeleteOption
                   magickwand (const c-string)))
 
-(define magick-set-antialias
-  (foreign-lambda bool MagickSetAntialias magickwand (const bool)))
+(define magickwand-antialias
+  (getter-with-setter
+   (foreign-lambda bool MagickGetAntialias magickwand)
+   (foreign-lambda bool MagickSetAntialias magickwand (const bool))))
 
-(define magick-get-antialias
-  (foreign-lambda bool MagickGetAntialias magickwand))
+(define magickwand-background-color
+  (getter-with-setter
+   (foreign-lambda pixelwand MagickGetBackgroundColor magickwand)
+   (foreign-lambda bool MagickSetBackgroundColor magickwand (const pixelwand))))
 
-(define magick-set-background-color
-  (foreign-lambda bool MagickSetBackgroundColor magickwand (const pixelwand)))
+(define magickwand-colorspace
+  (getter-with-setter
+   (foreign-lambda colorspace MagickGetColorspace magickwand)
+   (foreign-lambda bool MagickSetColorspace magickwand (const colorspace))))
 
-(define magick-get-background-color
-  (foreign-lambda pixelwand MagickGetBackgroundColor magickwand))
-
-(define magick-set-colorspace
-  (foreign-lambda bool MagickSetColorspace magickwand (const colorspace)))
-
-(define magick-get-colorspace
-  (foreign-lambda colorspace MagickGetColorspace magickwand))
-
-(define magick-set-compression
-  (foreign-lambda bool MagickSetCompression magickwand (const compressiontype)))
-
-(define magick-get-compression
-  (foreign-lambda compressiontype MagickGetCompression magickwand))
-
-(define magick-set-compression-quality
-  (foreign-lambda bool MagickSetCompressionQuality magickwand (const size_t)))
+(define magickwand-compression
+  (getter-with-setter
+   (foreign-lambda compressiontype MagickGetCompression magickwand)
+   (foreign-lambda bool MagickSetCompression magickwand (const compressiontype))))
 
 (define magick-get-compression-quality
-  (foreign-lambda size_t MagickGetCompressionQuality magickwand))
+  (getter-with-setter
+   (foreign-lambda size_t MagickGetCompressionQuality magickwand)
+   (foreign-lambda bool MagickSetCompressionQuality magickwand (const size_t))))
 
-(define magick-set-filename
-  (foreign-lambda bool MagickSetFilename magickwand (const c-string)))
+(define magickwand-filename
+  (getter-with-setter
+   (foreign-lambda c-string MagickGetFilename magickwand)
+   (foreign-lambda bool MagickSetFilename magickwand (const c-string))))
 
-(define magick-get-filename
-  (foreign-lambda c-string MagickGetFilename magickwand))
+(define magickwand-font
+  (getter-with-setter
+   (foreign-lambda c-string MagickGetFont magickwand)
+   (foreign-lambda bool MagickSetFont magickwand (const c-string))))
 
-(define magick-set-font
-  (foreign-lambda bool MagickSetFont magickwand (const c-string)))
-
-(define magick-get-font
-  (foreign-lambda c-string MagickGetFont magickwand))
-
-(define magick-set-format
-  (foreign-lambda bool MagickSetFormat magickwand (const c-string)))
-
-(define magick-get-format
-  (foreign-lambda char MagickGetFormat magickwand))
-
-(define magick-set-gravity
-  (foreign-lambda bool MagickSetGravity magickwand (const gravity)))
+(define magickwand-format
+  (getter-with-setter
+   (foreign-lambda char MagickGetFormat magickwand)
+   (foreign-lambda bool MagickSetFormat magickwand (const c-string))))
 
 (define magick-get-gravity
-  (foreign-lambda gravity MagickGetGravity magickwand))
+  (getter-with-setter
+   (foreign-lambda gravity MagickGetGravity magickwand)
+   (foreign-lambda bool MagickSetGravity magickwand (const gravity))))
 
 (define magick-set-image-artifact
   (foreign-lambda bool MagickSetImageArtifact
@@ -1082,17 +1073,15 @@
   (foreign-lambda c-string MagickGetImageProperties
                   magickwand (const c-string) (c-pointer size_t)))
 
-(define magick-set-interlace-scheme
-  (foreign-lambda bool MagickSetInterlaceScheme magickwand (const interlacetype)))
+(define magickwand-interlace-scheme
+  (getter-with-setter
+   (foreign-lambda interlacetype MagickGetInterlaceScheme magickwand)
+   (foreign-lambda bool MagickSetInterlaceScheme magickwand (const interlacetype))))
 
-(define magick-get-interlace-scheme
-  (foreign-lambda interlacetype MagickGetInterlaceScheme magickwand))
-
-(define magick-set-interpolate-method
-  (foreign-lambda bool MagickSetInterpolateMethod magickwand (const interpolatepixelmethod)))
-
-(define magick-get-interpolate-method
-  (foreign-lambda interpolatepixelmethod MagickGetInterpolateMethod magickwand))
+(define magickwand-interpolate-method
+  (getter-with-setter
+   (foreign-lambda interpolatepixelmethod MagickGetInterpolateMethod magickwand)
+   (foreign-lambda bool MagickSetInterpolateMethod magickwand (const interpolatepixelmethod))))
 
 (define magick-set-option
   (foreign-lambda bool MagickSetOption
@@ -1105,26 +1094,28 @@
   (foreign-lambda c-string MagickGetOptions
                   magickwand (const c-string) (c-pointer size_t)))
 
-(define magick-set-orientation
-  (foreign-lambda bool MagickSetOrientation
-                  magickwand (const orientation)))
-
-(define magick-get-orientation
-  (foreign-lambda orientation MagickGetOrientation magickwand))
+(define magickwand-orientation
+  (getter-with-setter
+   (foreign-lambda orientation MagickGetOrientation magickwand)
+   (foreign-lambda bool MagickSetOrientation magickwand (const orientation))))
 
 (define magick-get-package-name
   (foreign-lambda c-string MagickGetPackageName))
+
+(define magick-set-page
+  (foreign-lambda bool MagickSetPage
+                  magickwand (const size_t) (const size_t)
+                  (const size_t) (const size_t)))
 
 (define magick-get-page
   (foreign-lambda bool MagickGetPage
                   magickwand (c-pointer size_t) (c-pointer size_t)
                   (c-pointer size_t) (c-pointer size_t)))
 
-(define magick-set-pointsize
-  (foreign-lambda bool MagickSetPointsize magickwand (const double)))
-
-(define magick-get-pointsize
-  (foreign-lambda double MagickGetPointsize magickwand))
+(define magickwand-pointsize
+  (getter-with-setter
+   (foreign-lambda double MagickGetPointsize magickwand)
+   (foreign-lambda bool MagickSetPointsize magickwand (const double))))
 
 (define magick-get-quantum-depth
   (foreign-lambda c-string MagickGetQuantumDepth (c-pointer size_t)))
@@ -1167,11 +1158,10 @@
   (foreign-lambda bool MagickGetSizeOffset
                   magickwand (c-pointer ssize_t)))
 
-(define magick-set-type
-  (foreign-lambda bool MagickSetType magickwand (const imagetype)))
-
 (define magick-get-type
-  (foreign-lambda imagetype MagickGetType magickwand))
+  (getter-with-setter
+   (foreign-lambda imagetype MagickGetType magickwand)
+   (foreign-lambda bool MagickSetType magickwand (const imagetype))))
 
 (define magick-profile-image
   (foreign-lambda bool MagickProfileImage
@@ -1186,11 +1176,6 @@
 
 (define magick-set-extract
   (foreign-lambda bool MagickSetExtract magickwand (const c-string)))
-
-(define magick-set-page
-  (foreign-lambda bool MagickSetPage
-                  magickwand (const size_t) (const size_t)
-                  (const size_t) (const size_t)))
 
 (define magick-set-passphrase
   (foreign-lambda bool MagickSetPassphrase magickwand (const c-string)))
