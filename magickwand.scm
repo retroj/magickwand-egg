@@ -1301,6 +1301,7 @@
             "    to[i] = fro[i];"
             "}")
           p result count)
+         ;;XXX: need to free p?
          (f64vector->list result))))
    magick-sampling-factors-set!))
 
