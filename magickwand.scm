@@ -1075,6 +1075,13 @@
 (define magick-get-quantum-range
   (foreign-lambda c-string MagickGetQuantumRange (c-pointer size_t)))
 
+(define magick-set-resource-limit
+  (foreign-lambda bool MagickSetResourceLimit
+                  (const resourcetype) (const magicksize)))
+
+(define magick-get-resource-limit
+  (foreign-lambda magicksize MagickGetResourceLimit (const resourcetype)))
+
 
 ;;;
 ;;; Magickwand Property Getters & Setters
@@ -1221,13 +1228,6 @@
 (define magick-get-resource
   (foreign-lambda magicksize MagickGetResource (const resourcetype)))
 
-(define magick-get-resource-limit
-  (foreign-lambda magicksize MagickGetResourceLimit (const resourcetype)))
-
-(define magick-get-sampling-factors
-  (foreign-lambda (c-pointer double) MagickGetSamplingFactors
-                  magickwand (c-pointer size_t)))
-
 (define magick-set-size
   (foreign-lambda bool MagickSetSize
                   magickwand (const size_t) (const size_t)))
@@ -1274,13 +1274,13 @@
 ;;  (foreign-lambda magickprogressmonitor MagickSetProgressMonitor
 ;;                  magickwand (const magickprogressmonitor) c-pointer))
 
-(define magick-set-resource-limit
-  (foreign-lambda bool MagickSetResourceLimit
-                  (const resourcetype) (const magicksize)))
-
 (define magick-set-sampling-factors
   (foreign-lambda bool MagickSetSamplingFactors
                   magickwand (const size_t) (const (c-pointer double))))
+
+(define magick-get-sampling-factors
+  (foreign-lambda (c-pointer double) MagickGetSamplingFactors
+                  magickwand (c-pointer size_t)))
 
 
 ;;;
