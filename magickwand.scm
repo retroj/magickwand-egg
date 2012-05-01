@@ -1622,7 +1622,8 @@
 
 (define magickwand-image-scene
   (getter-with-setter
-   (foreign-lambda size_t MagickGetImageScene magickwand)))
+   (foreign-lambda size_t MagickGetImageScene magickwand)
+   magickwand-image-scene-set!))
 
 (define magickwand-image-ticks-per-second-set!
   (foreign-lambda bool MagickSetImageTicksPerSecond magickwand
