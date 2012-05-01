@@ -1565,19 +1565,22 @@
    magickwand-image-iterations-set!))
 
 (define magickwand-image-matte-color-set!
-  (foreign-lambda bool MagickSetImageMatteColor magickwand (const pixelwand)))
+  (foreign-lambda bool MagickSetImageMatteColor magickwand
+                  (const pixelwand)))
 
 (define magickwand-image-matte-color
   (getter-with-setter
    (lambda (wand)
      (let ((p (make-pixelwand)))
-       ((foreign-lambda bool MagickGetImageMatteColor magickwand pixelwand)
+       ((foreign-lambda bool MagickGetImageMatteColor magickwand
+                        pixelwand)
         wand p)
        p))
    magickwand-image-matte-color-set!))
 
 (define magickwand-image-orientation-set!
-  (foreign-lambda bool MagickSetImageOrientation magickwand (const orientation)))
+  (foreign-lambda bool MagickSetImageOrientation magickwand
+                  (const orientation)))
 
 (define magickwand-image-orientation
   (getter-with-setter
@@ -1660,7 +1663,8 @@
    magickwand-image-ticks-per-second-set!))
 
 (define magickwand-image-type-set!
-  (foreign-lambda bool MagickSetImageType magickwand (const imagetype)))
+  (foreign-lambda bool MagickSetImageType magickwand
+                  (const imagetype)))
 
 (define magickwand-image-type
   (getter-with-setter
@@ -1668,7 +1672,8 @@
    magickwand-image-type-set!))
 
 (define magickwand-image-units-set!
-  (foreign-lambda bool MagickSetImageUnits magickwand (const resolutiontype)))
+  (foreign-lambda bool MagickSetImageUnits magickwand
+                  (const resolutiontype)))
 
 (define magickwand-image-units
   (getter-with-setter
@@ -1705,10 +1710,12 @@
 ;;;
 
 (define magick-get-image-blob
-  (foreign-lambda unsigned-c-string MagickGetImageBlob magickwand (c-pointer size_t)))
+  (foreign-lambda unsigned-c-string MagickGetImageBlob magickwand
+                  (c-pointer size_t)))
 
 (define magick-get-images-blob
-  (foreign-lambda unsigned-c-string MagickGetImagesBlob magickwand (c-pointer size_t)))
+  (foreign-lambda unsigned-c-string MagickGetImagesBlob magickwand
+                  (c-pointer size_t)))
 
 (define magick-get-image-channel-distortion
   (foreign-lambda bool MagickGetImageChannelDistortion
@@ -1724,19 +1731,19 @@
                   magickwand (const size_t)))
 
 (define magick-get-image-channel-kurtosis
-  (foreign-lambda bool MagickGetImageChannelKurtosis
-                  magickwand (const channeltype)
-                  (c-pointer double) (c-pointer double)))
+  (foreign-lambda bool MagickGetImageChannelKurtosis magickwand
+                  (const channeltype) (c-pointer double)
+                  (c-pointer double)))
 
 (define magick-get-image-channel-mean
-  (foreign-lambda bool MagickGetImageChannelMean
-                  magickwand (const channeltype)
-                  (c-pointer double) (c-pointer double)))
+  (foreign-lambda bool MagickGetImageChannelMean magickwand
+                  (const channeltype) (c-pointer double)
+                  (c-pointer double)))
 
 (define magick-get-image-channel-range
-  (foreign-lambda bool MagickGetImageChannelRange
-                  magickwand (const channeltype)
-                  (c-pointer double) (c-pointer double)))
+  (foreign-lambda bool MagickGetImageChannelRange magickwand
+                  (const channeltype) (c-pointer double)
+                  (c-pointer double)))
 
 (define magick-get-image-channel-statistics
   (foreign-lambda channelstatistics MagickGetImageChannelStatistics magickwand))
@@ -1745,8 +1752,8 @@
   (foreign-lambda size_t MagickGetImageColors magickwand))
 
 (define magick-get-image-distortion
-  (foreign-lambda bool MagickGetImageDistortion
-                  magickwand (const magickwand) (const metrictype)
+  (foreign-lambda bool MagickGetImageDistortion magickwand
+                  (const magickwand) (const metrictype)
                   (c-pointer double)))
 
 (define magick-get-image-height
@@ -1757,17 +1764,17 @@
                   magickwand (c-pointer size_t)))
 
 (define magick-get-image-length
-  (foreign-lambda bool MagickGetImageLength
-                  magickwand (c-pointer "MagickSizeType")))
+  (foreign-lambda bool MagickGetImageLength magickwand
+                  (c-pointer "MagickSizeType")))
 
 (define magick-get-image-pixel-color
-  (foreign-lambda bool MagickGetImagePixelColor
-                  magickwand (const ssize_t) (const ssize_t)
+  (foreign-lambda bool MagickGetImagePixelColor magickwand
+                  (const ssize_t) (const ssize_t)
                   pixelwand))
 
 (define magick-get-image-region
-  (foreign-lambda magickwand MagickGetImageRegion
-                  magickwand (const size_t) (const size_t)
+  (foreign-lambda magickwand MagickGetImageRegion magickwand
+                  (const size_t) (const size_t)
                   (const ssize_t) (const ssize_t)))
 
 (define magick-get-image-signature
