@@ -1310,234 +1310,368 @@
 ;;; Magickwand Image Getters/Setters
 ;;;
 
-(define-magick-image-op (magick-set-image wand set-wand)
-  (MagickSetImage magickwand (const magickwand)))
-
-(define magick-get-image
-  (foreign-lambda magickwand MagickGetImage magickwand))
-
-(define-magick-image-op (magick-set-image-alpha-channel wand alpha-type)
-  (MagickSetImageAlphaChannel magickwand (const alphachanneltype)))
-
-(define magick-get-image-alpha-channel
-  (foreign-lambda bool MagickGetImageAlphaChannel magickwand))
-
-(define-magick-image-op (magick-set-image-clip-mask wand clip-mask)
-  (MagickSetImageClipMask magickwand (const magickwand)))
-
-(define magick-get-image-clip-mask
-  (foreign-lambda magickwand MagickGetImageClipMask magickwand))
-
-(define-magick-image-op (magick-set-image-background-color wand background)
-  (MagickSetImageBackgroundColor magickwand (const pixelwand)))
-
-(define magick-get-image-background-color
-  (foreign-lambda bool MagickGetImageBackgroundColor magickwand pixelwand))
-
-(define-magick-image-op (magick-set-image-blue-primary wand x y)
-  (MagickSetImageBluePrimary magickwand (const double) (const double)))
-
-(define magick-get-image-blue-primary
-  (foreign-lambda bool MagickGetImageBluePrimary
-                  magickwand (c-pointer double) (c-pointer double)))
-
-(define-magick-image-op (magick-set-image-border-color wand border)
-  (MagickSetImageBorderColor magickwand (const pixelwand)))
-
-(define magick-get-image-border-color
-  (foreign-lambda bool MagickGetImageBorderColor magickwand pixelwand))
-
-(define-magick-image-op (magick-set-image-channel-depth wand channel depth)
-  (MagickSetImageChannelDepth magickwand (const channeltype) (const size_t)))
-
-(define magick-get-image-channel-depth
-  (foreign-lambda size_t MagickGetImageChannelDepth magickwand (const channeltype)))
-
-(define-magick-image-op (magick-set-image-colormap-color wand index color)
-  (MagickSetImageColormapColor magickwand (const size_t) (const pixelwand)))
-
-(define magick-get-image-colormap-color
-  (foreign-lambda bool MagickGetImageColormapColor
-                  magickwand (const size_t) pixelwand))
-
-(define-magick-image-op (magick-set-image-colorspace wand colorspace)
-  (MagickSetImageColorspace magickwand (const colorspace)))
-
-(define magick-get-image-colorspace
-  (foreign-lambda colorspace MagickGetImageColorspace magickwand))
-
-(define-magick-image-op (magick-set-image-compose wand compose)
-  (MagickSetImageCompose magickwand (const compositeoperator)))
-
-(define magick-get-image-compose
-  (foreign-lambda compositeoperator MagickGetImageCompose magickwand))
-
-(define-magick-image-op (magick-set-image-compression wand compression)
-  (MagickSetImageCompression magickwand (const compressiontype)))
-
-(define magick-get-image-compression
-  (foreign-lambda compressiontype MagickGetImageCompression magickwand))
-
-(define-magick-image-op (magick-set-image-compression-quality wand quality)
-  (MagickSetImageCompressionQuality magickwand (const size_t)))
-
-(define magick-get-image-compression-quality
-  (foreign-lambda size_t MagickGetImageCompressionQuality magickwand))
-
-(define-magick-image-op (magick-set-image-delay wand delay)
-  (MagickSetImageDelay magickwand (const size_t)))
-
-(define magick-get-image-delay
-  (foreign-lambda size_t MagickGetImageDelay magickwand))
-
-(define-magick-image-op (magick-set-image-depth wand depth)
-  (MagickSetImageDepth magickwand (const size_t)))
-
-(define magick-get-image-depth
-  (foreign-lambda size_t MagickGetImageDepth magickwand))
-
-(define-magick-image-op (magick-set-image-dispose wand dispose)
-  (MagickSetImageDispose magickwand (const disposetype)))
-
-(define magick-get-image-dispose
-  (foreign-lambda disposetype MagickGetImageDispose magickwand))
-
-(define-magick-image-op (magick-set-image-filename wand filename)
-  (MagickSetImageFilename magickwand (const c-string)))
-
-(define magick-get-image-filename
-  (foreign-lambda c-string MagickGetImageFilename magickwand))
-
-(define-magick-image-op (magick-set-image-format wand format)
-  (MagickSetImageFormat magickwand (const c-string)))
-
-(define magick-get-image-format
-  (foreign-lambda c-string MagickGetImageFormat magickwand))
-
-(define-magick-image-op (magick-set-image-fuzz wand fuzz)
-  (MagickSetImageFuzz magickwand (const double)))
-
-(define magick-get-image-fuzz
-  (foreign-lambda double MagickGetImageFuzz magickwand))
-
-(define-magick-image-op (magick-set-image-gamma wand gamma)
-  (MagickSetImageGamma magickwand (const double)))
-
-(define magick-get-image-gamma
-  (foreign-lambda double MagickGetImageGamma magickwand))
-
-(define-magick-image-op (magick-set-image-gravity wand gravity)
-  (MagickSetImageGravity magickwand (const gravity)))
-
-(define magick-get-image-gravity
-  (foreign-lambda gravity MagickGetImageGravity magickwand))
-
-(define-magick-image-op (magick-set-image-green-primary wand x y)
-  (MagickSetImageGreenPrimary magickwand (const double) (const double)))
-
-(define magick-get-image-green-primary
-  (foreign-lambda bool MagickGetImageGreenPrimary
-                  magickwand (c-pointer double) (c-pointer double)))
-
-(define-magick-image-op (magick-set-image-interlace-scheme wand interlace)
-  (MagickSetImageInterlaceScheme magickwand (const interlacetype)))
-
-(define magick-get-image-interlace-scheme
-  (foreign-lambda interlacetype MagickGetImageInterlaceScheme magickwand))
-
-(define-magick-image-op (magick-set-image-interpolate-method wand method)
-  (MagickSetImageInterpolateMethod magickwand (const interpolatepixelmethod)))
-
-(define magick-get-image-interpolate-method
-  (foreign-lambda interpolatepixelmethod MagickGetImageInterpolateMethod
-                  magickwand))
-
-(define-magick-image-op (magick-set-image-iterations wand iterations)
-  (MagickSetImageIterations magickwand (const size_t)))
-
-(define magick-get-image-iterations
-  (foreign-lambda size_t MagickGetImageIterations magickwand))
-
-(define-magick-image-op (magick-set-image-matte-color wand matte)
-  (MagickSetImageMatteColor magickwand (const pixelwand)))
-
-(define magick-get-image-matte-color
-  (foreign-lambda bool MagickGetImageMatteColor
-                  magickwand pixelwand))
-
-(define-magick-image-op (magick-set-image-orientation wand orientation)
-  (MagickSetImageOrientation magickwand (const orientation)))
-
-(define magick-get-image-orientation
-  (foreign-lambda orientation MagickGetImageOrientation magickwand))
-
-(define-magick-image-op (magick-set-image-page wand width height x y)
-  (MagickSetImagePage magickwand (const size_t) (const size_t)
-                      (const ssize_t) (const ssize_t)))
-
-(define magick-get-image-page
-  (foreign-lambda bool MagickGetImagePage
-                  magickwand
-                  (c-pointer size_t) (c-pointer size_t)
-                  (c-pointer ssize_t) (c-pointer ssize_t)))
-
-(define-magick-image-op (magick-set-image-red-primary wand x y)
-  (MagickSetImageRedPrimary magickwand (const double) (const double)))
-
-(define magick-get-image-red-primary
-  (foreign-lambda bool MagickGetImageRedPrimary
-                  magickwand (c-pointer double) (c-pointer double)))
-
-(define-magick-image-op (magick-set-image-rendering-intent wand rendering-intent)
-  (MagickSetImageRenderingIntent magickwand (const renderingintent)))
-
-(define magick-get-image-rendering-intent
-  (foreign-lambda renderingintent MagickGetImageRenderingIntent magickwand))
-
-(define-magick-image-op (magick-set-image-resolution wand x-resolution y-resolution)
-  (MagickSetImageResolution magickwand (const double) (const double)))
-
-(define magick-get-image-resolution
-  (foreign-lambda bool MagickGetImageResolution
-                  magickwand (c-pointer double) (c-pointer double)))
-
-(define-magick-image-op (magick-set-image-scene wand scene)
-  (MagickSetImageScene magickwand (const size_t)))
-
-(define magick-get-image-scene
-  (foreign-lambda size_t MagickGetImageScene magickwand))
-
-(define-magick-image-op (magick-set-image-ticks-per-second wand ticks-per-second)
-  (MagickSetImageTicksPerSecond magickwand (const ssize_t)))
-
-(define magick-get-image-ticks-per-second
-  (foreign-lambda size_t MagickGetImageTicksPerSecond magickwand))
-
-(define-magick-image-op (magick-set-image-type wand image-type)
-  (MagickSetImageType magickwand (const imagetype)))
-
-(define magick-get-image-type
-  (foreign-lambda imagetype MagickGetImageType magickwand))
-
-(define-magick-image-op (magick-set-image-units wand units)
-  (MagickSetImageUnits magickwand (const resolutiontype)))
-
-(define magick-get-image-units
-  (foreign-lambda resolutiontype MagickGetImageUnits magickwand))
-
-(define magick-set-image-virtual-pixel-method
+(define magickwand-image-set!
+  (foreign-lambda bool MagickSetImage magickwand (const magickwand)))
+
+(define magickwand-image
+  (getter-with-setter
+   (foreign-lambda magickwand MagickGetImage magickwand)
+   magickwand-image-set!))
+
+(define magickwand-image-alpha-channel-set!
+  (foreign-lambda bool MagickSetImageAlphaChannel magickwand (const alphachanneltype)))
+
+(define magickwand-image-alpha-channel
+  (getter-with-setter
+   (foreign-lambda bool MagickGetImageAlphaChannel magickwand)
+   magickwand-image-alpha-channel-set!))
+
+(define magickwand-image-clip-mask-set!
+  (foreign-lambda bool MagickSetImageClipMask magickwand (const magickwand)))
+
+(define magickwand-image-clip-mask
+  (getter-with-setter
+   (foreign-lambda magickwand MagickGetImageClipMask magickwand)
+   magickwand-image-clip-mask-set!))
+
+(define magickwand-image-background-color-set!
+  (foreign-lambda bool MagickSetImageBackgroundColor magickwand (const pixelwand)))
+
+(define magickwand-image-background-color
+  (getter-with-setter
+   (lambda (wand)
+     (let ((p (make-pixelwand)))
+       ((foreign-lambda bool MagickGetImageBackgroundColor magickwand pixelwand)
+        wand p)
+       p))
+   magickwand-image-background-color-set!))
+
+(define magickwand-image-blue-primary-set!
+  (foreign-lambda bool MagickSetImageBluePrimary magickwand
+                  (const double) (const double)))
+
+(define magickwand-image-blue-primary
+  (getter-with-setter
+   (lambda (wand)
+     (let-location ((x double)
+                    (y double))
+       ((foreign-lambda bool MagickGetImageBluePrimary magickwand
+                        (c-pointer double) (c-pointer double))
+        wand (location x) (location y))
+       (list x y)))
+   (lambda (wand args) (apply magickwand-image-blue-primary-set! wand args))))
+
+(define magickwand-image-border-color-set!
+  (foreign-lambda bool MagickSetImageBorderColor magickwand (const pixelwand)))
+
+(define magickwand-image-border-color
+  (getter-with-setter
+   (lambda (wand)
+     (let ((p (make-pixelwand)))
+       ((foreign-lambda bool MagickGetImageBorderColor magickwand pixelwand)
+        wand p)
+       p))
+   magickwand-image-border-color-set!))
+
+(define magickwand-image-channel-depth-set!
+  (foreign-lambda bool MagickSetImageChannelDepth magickwand
+                  (const channeltype) (const size_t)))
+
+(define magickwand-image-channel-depth
+  (getter-with-setter
+   (foreign-lambda size_t MagickGetImageChannelDepth magickwand
+                   (const channeltype))
+   magickwand-image-channel-depth-set!))
+
+(define magickwand-image-colormap-color-set!
+  (foreign-lambda bool MagickSetImageColormapColor magickwand
+                  (const size_t) (const pixelwand)))
+
+(define magickwand-image-colormap-color
+  (getter-with-setter
+   (lambda (wand index)
+     (let ((p (make-pixelwand)))
+       ((foreign-lambda bool MagickGetImageColormapColor magickwand
+                        (const size_t) pixelwand)
+        wand index p)
+       p))
+   magickwand-image-colormap-color-set!))
+
+(define magickwand-image-colorspace-set!
+  (foreign-lambda bool MagickSetImageColorspace magickwand
+                  (const colorspace)))
+
+(define magickwand-image-colorspace
+  (getter-with-setter
+   (foreign-lambda colorspace MagickGetImageColorspace magickwand)
+   magickwand-image-colorspace-set!))
+
+(define magickwand-image-compose-set!
+  (foreign-lambda bool MagickSetImageCompose magickwand
+                  (const compositeoperator)))
+
+(define magickwand-image-compose
+  (getter-with-setter
+   (foreign-lambda compositeoperator MagickGetImageCompose magickwand)
+   magickwand-image-compose-set!))
+
+(define magickwand-image-compression-set!
+  (foreign-lambda bool MagickSetImageCompression magickwand
+                  (const compressiontype)))
+
+(define magickwand-image-compression
+  (getter-with-setter
+   (foreign-lambda compressiontype MagickGetImageCompression magickwand)
+   magickwand-image-compression-set!))
+
+(define magickwand-image-compression-quality-set!
+  (foreign-lambda bool MagickSetImageCompressionQuality magickwand
+                  (const size_t)))
+
+(define magickwand-image-compression-quality
+  (getter-with-setter
+   (foreign-lambda size_t MagickGetImageCompressionQuality magickwand)
+   magickwand-image-compression-quality-set!))
+
+(define magickwand-image-delay-set!
+  (foreign-lambda bool MagickSetImageDelay magickwand (const size_t)))
+
+(define magickwand-image-delay
+  (getter-with-setter
+   (foreign-lambda size_t MagickGetImageDelay magickwand)
+   magickwand-image-delay-set!))
+
+(define magickwand-image-depth-set!
+  (foreign-lambda bool MagickSetImageDepth magickwand (const size_t)))
+
+(define magickwand-image-depth
+  (getter-with-setter
+   (foreign-lambda size_t MagickGetImageDepth magickwand)
+   magickwand-image-depth-set!))
+
+(define magickwand-image-dispose-set!
+  (foreign-lambda bool MagickSetImageDispose magickwand (const disposetype)))
+
+(define magickwand-image-dispose
+  (getter-with-setter
+   (foreign-lambda disposetype MagickGetImageDispose magickwand)
+   magickwand-image-dispose-set!))
+
+(define magickwand-image-filename-set!
+  (foreign-lambda bool MagickSetImageFilename magickwand (const c-string)))
+
+(define magickwand-image-filename
+  (getter-with-setter
+   (foreign-lambda c-string MagickGetImageFilename magickwand)
+   magickwand-image-filename-set!))
+
+(define magickwand-image-format-set!
+  (foreign-lambda bool MagickSetImageFormat magickwand (const c-string)))
+
+(define magickwand-image-format
+  (getter-with-setter
+   (foreign-lambda c-string MagickGetImageFormat magickwand)
+   magickwand-image-format-set!))
+
+(define magickwand-image-fuzz-set!
+  (foreign-lambda bool MagickSetImageFuzz magickwand (const double)))
+
+(define magickwand-image-fuzz
+  (getter-with-setter
+   (foreign-lambda double MagickGetImageFuzz magickwand)
+   magickwand-image-fuzz-set!))
+
+(define magickwand-image-gamma-set!
+  (foreign-lambda bool MagickSetImageGamma magickwand (const double)))
+
+(define magickwand-image-gamma
+  (getter-with-setter
+   (foreign-lambda double MagickGetImageGamma magickwand)
+   magickwand-image-gamma-set!))
+
+(define magickwand-image-gravity-set!
+  (foreign-lambda bool MagickSetImageGravity magickwand (const gravity)))
+
+(define magickwand-image-gravity
+  (getter-with-setter
+   (foreign-lambda gravity MagickGetImageGravity magickwand)
+   magickwand-image-gravity-set!))
+
+(define magickwand-image-green-primary-set!
+  (foreign-lambda bool MagickSetImageGreenPrimary magickwand
+                  (const double) (const double)))
+
+(define magickwand-image-green-primary
+  (getter-with-setter
+   (lambda (wand)
+     (let-location ((x double)
+                    (y double))
+       ((foreign-lambda bool MagickGetImageGreenPrimary
+                        magickwand (c-pointer double) (c-pointer double))
+        wand (location x) (location y))
+       (list x y)))
+   (lambda (wand args) (apply magickwand-image-green-primary-set! wand args))))
+
+(define magickwand-image-interlace-scheme-set!
+  (foreign-lambda bool MagickSetImageInterlaceScheme magickwand
+                  (const interlacetype)))
+
+(define magickwand-image-interlace-scheme
+  (getter-with-setter
+   (foreign-lambda interlacetype MagickGetImageInterlaceScheme magickwand)
+   magickwand-image-interlace-scheme-set!))
+
+(define magickwand-image-interpolate-method-set!
+  (foreign-lambda bool MagickSetImageInterpolateMethod magickwand
+                  (const interpolatepixelmethod)))
+
+(define magickwand-image-interpolate-method
+  (getter-with-setter
+   (foreign-lambda interpolatepixelmethod MagickGetImageInterpolateMethod
+                   magickwand)
+   magickwand-image-interpolate-method-set!))
+
+(define magickwand-image-iterations-set!
+  (foreign-lambda bool MagickSetImageIterations magickwand (const size_t)))
+
+(define magickwand-image-iterations
+  (getter-with-setter
+   (foreign-lambda size_t MagickGetImageIterations magickwand)
+   magickwand-image-iterations-set!))
+
+(define magickwand-image-matte-color-set!
+  (foreign-lambda bool MagickSetImageMatteColor magickwand (const pixelwand)))
+
+(define magickwand-image-matte-color
+  (getter-with-setter
+   (lambda (wand)
+     (let ((p (make-pixelwand)))
+       ((foreign-lambda bool MagickGetImageMatteColor magickwand pixelwand)
+        wand p)
+       p))
+   magickwand-image-matte-color-set!))
+
+(define magickwand-image-orientation-set!
+  (foreign-lambda bool MagickSetImageOrientation magickwand (const orientation)))
+
+(define magickwand-image-orientation
+  (getter-with-setter
+   (foreign-lambda orientation MagickGetImageOrientation magickwand)
+   magickwand-image-orientation-set!))
+
+(define magickwand-image-page-set!
+  (foreign-lambda bool MagickSetImagePage magickwand
+                  (const size_t) (const size_t)
+                  (const ssize_t) (const ssize_t)))
+
+(define magickwand-image-page
+  (getter-with-setter
+   (lambda (wand)
+     (let-location ((width size_t)
+                    (height size_t)
+                    (x ssize_t)
+                    (y ssize_t))
+       ((foreign-lambda bool MagickGetImagePage magickwand
+                        (c-pointer size_t) (c-pointer size_t)
+                        (c-pointer ssize_t) (c-pointer ssize_t))
+        wand (location width) (location height) (location x) (location y))
+       (list width height x y)))
+   (lambda (wand args) (apply magickwand-image-page-set! wand args))))
+
+(define magickwand-image-red-primary-set!
+  (foreign-lambda bool MagickSetImageRedPrimary magickwand
+                  (const double) (const double)))
+
+(define magickwand-image-red-primary
+  (getter-with-setter
+   (lambda (wand)
+     (let-location ((x double)
+                    (y double))
+       ((foreign-lambda bool MagickGetImageRedPrimary magickwand
+                        (c-pointer double) (c-pointer double))
+        wand x y)
+       (list x y)))
+   (lambda (wand args) (apply magickwand-image-red-primary-set! wand args))))
+
+(define magickwand-image-rendering-intent-set!
+  (foreign-lambda bool MagickSetImageRenderingIntent magickwand
+                  (const renderingintent)))
+
+(define magickwand-image-rendering-intent
+  (getter-with-setter
+   (foreign-lambda renderingintent MagickGetImageRenderingIntent magickwand)
+   magickwand-image-rendering-intent-set!))
+
+(define magickwand-image-resolution-set!
+  (foreign-lambda bool MagickSetImageResolution magickwand
+                  (const double) (const double)))
+
+(define magickwand-image-resolution
+  (getter-with-setter
+   (lambda (wand)
+     (let-location ((x-res double)
+                    (y-res double))
+       ((foreign-lambda bool MagickGetImageResolution magickwand
+                        (c-pointer double) (c-pointer double))
+        wand (location x-res) (location y-res))
+       (list x-res y-res)))
+   (lambda (wand args) (apply magickwand-image-resolution-set! wand args))))
+
+(define magickwand-image-scene-set!
+  (foreign-lambda bool MagickSetImageScene magickwand (const size_t)))
+
+(define magickwand-image-scene
+  (getter-with-setter
+   (foreign-lambda size_t MagickGetImageScene magickwand)))
+
+(define magickwand-image-ticks-per-second-set!
+  (foreign-lambda bool MagickSetImageTicksPerSecond magickwand
+                  (const ssize_t)))
+
+(define magickwand-image-ticks-per-second
+  (getter-with-setter
+   (foreign-lambda size_t MagickGetImageTicksPerSecond magickwand)
+   magickwand-image-ticks-per-second-set!))
+
+(define magickwand-image-type-set!
+  (foreign-lambda bool MagickSetImageType magickwand (const imagetype)))
+
+(define magickwand-image-type
+  (getter-with-setter
+   (foreign-lambda imagetype MagickGetImageType magickwand)
+   magickwand-image-type-set!))
+
+(define magickwand-image-units-set!
+  (foreign-lambda bool MagickSetImageUnits magickwand (const resolutiontype)))
+
+(define magickwand-image-units
+  (getter-with-setter
+   (foreign-lambda resolutiontype MagickGetImageUnits magickwand)
+   magickwand-image-units-set!))
+
+(define magickwand-image-virtual-pixel-method-set!
   (foreign-lambda virtualpixelmethod MagickSetImageVirtualPixelMethod
                   magickwand (const virtualpixelmethod)))
 
-(define magick-get-image-virtual-pixel-method
-  (foreign-lambda virtualpixelmethod MagickGetImageVirtualPixelMethod magickwand))
+(define magickwand-image-virtual-pixel-method
+  (getter-with-setter
+   (foreign-lambda virtualpixelmethod MagickGetImageVirtualPixelMethod magickwand)
+   magickwand-image-virtual-pixel-method-set!))
 
-(define-magick-image-op (magick-set-image-white-point wand x y)
-  (MagickSetImageWhitePoint magickwand (const double) (const double)))
+(define magickwand-image-white-point-set!
+  (foreign-lambda bool MagickSetImageWhitePoint magickwand
+                  (const double) (const double)))
 
-(define magick-get-image-white-point
-  (foreign-lambda bool MagickGetImageWhitePoint
-                  magickwand (c-pointer double) (c-pointer double)))
+(define magickwand-image-white-point
+  (getter-with-setter
+   (lambda (wand)
+     (let-location ((x double)
+                    (y double))
+       ((foreign-lambda bool MagickGetImageWhitePoint magickwand
+                        (c-pointer double) (c-pointer double))
+        wand (location x) (location y))
+       (list x y)))
+   (lambda (wand args) (apply magickwand-image-white-point-set! wand args))))
 
 
 ;;;
