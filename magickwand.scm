@@ -962,8 +962,8 @@
       w))))
 
 (define magick-query-font-metrics
-  (foreign-lambda (c-pointer double) MagickQueryFontMetrics
-                  magickwand (const drawingwand) (const c-string)))
+  (foreign-lambda (c-pointer double) MagickQueryFontMetrics magickwand
+                  (const drawingwand) (const c-string)))
 
 (define magick-query-multiline-font-metrics
   (foreign-lambda (c-pointer double) MagickQueryMultilineFontMetrics
@@ -992,19 +992,20 @@
 ;;;
 
 (define magick-set-image-artifact
-  (foreign-lambda bool MagickSetImageArtifact
-                  magickwand (const c-string) (const c-string)))
+  (foreign-lambda bool MagickSetImageArtifact magickwand
+                  (const c-string) (const c-string)))
 
 (define magick-get-image-artifact
-  (foreign-lambda c-string MagickGetImageArtifact magickwand (const c-string)))
+  (foreign-lambda c-string MagickGetImageArtifact magickwand
+                  (const c-string)))
 
 (define magick-get-image-artifacts
-  (foreign-lambda c-string MagickGetImageArtifacts
-                  magickwand (const c-string) (c-pointer size_t)))
+  (foreign-lambda c-string MagickGetImageArtifacts magickwand
+                  (const c-string) (c-pointer size_t)))
 
 (define magick-delete-image-artifact
-  (foreign-lambda bool MagickDeleteImageArtifact
-                  magickwand (const c-string)))
+  (foreign-lambda bool MagickDeleteImageArtifact magickwand
+                  (const c-string)))
 
 ;; profiles should probably be a record type
 (define (magic-set-image-profile wand name vec)
@@ -1017,8 +1018,8 @@
                   "}"
                   "C_return(to);")
                 vec len)))
-    ((foreign-lambda bool MagickSetImageProfile
-                     magickwand (const c-string) (const c-pointer) (const size_t))
+    ((foreign-lambda bool MagickSetImageProfile magickwand
+                     (const c-string) (const c-pointer) (const size_t))
      wand name blob len)))
 
 (define (magick-get-image-profile wand name)
@@ -1036,38 +1037,40 @@
       result)))
 
 (define magick-get-image-profiles
-  (foreign-lambda c-string MagickGetImageProfiles
-                  magickwand (const c-string) (c-pointer size_t)))
+  (foreign-lambda c-string MagickGetImageProfiles magickwand
+                  (const c-string) (c-pointer size_t)))
 
 (define magick-set-image-property
-  (foreign-lambda bool MagickSetImageProperty
-                  magickwand (const c-string) (const c-string)))
+  (foreign-lambda bool MagickSetImageProperty magickwand
+                  (const c-string) (const c-string)))
 
 (define magick-get-image-property
-  (foreign-lambda c-string MagickGetImageProperty magickwand (const c-string)))
+  (foreign-lambda c-string MagickGetImageProperty magickwand
+                  (const c-string)))
 
 (define magick-get-image-properties
-  (foreign-lambda c-string MagickGetImageProperties
-                  magickwand (const c-string) (c-pointer size_t)))
+  (foreign-lambda c-string MagickGetImageProperties magickwand
+                  (const c-string) (c-pointer size_t)))
 
 (define magick-delete-image-property
-  (foreign-lambda bool MagickDeleteImageProperty
-                  magickwand (const c-string)))
+  (foreign-lambda bool MagickDeleteImageProperty magickwand
+                  (const c-string)))
 
 (define magick-set-option
-  (foreign-lambda bool MagickSetOption
-                  magickwand (const c-string) (const c-string)))
+  (foreign-lambda bool MagickSetOption magickwand
+                  (const c-string) (const c-string)))
 
 (define magick-get-option
-  (foreign-lambda c-string MagickGetOption magickwand (const c-string)))
+  (foreign-lambda c-string MagickGetOption magickwand
+                  (const c-string)))
 
 (define magick-get-options
-  (foreign-lambda c-string MagickGetOptions
-                  magickwand (const c-string) (c-pointer size_t)))
+  (foreign-lambda c-string MagickGetOptions magickwand
+                  (const c-string) (c-pointer size_t)))
 
 (define magick-delete-option
-  (foreign-lambda bool MagickDeleteOption
-                  magickwand (const c-string)))
+  (foreign-lambda bool MagickDeleteOption magickwand
+                  (const c-string)))
 
 (define magick-get-quantum-depth
   (foreign-lambda c-string MagickGetQuantumDepth (c-pointer size_t)))
@@ -1086,12 +1089,12 @@
   (foreign-lambda magicksize MagickGetResourceLimit (const resourcetype)))
 
 (define magick-profile-image
-  (foreign-lambda bool MagickProfileImage
-                  magickwand (const c-string) (const c-pointer) (const size_t)))
+  (foreign-lambda bool MagickProfileImage magickwand
+                  (const c-string) (const c-pointer) (const size_t)))
 
 (define magick-remove-image-profile
-  (foreign-lambda unsigned-c-string MagickRemoveImageProfile
-                  magickwand (const c-string) (c-pointer size_t)))
+  (foreign-lambda unsigned-c-string MagickRemoveImageProfile magickwand
+                  (const c-string) (c-pointer size_t)))
 
 (define magick-set-depth
   (foreign-lambda bool MagickSetDepth magickwand (const size_t)))
