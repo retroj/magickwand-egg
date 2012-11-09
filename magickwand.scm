@@ -1709,9 +1709,11 @@
 ;;; Magickwand Image Getters/Setters, Unpaired
 ;;;
 
-(define magick-get-image-blob
-  (foreign-lambda unsigned-c-string MagickGetImageBlob magickwand
-                  (c-pointer size_t)))
+(define (magick-get-image-blob magickwand)
+  (let-location ((ignored size_t))
+    ((foreign-lambda unsigned-c-string MagickGetImageBlob magickwand
+                     (c-pointer size_t))
+     magickwand (location ignored))))
 
 (define magick-get-images-blob
   (foreign-lambda unsigned-c-string MagickGetImagesBlob magickwand
