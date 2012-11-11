@@ -2292,7 +2292,10 @@
 (define-magick-image-op (magick-reset-image-page wand page)
   (MagickResetImagePage magickwand (const c-string)))
 
-(define (magick-resize-image wand columns rows filter blur)
+(define (magick-resize-image wand columns rows filter #!optional (blur 1.0))
+  ;; convert chooses a default filter as follows: Mitchell for colormapped
+  ;; images, images with a matte channel, or if the image is enlarged.
+  ;; Otherwise Lanczos.
   (unless ((foreign-lambda bool MagickResizeImage
                            magickwand (const size_t) (const size_t)
                            (const filtertype) (const double))
