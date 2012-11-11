@@ -2292,9 +2292,13 @@
 (define-magick-image-op (magick-reset-image-page wand page)
   (MagickResetImagePage magickwand (const c-string)))
 
-(define-magick-image-op (magick-resize-image wand columns rows filter blur)
-  (MagickResizeImage magickwand (const size_t) (const size_t)
-                     (const filtertype) (const double)))
+(define (magick-resize-image wand columns rows filter blur)
+  (unless ((foreign-lambda bool MagickResizeImage
+                           magickwand (const size_t) (const size_t)
+                           (const filtertype) (const double))
+           wand columns rows (filtertype->int filter) blur)
+    (abort (magick-get-exception wand))
+    #t))
 
 (define-magick-image-op (magick-roll-image wand x y)
   (MagickRollImage magickwand (const ssize_t) (const ssize_t)))
