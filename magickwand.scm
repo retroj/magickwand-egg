@@ -609,8 +609,8 @@
   (dithermethod/riemersma RiemersmaDitherMethod)
   (dithermethod/floydsteinberg FloydSteinbergDitherMethod))
 
-(define-foreign-enum-type (filtertypes int)
-  (filtertypes->int int->filtertypes)
+(define-foreign-enum-type (filtertype int)
+  (filtertype->int int->filtertype)
   (filter/undefined UndefinedFilter)
   (filter/point PointFilter)
   (filter/box BoxFilter)
@@ -2287,14 +2287,14 @@
 
 (define-magick-image-op (magick-resample-image wand x-resolution y-resolution filter blur)
   (MagickResampleImage magickwand (const double) (const double)
-                       (const filtertypes) (const double)))
+                       (const filtertype) (const double)))
 
 (define-magick-image-op (magick-reset-image-page wand page)
   (MagickResetImagePage magickwand (const c-string)))
 
 (define-magick-image-op (magick-resize-image wand columns rows filter blur)
   (MagickResizeImage magickwand (const size_t) (const size_t)
-                     (const filtertypes) (const double)))
+                     (const filtertype) (const double)))
 
 (define-magick-image-op (magick-roll-image wand x y)
   (MagickRollImage magickwand (const ssize_t) (const ssize_t)))
