@@ -25,6 +25,11 @@
 
 
 
+== Memory Management
+
+Pixelwands are not memory managed.
+
+
 == Examples
 
 

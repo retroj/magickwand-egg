@@ -2609,9 +2609,7 @@
       (set! (pixelwand-color p) x)
       p))
    (()
-    (let ((p ((foreign-lambda pixelwand NewPixelWand))))
-      (set-finalizer! p pixelwand-destroy)
-      p))))
+    ((foreign-lambda pixelwand NewPixelWand)))))
 
 (define new-pixelwands
   (foreign-lambda (c-pointer pixelwand) NewPixelWands (const size_t)))
