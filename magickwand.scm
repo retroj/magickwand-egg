@@ -862,10 +862,8 @@
     ((define-magick-image-op (scheme-name object . rest)
                              (c-name . c-args))
      (define (scheme-name object . rest)
-       (unless ((foreign-lambda bool c-name . c-args)
-                object . rest)
-         (abort (magick-get-exception object))
-         #t)))))
+       (or ((foreign-lambda bool c-name . c-args) object . rest)
+           (signal (magick-get-exception object)))))))
 
 
 ;;;
@@ -2296,12 +2294,11 @@
   ;; convert chooses a default filter as follows: Mitchell for colormapped
   ;; images, images with a matte channel, or if the image is enlarged.
   ;; Otherwise Lanczos.
-  (unless ((foreign-lambda bool MagickResizeImage
-                           magickwand (const size_t) (const size_t)
-                           (const filtertype) (const double))
-           wand columns rows (filtertype->int filter) blur)
-    (abort (magick-get-exception wand))
-    #t))
+  (or ((foreign-lambda bool MagickResizeImage
+                       magickwand (const size_t) (const size_t)
+                       (const filtertype) (const double))
+       wand columns rows (filtertype->int filter) blur)
+      (signal (magick-get-exception wand))))
 
 (define-magick-image-op (magick-roll-image wand x y)
   (MagickRollImage magickwand (const ssize_t) (const ssize_t)))
