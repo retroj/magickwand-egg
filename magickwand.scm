@@ -30,7 +30,8 @@
 (import chicken scheme foreign foreigners)
 
 (use
- srfi-4
+ (srfi 4 13)
+ extras
  matchable)
 
 (foreign-declare "#include <wand/MagickWand.h>")
@@ -936,13 +937,16 @@
 
 (define (magick-get-exception wand)
   (let-location ((typeout int))
-    (let ((str ((foreign-lambda c-string MagickGetException
-                                (const magickwand)
-                                (c-pointer "ExceptionType"))
-                wand (location typeout))))
-      (make-property-condition
-       (int->exceptiontype typeout)
-       'message str))))
+    (let* ((str ((foreign-lambda c-string MagickGetException
+                                 (const magickwand)
+                                 (c-pointer "ExceptionType"))
+                 wand (location typeout)))
+           (str (if (string-null? str) str (string-append ": " str)))
+           (type (int->exceptiontype typeout)))
+      (make-composite-condition
+       (make-property-condition 'exn 'message (sprintf "MagickWand ~A~A" type str))
+       (make-property-condition 'magickwand 'type type)
+       (make-property-condition type)))))
 
 (define magick-get-exception-type
   (foreign-lambda exceptiontype MagickGetExceptionType (const magickwand)))
