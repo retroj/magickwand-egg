@@ -2274,8 +2274,11 @@
 (define-magick-image-op (magick-read-image wand filename)
   (MagickReadImage magickwand (const c-string)))
 
-(define-magick-image-op (magick-read-image-blob wand blob length)
-  (MagickReadImageBlob magickwand (const c-pointer) (const size_t)))
+(define (magick-read-image-blob wand blob)
+  (or ((foreign-lambda bool MagickReadImageBlob magickwand
+                       (const blob) (const size_t))
+       wand blob (blob-size blob))
+      (signal (magick-get-exception wand))))
 
 ;;(define magick-read-image-file
 ;;  (foreign-lambda bool MagickReadImageFile
