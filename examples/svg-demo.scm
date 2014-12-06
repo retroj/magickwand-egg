@@ -32,8 +32,6 @@ END
 
 (magickwand-genesis)
 
-(let ((w (make-magickwand)))
-  (magick-read-image-blob w an-svg)
-  (magick-write-image w "x:"))
+(magick-write-image (make-magickwand an-svg) "x:")
 
 (magickwand-terminus)
