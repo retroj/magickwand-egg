@@ -2272,12 +2272,6 @@
 (define-magick-image-op (magick-quantize-images wand number-colors colorspace treedepth dither measure-error)
   (MagickQuantizeImages magickwand (const size_t) (const colorspace) (const size_t) (const bool) (const bool)))
 
-(define-magick-image-op (magick-radial-blur-image wand angle)
-  (MagickRadialBlurImage magickwand (const double)))
-
-(define-magick-image-op (magick-radial-blur-image-channel wand channel angle)
-  (MagickRadialBlurImageChannel magickwand (const channeltype) (const double)))
-
 (define-magick-image-op (magick-raise-image wand width height x y raise)
   (MagickRaiseImage magickwand (const size_t) (const size_t)
                     (const ssize_t) (const ssize_t) (const bool)))
