@@ -871,11 +871,17 @@
 ;;; General
 ;;;
 
-(define magickwand-genesis
-  (foreign-lambda void MagickWandGenesis))
+(define magickwand-state 'uninitialized)
 
-(define magickwand-terminus
-  (foreign-lambda void MagickWandTerminus))
+(define (magickwand-genesis)
+  (when (eq? 'uninitialized magickwand-state)
+    ((foreign-lambda void MagickWandGenesis))
+    (set! magickwand-state 'initialized)))
+
+(define (magickwand-terminus)
+  (when (eq? 'initialized magickwand-state)
+    ((foreign-lambda void MagickWandTerminus))
+    (set! magickwand-state 'uninitialized)))
 
 (define magick-query-configure-option
   (foreign-lambda c-string MagickQueryConfigureOption (const c-string)))
@@ -951,16 +957,28 @@
 (define magick-get-exception-type
   (foreign-lambda exceptiontype MagickGetExceptionType (const magickwand)))
 
+(define (magickwand-finalizer w)
+  (when (eq? 'initialized magickwand-state)
+    (magickwand-destroy w)))
+
 (define make-magickwand
-  (case-lambda
-   ((image)
+  (match-lambda*
+   (((? string? str))
+    (let ((w (make-magickwand)))
+      (magick-read-image w str)
+      w))
+   (((? blob? b))
+    (let ((w (make-magickwand)))
+      (magick-read-image-blob w b)
+      w))
+   ((image) ;; need typecheck predicate for 'image'
     (let ((w ((foreign-lambda magickwand NewMagickWandFromImage (const image))
               image)))
-      (set-finalizer! w magickwand-destroy)
+      (set-finalizer! w magickwand-finalizer)
       w))
    (()
     (let ((w ((foreign-lambda magickwand NewMagickWand))))
-      (set-finalizer! w magickwand-destroy)
+      (set-finalizer! w magickwand-finalizer)
       w))))
 
 (define magick-query-font-metrics
