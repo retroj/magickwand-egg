@@ -1,16 +1,16 @@
 ;; -*- scheme -*-
 
 (compile -s -O3 -d1
-         -C "`pkg-config --cflags MagickWand`"
-         -L "`pkg-config --libs MagickWand`"
+         -C "\"`pkg-config --cflags MagickWand`\""
+         -L "\"`pkg-config --libs MagickWand`\""
          "magickwand.scm" -J)
 (compile -c -O3 -d1
-         -C "`pkg-config --cflags MagickWand`"
-         -L "`pkg-config --libs MagickWand`"
+         -C "\"`pkg-config --cflags MagickWand`\""
+         -L "\"`pkg-config --libs MagickWand`\""
          "magickwand.scm" -unit magickwand)
 (compile -s -O3 -d0 "magickwand.import.scm"
-         -C "`pkg-config --cflags MagickWand`"
-         -L "`pkg-config --libs MagickWand`")
+         -C "\"`pkg-config --cflags MagickWand`\""
+         -L "\"`pkg-config --libs MagickWand`\"")
 
 (install-extension
  'magickwand
