@@ -30,8 +30,4 @@ exec csi -s $0 "$@"
 END
 ))
 
-(magickwand-genesis)
-
 (magick-write-image (make-magickwand an-svg) "x:")
-
-(magickwand-terminus)
