@@ -927,9 +927,6 @@
 (define magickwand-clear
   (foreign-lambda void ClearMagickWand magickwand))
 
-(define magickwand-destroy
-  (foreign-lambda magickwand DestroyMagickWand magickwand))
-
 (define magickwand?
   (foreign-lambda bool IsMagickWand (const magickwand)))
 
@@ -954,7 +951,7 @@
 
 (define (magickwand-finalizer w)
   (when (magickwand-instantiated?)
-    (magickwand-destroy w)))
+    ((foreign-lambda magickwand DestroyMagickWand magickwand) w)))
 
 (define make-magickwand
   (match-lambda*
