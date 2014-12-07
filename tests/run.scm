@@ -27,3 +27,5 @@
               (magick-get-image-height w)
               (magick-get-image-width w)
               (magickwand-image-type w))))
+
+(test-exit)
