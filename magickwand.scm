@@ -927,9 +927,6 @@
 (define magickwand-clear
   (foreign-lambda void ClearMagickWand magickwand))
 
-(define magickwand-clone
-  (foreign-lambda magickwand CloneMagickWand (const magickwand)))
-
 (define magickwand-destroy
   (foreign-lambda magickwand DestroyMagickWand magickwand))
 
@@ -969,6 +966,10 @@
     (let ((w (make-magickwand)))
       (magick-read-image-blob w b)
       w))
+   (((? magickwand? w))
+    (let ((w2 ((foreign-lambda magickwand CloneMagickWand (const magickwand)) w)))
+      (set-finalizer! w2 magickwand-finalizer)
+      w2))
    ((image) ;; need typecheck predicate for 'image'
     (let ((w ((foreign-lambda magickwand NewMagickWandFromImage (const image))
               image)))
