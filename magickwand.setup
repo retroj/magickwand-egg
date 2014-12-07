@@ -4,14 +4,9 @@
          -C "\"`pkg-config --cflags MagickWand`\""
          -L "\"`pkg-config --libs MagickWand`\""
          "magickwand.scm" -J)
-(compile -c -O3 -d1
-         -C "\"`pkg-config --cflags MagickWand`\""
-         -L "\"`pkg-config --libs MagickWand`\""
-         "magickwand.scm" -unit magickwand)
 (compile -s -O3 -d0 "magickwand.import.scm")
 
 (install-extension
  'magickwand
- '("magickwand.o" "magickwand.so" "magickwand.import.so")
- '((version 0.1)
-   (static "magickwand.o")))
+ '("magickwand.so" "magickwand.import.so")
+ '((version 0.1)))
