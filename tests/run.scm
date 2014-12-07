@@ -1,10 +1,10 @@
 
-(import chicken scheme extras)
+(import chicken scheme)
 
-(use
- srfi-13
- test
- magickwand)
+(use (srfi 13)
+     extras
+     test
+     magickwand)
 
 (test "magickwand? boolean"
       #t
