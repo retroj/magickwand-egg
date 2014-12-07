@@ -3512,4 +3512,13 @@
 ;;  (foreign-lambda bool UpdateWandViewIterator
 ;;                  wandview updatewandviewmethod c-pointer))
 
+
+;;;
+;;; Init
+;;;
+
+(magickwand-genesis)
+
+(on-exit magickwand-terminus)
+
 )
