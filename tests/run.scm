@@ -6,8 +6,6 @@
  test
  magickwand)
 
-(magickwand-genesis) ;; why?
-
 (test "magickwand? boolean"
       #t
       (let ((w (new-magickwand)))
@@ -29,5 +27,3 @@
               (magick-get-image-height w)
               (magick-get-image-width w)
               (magick-get-image-type w))))
-
-(magickwand-terminus) ;; why?
