@@ -8,7 +8,7 @@
 
 (test "magickwand? boolean"
       #t
-      (let ((w (new-magickwand)))
+      (let ((w (make-magickwand)))
         (magickwand? w)))
 
 (test "magick-get-copyright"
@@ -19,11 +19,11 @@
              #t)))
 
 (test "rose: characteristics"
-      '("ROSE" "PPM" 46 70 TrueColorType)
-      (let ((w (new-magickwand)))
+      '("ROSE" "PPM" 46 70 type/truecolor)
+      (let ((w (make-magickwand)))
         (magick-read-image w "rose:")
-        (list (magick-get-image-filename w)
-              (magick-get-image-format w)
+        (list (magickwand-image-filename w)
+              (magickwand-image-format w)
               (magick-get-image-height w)
               (magick-get-image-width w)
-              (magick-get-image-type w))))
+              (magickwand-image-type w))))
