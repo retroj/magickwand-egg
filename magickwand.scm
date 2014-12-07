@@ -871,17 +871,15 @@
 ;;; General
 ;;;
 
-(define magickwand-state 'uninitialized)
+(define magickwand-instantiated?
+  (foreign-lambda bool IsMagickWandInstantiated))
 
-(define (magickwand-genesis)
-  (when (eq? 'uninitialized magickwand-state)
-    ((foreign-lambda void MagickWandGenesis))
-    (set! magickwand-state 'initialized)))
+(define magickwand-genesis
+  (foreign-lambda void MagickWandGenesis))
 
 (define (magickwand-terminus)
-  (when (eq? 'initialized magickwand-state)
-    ((foreign-lambda void MagickWandTerminus))
-    (set! magickwand-state 'uninitialized)))
+  (when (magickwand-instantiated?)
+    ((foreign-lambda void MagickWandTerminus))))
 
 (define magick-query-configure-option
   (foreign-lambda c-string MagickQueryConfigureOption (const c-string)))
@@ -958,7 +956,7 @@
   (foreign-lambda exceptiontype MagickGetExceptionType (const magickwand)))
 
 (define (magickwand-finalizer w)
-  (when (eq? 'initialized magickwand-state)
+  (when (magickwand-instantiated?)
     (magickwand-destroy w)))
 
 (define make-magickwand
