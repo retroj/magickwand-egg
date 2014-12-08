@@ -433,7 +433,6 @@
           pixelwand-clear
           pixelwand-clone
           clone-pixelwands
-          pixelwand-destroy
           destroy-pixelwands
           is-pixelwand-similar
           pixelwand?

@@ -73,6 +73,31 @@
     (%make-drawingwand p)))
 
 
+;; pixelwand
+;;
+(define-record-type :pixelwand
+  (%make-pixelwand this)
+  pixelwand?
+  (this pixelwand-this))
+
+(define (%pixelwand-finalizer p)
+  (when (magickwand-instantiated?)
+    ((foreign-lambda c-pointer DestroyPixelWand pixelwand))
+    #t))
+
+(define-foreign-type pixelwand (c-pointer (struct _PixelWand))
+  pixelwand-this
+  (lambda (p)
+    (set-finalizer! p %pixelwand-finalizer)
+    (%make-pixelwand p)))
+
+
+;; pixelwands (array of pixelwands)
+;;
+;; (To-do)
+;;
+
+
 ;; image
 ;;
 (define-record-type :image
@@ -82,11 +107,6 @@
 
 (define-foreign-type image (c-pointer (struct _Image))
   image-this %make-image)
-
-
-;; pixelwand
-;;
-(define-foreign-type pixelwand (c-pointer (struct _PixelWand)))
 
 
 ;; pixeliterator
@@ -1919,9 +1939,6 @@
   (foreign-lambda (c-pointer pixelwand) ClonePixelWands
                   (const (c-pointer pixelwand)) (const size_t)))
 
-(define pixelwand-destroy
-  (foreign-lambda pixelwand DestroyPixelWand pixelwand))
-
 (define destroy-pixelwands
   (foreign-lambda (c-pointer pixelwand) DestroyPixelWands
                   (c-pointer pixelwand) (const size_t)))
@@ -1929,9 +1946,6 @@
 (define is-pixelwand-similar
   (foreign-lambda bool IsPixelWandSimilar
                   pixelwand pixelwand (const double)))
-
-(define pixelwand?
-  (foreign-lambda bool IsPixelWand (const pixelwand)))
 
 ;; fuzz
 ;; hsl color, given by 3 doubles
