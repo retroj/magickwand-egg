@@ -467,8 +467,7 @@
    magickwand-antialias-set!))
 
 (define magickwand-background-color-set!
-  (foreign-lambda bool MagickSetBackgroundColor magickwand
-                  (const pixelwand)))
+  (foreign-lambda bool MagickSetBackgroundColor magickwand pixelwand))
 
 (define magickwand-background-color
   (getter-with-setter
@@ -690,8 +689,7 @@
    magickwand-image-clip-mask-set!))
 
 (define magickwand-image-background-color-set!
-  (foreign-lambda bool MagickSetImageBackgroundColor magickwand
-                  (const pixelwand)))
+  (foreign-lambda bool MagickSetImageBackgroundColor magickwand pixelwand))
 
 (define magickwand-image-background-color
   (getter-with-setter
@@ -719,8 +717,7 @@
    (lambda (wand args) (apply magickwand-image-blue-primary-set! wand args))))
 
 (define magickwand-image-border-color-set!
-  (foreign-lambda bool MagickSetImageBorderColor magickwand
-                  (const pixelwand)))
+  (foreign-lambda bool MagickSetImageBorderColor magickwand pixelwand))
 
 (define magickwand-image-border-color
   (getter-with-setter
@@ -744,7 +741,7 @@
 
 (define magickwand-image-colormap-color-set!
   (foreign-lambda bool MagickSetImageColormapColor magickwand
-                  (const size_t) (const pixelwand)))
+                  (const size_t) pixelwand))
 
 (define magickwand-image-colormap-color
   (getter-with-setter
@@ -908,8 +905,7 @@
    magickwand-image-iterations-set!))
 
 (define magickwand-image-matte-color-set!
-  (foreign-lambda bool MagickSetImageMatteColor magickwand
-                  (const pixelwand)))
+  (foreign-lambda bool MagickSetImageMatteColor magickwand pixelwand))
 
 (define magickwand-image-matte-color
   (getter-with-setter
@@ -1138,7 +1134,7 @@
   (MagickSetImageBias magickwand (const double)))
 
 (define-magick-image-op (magick-set-image-color wand color)
-  (MagickSetImageColor magickwand (const pixelwand)))
+  (MagickSetImageColor magickwand pixelwand))
 
 (define-magick-image-op (magick-set-image-extent wand columns rows)
   (MagickSetImageExtent magickwand (const size_t) (const size_t)))
@@ -1211,7 +1207,7 @@
   (MagickAutoLevelImageChannel magickwand (const channeltype)))
 
 (define-magick-image-op (magick-black-threshold-image wand threshold)
-  (MagickBlackThresholdImage magickwand (const pixelwand)))
+  (MagickBlackThresholdImage magickwand pixelwand))
 
 (define-magick-image-op (magick-blue-shift-image wand factor)
   (MagickBlueShiftImage magickwand (const double)))
@@ -1223,7 +1219,7 @@
   (MagickBlurImageChannel magickwand (const channeltype) (const double) (const double)))
 
 (define-magick-image-op (magick-border-image wand bordercolor width height)
-  (MagickBorderImage magickwand (const pixelwand) (const size_t) (const size_t)))
+  (MagickBorderImage magickwand pixelwand (const size_t) (const size_t)))
 
 (define-magick-image-op (magick-brightness-contrast-image wand brightness contrast)
   (MagickBrightnessContrastImage magickwand (const double) (const double)))
@@ -1263,7 +1259,7 @@
   (MagickColorDecisionListImage magickwand (const c-string)))
 
 (define-magick-image-op (magick-colorize-image wand colorize opacity)
-  (MagickColorizeImage magickwand (const pixelwand) (const pixelwand)))
+  (MagickColorizeImage magickwand pixelwand pixelwand))
 
 (define-magick-image-op (magick-color-matrix-image wand color-matrix)
   (MagickColorMatrixImage magickwand (const kernelinfo)))
@@ -1402,8 +1398,8 @@
   (MagickFlipImage magickwand))
 
 (define-magick-image-op (magick-floodfill-paint-image wand channel fill fuzz bordercolor x y invert)
-  (MagickFloodfillPaintImage magickwand (const channeltype) (const pixelwand) (const double)
-                             (const pixelwand) (const ssize_t) (const ssize_t) (const bool)))
+  (MagickFloodfillPaintImage magickwand (const channeltype) pixelwand (const double)
+                             pixelwand (const ssize_t) (const ssize_t) (const bool)))
 
 (define-magick-image-op (magick-flop-image wand)
   (MagickFlopImage magickwand))
@@ -1412,7 +1408,7 @@
   (MagickForwardFourierTransformImage magickwand (const bool)))
 
 (define-magick-image-op (magick-frame-image wand matte-color width height inner-bevel outer-bevel)
-  (MagickFrameImage magickwand (const pixelwand) (const size_t) (const size_t)
+  (MagickFrameImage magickwand pixelwand (const size_t) (const size_t)
                     (const ssize_t) (const ssize_t)))
 
 (define-magick-image-op (magick-function-image wand function number-arguments arguments)
@@ -1531,7 +1527,7 @@
   (MagickNegateImageChannel magickwand (const channeltype) (const bool)))
 
 (define-magick-image-op (magick-new-image wand columns rows background)
-  (MagickNewImage magickwand (const size_t) (const size_t) (const pixelwand)))
+  (MagickNewImage magickwand (const size_t) (const size_t) pixelwand))
 
 (define magick-next-image
   (foreign-lambda bool MagickNextImage magickwand))
@@ -1546,12 +1542,12 @@
   (MagickOilPaintImage magickwand (const double)))
 
 (define-magick-image-op (magick-opaque-paint-image wand target fill fuzz invert)
-  (MagickOpaquePaintImage magickwand (const pixelwand) (const pixelwand)
+  (MagickOpaquePaintImage magickwand pixelwand pixelwand
                           (const double) (const bool)))
 
 (define-magick-image-op (magick-opaque-paint-image-channel wand channel target fill fuzz invert)
-  (MagickOpaquePaintImageChannel magickwand (const channeltype) (const pixelwand)
-                                 (const pixelwand) (const double) (const bool)))
+  (MagickOpaquePaintImageChannel magickwand (const channeltype) pixelwand
+                                 pixelwand (const double) (const bool)))
 
 (define magick-optimize-image-layers
   (foreign-lambda magickwand MagickOptimizeImageLayers magickwand))
@@ -1642,7 +1638,7 @@
   (MagickRollImage magickwand (const ssize_t) (const ssize_t)))
 
 (define-magick-image-op (magick-rotate-image wand background degrees)
-  (MagickRotateImage magickwand (const pixelwand) (const double)))
+  (MagickRotateImage magickwand pixelwand (const double)))
 
 (define-magick-image-op (magick-sample-image wand columns rows)
   (MagickSampleImage magickwand (const size_t) (const size_t)))
@@ -1684,7 +1680,7 @@
   (MagickShaveImage magickwand (const size_t) (const size_t)))
 
 (define-magick-image-op (magick-shear-image wand background x-shear y-shear)
-  (MagickShearImage magickwand (const pixelwand) (const double) (const double)))
+  (MagickShearImage magickwand pixelwand (const double) (const double)))
 
 (define-magick-image-op (magick-sigmoidal-contrast-image wand sharpen alpha beta)
   (MagickSigmoidalContrastImage magickwand (const bool) (const double) (const double)))
@@ -1759,7 +1755,7 @@
   (MagickThumbnailImage magickwand (const size_t) (const size_t)))
 
 (define-magick-image-op (magick-tint-image wand tint opacity)
-  (MagickTintImage magickwand (const pixelwand) (const pixelwand)))
+  (MagickTintImage magickwand pixelwand pixelwand))
 
 (define magick-transform-image
   (foreign-lambda magickwand MagickTransformImage
@@ -1769,7 +1765,7 @@
   (MagickTransformImageColorspace magickwand (const colorspace)))
 
 (define-magick-image-op (magick-transparent-paint-image wand target alpha fuzz invert)
-  (MagickTransparentPaintImage magickwand (const pixelwand) (const double)
+  (MagickTransparentPaintImage magickwand pixelwand (const double)
                                (const double) (const bool)))
 
 (define-magick-image-op (magick-transpose-image wand)
@@ -1800,7 +1796,7 @@
   (MagickWaveImage magickwand (const double) (const double)))
 
 (define-magick-image-op (magick-white-threshold-image wand threshold)
-  (MagickWhiteThresholdImage magickwand (const pixelwand)))
+  (MagickWhiteThresholdImage magickwand pixelwand))
 
 (define-magick-image-op (magick-write-image wand filename)
   (MagickWriteImage magickwand (const c-string)))
@@ -1901,19 +1897,19 @@
 (define (pixelwand-get-exception wand)
   (let-location ((typeout int))
     (let ((str ((foreign-lambda c-string PixelGetException
-                                (const pixelwand)
+                                pixelwand
                                 (c-pointer "ExceptionType"))
                 wand (location typeout))))
       (values str (int->exceptiontype typeout)))))
 
 (define pixelwand-get-exception-type
-  (foreign-lambda exceptiontype PixelGetExceptionType (const pixelwand)))
+  (foreign-lambda exceptiontype PixelGetExceptionType pixelwand))
 
 (define pixelwand-clear
   (foreign-lambda void ClearPixelWand pixelwand))
 
 (define pixelwand-clone
-  (foreign-lambda pixelwand ClonePixelWand (const pixelwand)))
+  (foreign-lambda pixelwand ClonePixelWand pixelwand))
 
 (define clone-pixelwands
   (foreign-lambda (c-pointer pixelwand) ClonePixelWands
@@ -1950,7 +1946,7 @@
   (foreign-lambda void PixelSetAlpha pixelwand (const double)))
 
 (define pixelwand-alpha
-  (foreign-lambda double PixelGetAlpha (const pixelwand)))
+  (foreign-lambda double PixelGetAlpha pixelwand))
 
 (set! (setter pixelwand-alpha) pixelwand-alpha-set!)
 
@@ -1958,7 +1954,7 @@
 ;;  (foreign-lambda void PixelSetAlphaQuantum pixelwand (const quantum)))
 
 ;;(define pixelwand-alpha-quantum
-;;  (foreign-lambda quantum PixelGetAlphaQuantum (const pixelwand)))
+;;  (foreign-lambda quantum PixelGetAlphaQuantum pixelwand))
 
 ;;(set! (setter pixelwand-alpha-quantum) pixelwand-alpha-quantum-set!)
 
@@ -1966,7 +1962,7 @@
   (foreign-lambda void PixelSetBlack pixelwand (const double)))
 
 (define pixelwand-black
-  (foreign-lambda double PixelGetBlack (const pixelwand)))
+  (foreign-lambda double PixelGetBlack pixelwand))
 
 (set! (setter pixelwand-black) pixelwand-black-set!)
 
@@ -1974,7 +1970,7 @@
 ;;  (foreign-lambda void PixelSetBlackQuantum pixelwand (const quantum)))
 
 ;;(define pixelwand-black-quantum
-;;  (foreign-lambda quantum PixelGetBlackQuantum (const pixelwand)))
+;;  (foreign-lambda quantum PixelGetBlackQuantum pixelwand))
 
 ;;(set! (setter pixelwand-black-quantum) pixelwand-black-quantum-set!)
 
@@ -1982,7 +1978,7 @@
   (foreign-lambda void PixelSetBlue pixelwand (const double)))
 
 (define pixelwand-blue
-  (foreign-lambda double PixelGetBlue (const pixelwand)))
+  (foreign-lambda double PixelGetBlue pixelwand))
 
 (set! (setter pixelwand-blue) pixelwand-blue-set!)
 
@@ -1990,7 +1986,7 @@
 ;;  (foreign-lambda void PixelSetBlueQuantum pixelwand (const quantum)))
 
 ;;(define pixelwand-blue-quantum
-;;  (foreign-lambda quantum PixelGetBlueQuantum (const pixelwand)))
+;;  (foreign-lambda quantum PixelGetBlueQuantum pixelwand))
 
 ;;(set! (setter pixelwand-blue-quantum) pixelwand-blue-quantum-set!)
 
@@ -2004,7 +2000,7 @@
 
 ;;XXX: awkward name, probably means we need an abstraction with pixelwand-color-set!
 (define pixelwand-color-from-wand-set!
-  (foreign-lambda void PixelSetColorFromWand pixelwand (const pixelwand)))
+  (foreign-lambda void PixelSetColorFromWand pixelwand pixelwand))
 
 (define pixelwand-color/normalized
   (foreign-lambda c-string PixelGetColorAsNormalizedString pixelwand))
@@ -2014,7 +2010,7 @@
 
 ;; color-count is set by MagickGetImageHistogram
 (define pixelwand-color-count
-  (foreign-lambda size_t PixelGetColorCount (const pixelwand)))
+  (foreign-lambda size_t PixelGetColorCount pixelwand))
 
 (set! (setter pixelwand-color-count) pixelwand-color-count-set!)
 
@@ -2022,7 +2018,7 @@
   (foreign-lambda void PixelSetCyan pixelwand (const double)))
 
 (define pixelwand-cyan
-  (foreign-lambda double PixelGetCyan (const pixelwand)))
+  (foreign-lambda double PixelGetCyan pixelwand))
 
 (set! (setter pixelwand-cyan) pixelwand-cyan-set!)
 
@@ -2030,7 +2026,7 @@
 ;;  (foreign-lambda void PixelSetCyanQuantum pixelwand (const quantum)))
 
 ;;(define pixelwand-cyan-quantum
-;;  (foreign-lambda quantum PixelGetCyanQuantum (const pixelwand)))
+;;  (foreign-lambda quantum PixelGetCyanQuantum pixelwand))
 
 ;;(set! (setter pixelwand-cyan-quantum) pixelwand-cyan-quantum-set!)
 
@@ -2038,7 +2034,7 @@
   (foreign-lambda void PixelSetFuzz pixelwand (const double)))
 
 (define pixelwand-fuzz
-  (foreign-lambda double PixelGetFuzz (const pixelwand)))
+  (foreign-lambda double PixelGetFuzz pixelwand))
 
 (set! (setter pixelwand-fuzz) pixelwand-fuzz-set!)
 
@@ -2046,7 +2042,7 @@
   (foreign-lambda void PixelSetGreen pixelwand (const double)))
 
 (define pixelwand-green
-  (foreign-lambda double PixelGetGreen (const pixelwand)))
+  (foreign-lambda double PixelGetGreen pixelwand))
 
 (set! (setter pixelwand-green) pixelwand-green-set!)
 
@@ -2054,7 +2050,7 @@
 ;;  (foreign-lambda void PixelSetGreenQuantum pixelwand (const quantum)))
 
 ;;(define pixelwand-green-quantum
-;;  (foreign-lambda quantum PixelGetGreenQuantum (const pixelwand)))
+;;  (foreign-lambda quantum PixelGetGreenQuantum pixelwand))
 
 ;;(set! (setter pixelwand-green-quantum) pixelwand-green-quantum-set!)
 
@@ -2065,7 +2061,7 @@
 
 (define pixelwand-hsl
   (foreign-lambda void PixelGetHSL
-                  (const pixelwand) (c-pointer double)
+                  pixelwand (c-pointer double)
                   (c-pointer double) (c-pointer double)))
 
 ;;(define pixelwand-index-set!
@@ -2080,7 +2076,7 @@
   (foreign-lambda void PixelSetMagenta pixelwand (const double)))
 
 (define pixelwand-magenta
-  (foreign-lambda double PixelGetMagenta (const pixelwand)))
+  (foreign-lambda double PixelGetMagenta pixelwand))
 
 (set! (setter pixelwand-magenta) pixelwand-magenta-set!)
 
@@ -2088,7 +2084,7 @@
 ;;  (foreign-lambda void PixelSetMagentaQuantum pixelwand (const quantum)))
 
 ;;(define pixelwand-magenta-quantum
-;;  (foreign-lambda quantum PixelGetMagentaQuantum (const pixelwand)))
+;;  (foreign-lambda quantum PixelGetMagentaQuantum pixelwand))
 
 ;;(set! (setter pixelwand-magenta-quantum) pixelwand-magenta-quantum-set!)
 
@@ -2107,7 +2103,7 @@
   (foreign-lambda void PixelSetOpacity pixelwand (const double)))
 
 (define pixelwand-opacity
-  (foreign-lambda double PixelGetOpacity (const pixelwand)))
+  (foreign-lambda double PixelGetOpacity pixelwand))
 
 (set! (setter pixelwand-opacity) pixelwand-opacity-set!)
 
@@ -2115,7 +2111,7 @@
 ;;  (foreign-lambda void PixelSetOpacityQuantum pixelwand (const quantum)))
 
 ;;(define pixelwand-opacity-quantum
-;;  (foreign-lambda quantum PixelGetOpacityQuantum (const pixelwand)))
+;;  (foreign-lambda quantum PixelGetOpacityQuantum pixelwand))
 
 ;;(set! (setter pixelwand-opacity-quantum) pixelwand-opacity-quantum-set!)
 
@@ -2131,7 +2127,7 @@
   (foreign-lambda void PixelSetRed pixelwand (const double)))
 
 (define pixelwand-red
-  (foreign-lambda double PixelGetRed (const pixelwand)))
+  (foreign-lambda double PixelGetRed pixelwand))
 
 (set! (setter pixelwand-red) pixelwand-red-set!)
 
@@ -2139,7 +2135,7 @@
 ;;  (foreign-lambda void PixelSetRedQuantum pixelwand (const quantum)))
 
 ;;(define pixelwand-red-quantum
-;;  (foreign-lambda quantum PixelGetRedQuantum (const pixelwand)))
+;;  (foreign-lambda quantum PixelGetRedQuantum pixelwand))
 
 ;;(set! (setter pixelwand-red-quantum) pixelwand-red-quantum-set!)
 
@@ -2147,7 +2143,7 @@
   (foreign-lambda void PixelSetYellow pixelwand (const double)))
 
 (define pixelwand-yellow
-  (foreign-lambda double PixelGetYellow (const pixelwand)))
+  (foreign-lambda double PixelGetYellow pixelwand))
 
 (set! (setter pixelwand-yellow) pixelwand-yellow-set!)
 
@@ -2155,7 +2151,7 @@
 ;;  (foreign-lambda void PixelSetYellowQuantum pixelwand (const quantum)))
 
 ;;(define pixelwand-yellow-quantum
-;;  (foreign-lambda quantum PixelGetYellowQuantum (const pixelwand)))
+;;  (foreign-lambda quantum PixelGetYellowQuantum pixelwand))
 
 ;;(set! (setter pixelwand-yellow-quantum) pixelwand-yellow-quantum-set!)
 
@@ -2186,7 +2182,7 @@
 
 (define drawingwand-border-color-set!
   (foreign-lambda void DrawSetBorderColor
-                   drawingwand (const pixelwand)))
+                   drawingwand pixelwand))
 
 (define drawingwand-border-color
   (getter-with-setter
@@ -2223,7 +2219,7 @@
    drawingwand-clip-units-set!))
 
 (define drawingwand-fill-color-set!
-  (foreign-lambda void DrawSetFillColor drawingwand (const pixelwand)))
+  (foreign-lambda void DrawSetFillColor drawingwand pixelwand))
 
 (define drawingwand-fill-color
   (getter-with-setter
@@ -2336,7 +2332,7 @@
    drawingwand-stroke-antialias-set!))
 
 (define drawingwand-stroke-color-set!
-  (foreign-lambda void DrawSetStrokeColor drawingwand (const pixelwand)))
+  (foreign-lambda void DrawSetStrokeColor drawingwand pixelwand))
 
 (define drawingwand-stroke-color
   (getter-with-setter
@@ -2484,7 +2480,7 @@
    drawingwand-vector-graphics-set!))
 
 (define drawingwand-text-under-color-set!
-  (foreign-lambda void DrawSetTextUnderColor drawingwand (const pixelwand)))
+  (foreign-lambda void DrawSetTextUnderColor drawingwand pixelwand))
 
 (define drawingwand-text-under-color
   (getter-with-setter
