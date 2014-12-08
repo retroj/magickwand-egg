@@ -35,6 +35,8 @@
 ;;; Main Object Types
 ;;;
 
+;; magickwand
+;;
 (define-record-type :magickwand
   (%make-magickwand this)
   magickwand?
@@ -70,6 +72,8 @@
     (%make-drawingwand p)))
 
 
+;; image
+;;
 (define-record-type :image
   (%make-image this)
   image?
