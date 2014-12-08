@@ -82,7 +82,7 @@
 
 (define (%pixelwand-finalizer p)
   (when (magickwand-instantiated?)
-    ((foreign-lambda c-pointer DestroyPixelWand pixelwand))
+    ((foreign-lambda c-pointer DestroyPixelWand pixelwand) p)
     #t))
 
 (define-foreign-type pixelwand (c-pointer (struct _PixelWand))
