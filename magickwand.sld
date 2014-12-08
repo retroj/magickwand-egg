@@ -629,5 +629,8 @@
           foreigners
           matchable)
 
+  (begin
+    (foreign-declare "#include <wand/MagickWand.h>"))
+
   (include "magickwand-enum")
   (include "magickwand-impl"))
