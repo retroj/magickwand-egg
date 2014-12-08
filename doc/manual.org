@@ -1,0 +1,53 @@
+
+* Memory Management
+** Genesis and Terminus
+
+MagickWand has two procedures, MagickWandGenesis and MagickWandTerminus,
+that must be called before and after (respectively) using the library.
+
+Magickwand-egg automatically calls MagickWandGenesis when loaded, and uses
+an `on-exit` handler to call MagickWandTerminus during normal program
+exit.
+
+MagickWandTerminus releases the memory for all wands and their associated
+resources.
+
+In the normal course of things, Magickwand-egg handles memory in the
+following way:
+
+  - A finalizer is set on any wand that is seen by scheme.  If
+    MagickWandTerminus has not yet been called, the finalizer calls the
+    MagickWand "destoy" procedure appropriate to the type of object.
+
+Since memory management is a complex and delicate concern in bindings of a
+large library like MagickWand, we will make a few notes about each type of
+object and how magickwand-egg deals with their memory management.
+
+** MagickWand
+
+Normal memory management as described above.
+
+** DrawingWand
+
+Normal memory management as described above.
+
+** PixelWand
+
+Normal memory management as described above.
+
+** PixelWands
+
+PixelWands is an array of PixelWand pointers.
+
+** Image
+
+Magickwand-egg does not make the Image datatype available to scheme.
+Their memory management is handled by internal reference counting, but
+getting a reference to an image via GetImageFromMagickWand does not
+automatically increase this count.  It would therefore be possible for an
+Image to be destroyed internally to MagickWand, and an invalid pointer
+left in scheme.  If we want to make the Image type available in scheme, we
+will need to wrap it in a way that we increase the refcount whenever
+taking a reference.  We leave this exercise to another day.
+
+** PixelIterator
