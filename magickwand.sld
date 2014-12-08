@@ -628,4 +628,6 @@
           foreign
           foreigners
           matchable)
+
+  (include "magickwand-enum")
   (include "magickwand-impl"))
