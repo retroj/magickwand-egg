@@ -1,0 +1,16 @@
+* MagickWandTerminus
+
+retroj> guaranteeing that the terminus function will be called on
+    exit is difficult to do in all cases, right?
+sjamaan> yeah, so be sure to document how the egg handles it
+retroj> ok
+sjamaan> Maybe provide a way for the user to explicitly call
+    terminus when needed
+sjamaan> It should probably set an on-exit handler so in the common
+    situation you don't need to worry about it
+
+* api methods not yet implemented, that may be useful
+** CloneMagickWandFromImages
+
+Clones a magickwand, but constructs the images list of the clone from the
+given images instead of from the cloned wand.
