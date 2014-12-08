@@ -83,8 +83,14 @@
 (define-foreign-type image (c-pointer (struct _Image))
   image-this %make-image)
 
+
+;; pixelwand
+;;
 (define-foreign-type pixelwand (c-pointer (struct _PixelWand)))
 
+
+;; pixeliterator
+;;
 (define-foreign-type pixeliterator (c-pointer (struct _PixelIterator)))
 
 
