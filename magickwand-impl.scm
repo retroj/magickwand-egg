@@ -52,7 +52,13 @@
 
 (define-foreign-type drawingwand (c-pointer (struct _DrawingWand)))
 
-(define-foreign-type image (c-pointer (struct _Image)))
+(define-record-type :image
+  (%make-image this)
+  image?
+  (this image-this))
+
+(define-foreign-type image (c-pointer (struct _Image))
+  image-this %make-image)
 
 (define-foreign-type pixelwand (c-pointer (struct _PixelWand)))
 
