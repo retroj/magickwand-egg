@@ -28,6 +28,15 @@
 
 (define-foreign-type ssize_t long)
 
+(define-foreign-type magicksize unsigned-long)
+
+(define-foreign-type magickrealtype double)
+
+
+;;;
+;;; Enum Types
+;;;
+
 (define-foreign-enum-type (exceptiontype int)
   (exceptiontype->int int->exceptiontype)
   (exception/undefined UndefinedException)
@@ -201,8 +210,6 @@
   (orientation/righttop RightTopOrientation)
   (orientation/rightbottom RightBottomOrientation)
   (orientation/leftbottom LeftBottomOrientation))
-
-(define-foreign-type magicksize unsigned-long)
 
 (define-foreign-enum-type (resourcetype int)
   (resourcetype->int int->resourcetype)
@@ -746,6 +753,11 @@
   (decoration/overline OverlineDecoration)
   (decoration/linethrough LineThroughDecoration))
 
+
+;;;
+;;; Main Object Types
+;;;
+
 (define-record-type :magickwand
   (%make-magickwand this)
   magickwand?
@@ -768,6 +780,11 @@
 (define-foreign-type pixelwand (c-pointer (struct _PixelWand)))
 
 (define-foreign-type pixeliterator (c-pointer (struct _PixelIterator)))
+
+
+;;;
+;;; Auxiliary Object Types
+;;;
 
 ;; typedef MagickBooleanType
 ;;   (*MagickProgressMonitor)(const char *,const MagickOffsetType,
@@ -824,8 +841,6 @@
   (ssize_t x rectangleinfo-x)
   (ssize_t y rectangleinfo-y))
 
-(define-foreign-type magickrealtype double)
-
 (define-foreign-record-type (magickpixelpacket MagickPixelPacket)
   (classtype storage_class magickpixelpacket-storage-class)
   (colorspace colorspace magickpixelpacket-colorspace)
@@ -860,6 +875,10 @@
   (double x pointinfo-x)
   (double y pointinfo-y))
 
+
+;;;
+;;; Binding Syntax
+;;;
 
 (define-syntax define-magick-image-op
   (syntax-rules ()
