@@ -44,7 +44,8 @@
 
 (define (%magickwand-finalizer w)
   (when (magickwand-instantiated?)
-    ((foreign-lambda c-pointer DestroyMagickWand magickwand) w)))
+    ((foreign-lambda c-pointer DestroyMagickWand magickwand) w)
+    #t))
 
 (define-foreign-type magickwand (c-pointer (struct _MagickWand))
   magickwand-this
