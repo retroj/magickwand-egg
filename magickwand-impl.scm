@@ -98,17 +98,6 @@
 ;;
 
 
-;; image
-;;
-(define-record-type :image
-  (%make-image this)
-  image?
-  (this image-this))
-
-(define-foreign-type image (c-pointer (struct _Image))
-  image-this %make-image)
-
-
 ;; pixeliterator
 ;;
 (define-foreign-type pixeliterator (c-pointer (struct _PixelIterator)))
@@ -312,9 +301,6 @@
       w))
    (((? magickwand? w))
     ((foreign-lambda magickwand CloneMagickWand (const magickwand)) w))
-   (((? image? image))
-    ((foreign-lambda magickwand NewMagickWandFromImage (const image))
-     image))
    (()
     ((foreign-lambda magickwand NewMagickWand)))))
 
@@ -1172,9 +1158,6 @@
 ;;; Magick-image methods
 ;;;
 
-(define get-image-from-magick-wand
-  (foreign-lambda image GetImageFromMagickWand magickwand))
-
 (define-magick-image-op (magick-adaptive-blur-image wand radius sigma)
   (MagickAdaptiveBlurImage magickwand (const double) (const double)))
 
@@ -1356,9 +1339,6 @@
 
 (define-magick-image-op (magick-despeckle-image wand)
   (MagickDespeckleImage magickwand))
-
-(define magick-destroy-image
-  (foreign-lambda image MagickDestroyImage image))
 
 (define-magick-image-op (magick-display-image wand server-name)
   (MagickDisplayImage magickwand (const c-string)))

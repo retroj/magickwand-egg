@@ -218,8 +218,7 @@
           magick-set-image-opacity)
   ;; Magick-image methods
   ;;
-  (export get-image-from-magick-wand
-          magick-adaptive-blur-image
+  (export magick-adaptive-blur-image
           magick-adaptive-blur-image-channel
           magick-adaptive-resize-image
           magick-adaptive-sharpen-image
@@ -275,7 +274,6 @@
           magick-deconstruct-images
           magick-deskew-image
           magick-despeckle-image
-          magick-destroy-image
           magick-display-image
           magick-display-images
           magick-distort-image
