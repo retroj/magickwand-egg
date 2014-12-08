@@ -867,7 +867,7 @@
                              (c-name . c-args))
      (define (scheme-name object . rest)
        (or ((foreign-lambda bool c-name . c-args) object . rest)
-           (signal (magick-get-exception object)))))))
+           (signal (%magick-get-exception object)))))))
 
 
 ;;;
@@ -930,10 +930,10 @@
 (define magickwand-clear
   (foreign-lambda void ClearMagickWand magickwand))
 
-(define magick-clear-exception
+(define %magick-clear-exception
   (foreign-lambda bool MagickClearException magickwand))
 
-(define (magick-get-exception wand)
+(define (%magick-get-exception wand)
   (let-location ((typeout int))
     (let* ((str ((foreign-lambda c-string MagickGetException
                                  (const magickwand)
@@ -946,7 +946,7 @@
        (make-property-condition 'magickwand 'type type)
        (make-property-condition type)))))
 
-(define magick-get-exception-type
+(define %magick-get-exception-type
   (foreign-lambda exceptiontype MagickGetExceptionType (const magickwand)))
 
 (define make-magickwand
@@ -2055,7 +2055,7 @@
   (or ((foreign-lambda bool MagickExportImagePixels magickwand (const ssize_t) (const ssize_t) (const size_t)
                        (const size_t) (const c-string) (const storagetype) nonnull-blob)
        wand x y columns rows map (storagetype->int storage) pixels)
-      (signal (magick-get-exception wand))))
+      (signal (%magick-get-exception wand))))
 
 (define-magick-image-op (magick-extent-image wand width height x y)
   (MagickExtentImage magickwand (const size_t) (const size_t)
@@ -2278,7 +2278,7 @@
   (or ((foreign-lambda bool MagickReadImageBlob magickwand
                        (const blob) (const size_t))
        wand blob (blob-size blob))
-      (signal (magick-get-exception wand))))
+      (signal (%magick-get-exception wand))))
 
 ;;(define magick-read-image-file
 ;;  (foreign-lambda bool MagickReadImageFile
@@ -2305,7 +2305,7 @@
                        magickwand (const size_t) (const size_t)
                        (const filtertype) (const double))
        wand columns rows (filtertype->int filter) blur)
-      (signal (magick-get-exception wand))))
+      (signal (%magick-get-exception wand))))
 
 (define-magick-image-op (magick-roll-image wand x y)
   (MagickRollImage magickwand (const ssize_t) (const ssize_t)))
