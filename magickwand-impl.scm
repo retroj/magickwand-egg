@@ -24,16 +24,6 @@
 ;; OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ;; ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-(module magickwand
-        *
-
-(import chicken scheme foreign foreigners)
-
-(use
- (srfi 4 13)
- extras
- matchable)
-
 (foreign-declare "#include <wand/MagickWand.h>")
 
 (define-foreign-type ssize_t long)
@@ -3520,5 +3510,3 @@
 (magickwand-genesis)
 
 (on-exit magickwand-terminus)
-
-)

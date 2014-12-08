@@ -1,10 +1,10 @@
 ;; -*- scheme -*-
 
-(compile -s -O3 -d1
+(compile -s -O3 -d1 -X r7rs -R r7rs
          -C "\"`pkg-config --cflags MagickWand`\""
          -L "\"`pkg-config --libs MagickWand`\""
-         "magickwand.scm" -J)
-(compile -s -O3 -d0 "magickwand.import.scm")
+         "magickwand.sld" -J)
+(compile -s -O3 -d0 -X r7rs -R r7rs "magickwand.import.scm")
 
 (install-extension
  'magickwand
