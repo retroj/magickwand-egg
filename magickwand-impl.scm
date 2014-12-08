@@ -286,7 +286,7 @@
       w))
    (((? magickwand? w))
     ((foreign-lambda magickwand CloneMagickWand (const magickwand)) w))
-   ((image) ;; need typecheck predicate for 'image'
+   (((? image? image))
     ((foreign-lambda magickwand NewMagickWandFromImage (const image))
      image))
    (()
