@@ -746,7 +746,20 @@
   (decoration/overline OverlineDecoration)
   (decoration/linethrough LineThroughDecoration))
 
-(define-foreign-type magickwand (c-pointer (struct _MagickWand)))
+(define-record-type :magickwand
+  (%make-magickwand this)
+  magickwand?
+  (this magickwand-this))
+
+(define (%magickwand-finalizer w)
+  (when (magickwand-instantiated?)
+    ((foreign-lambda c-pointer DestroyMagickWand magickwand) w)))
+
+(define-foreign-type magickwand (c-pointer (struct _MagickWand))
+  magickwand-this
+  (lambda (p)
+    (set-finalizer! p %magickwand-finalizer)
+    (%make-magickwand p)))
 
 (define-foreign-type drawingwand (c-pointer (struct _DrawingWand)))
 
@@ -917,9 +930,6 @@
 (define magickwand-clear
   (foreign-lambda void ClearMagickWand magickwand))
 
-(define magickwand?
-  (foreign-lambda bool IsMagickWand (const magickwand)))
-
 (define magick-clear-exception
   (foreign-lambda bool MagickClearException magickwand))
 
@@ -939,10 +949,6 @@
 (define magick-get-exception-type
   (foreign-lambda exceptiontype MagickGetExceptionType (const magickwand)))
 
-(define (magickwand-finalizer w)
-  (when (magickwand-instantiated?)
-    ((foreign-lambda magickwand DestroyMagickWand magickwand) w)))
-
 (define make-magickwand
   (match-lambda*
    (((? string? str))
@@ -954,18 +960,12 @@
       (magick-read-image-blob w b)
       w))
    (((? magickwand? w))
-    (let ((w2 ((foreign-lambda magickwand CloneMagickWand (const magickwand)) w)))
-      (set-finalizer! w2 magickwand-finalizer)
-      w2))
+    ((foreign-lambda magickwand CloneMagickWand (const magickwand)) w))
    ((image) ;; need typecheck predicate for 'image'
-    (let ((w ((foreign-lambda magickwand NewMagickWandFromImage (const image))
-              image)))
-      (set-finalizer! w magickwand-finalizer)
-      w))
+    ((foreign-lambda magickwand NewMagickWandFromImage (const image))
+     image))
    (()
-    (let ((w ((foreign-lambda magickwand NewMagickWand))))
-      (set-finalizer! w magickwand-finalizer)
-      w))))
+    ((foreign-lambda magickwand NewMagickWand)))))
 
 (define magick-query-font-metrics
   (foreign-lambda (c-pointer double) MagickQueryFontMetrics magickwand
