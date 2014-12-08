@@ -50,7 +50,25 @@
     (set-finalizer! p %magickwand-finalizer)
     (%make-magickwand p)))
 
-(define-foreign-type drawingwand (c-pointer (struct _DrawingWand)))
+
+;; drawingwand
+;;
+(define-record-type :drawingwand
+  (%make-drawingwand this)
+  drawingwand?
+  (this drawingwand-this))
+
+(define (%drawingwand-finalizer d)
+  (when (magickwand-instantiated?)
+    ((foreign-lambda c-pointer DestroyDrawingWand drawingwand) d)
+    #t))
+
+(define-foreign-type drawingwand (c-pointer (struct _DrawingWand))
+  drawingwand-this
+  (lambda (p)
+    (set-finalizer! p %drawingwand-finalizer)
+    (%make-drawingwand p)))
+
 
 (define-record-type :image
   (%make-image this)
@@ -2161,9 +2179,6 @@
 (define drawingwand-clone
   (foreign-lambda drawingwand CloneDrawingWand (const drawingwand)))
 
-(define drawingwand-destroy
-  (foreign-lambda drawingwand DestroyDrawingWand drawingwand))
-
 (define drawingwand-border-color-set!
   (foreign-lambda void DrawSetBorderColor
                    drawingwand (const pixelwand)))
@@ -2697,13 +2712,8 @@
   (foreign-lambda void DrawSetViewbox
                   drawingwand ssize_t ssize_t ssize_t ssize_t))
 
-(define drawingwand?
-  (foreign-lambda bool IsDrawingWand (const drawingwand)))
-
-(define (make-drawingwand)
-  (let ((d ((foreign-lambda drawingwand NewDrawingWand))))
-    (set-finalizer! d drawingwand-destroy)
-    d))
+(define make-drawingwand
+  (foreign-lambda drawingwand NewDrawingWand))
 
 (define peek-drawingwand
   (foreign-lambda drawinfo PeekDrawingWand (const drawingwand)))

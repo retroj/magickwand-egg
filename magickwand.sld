@@ -477,7 +477,6 @@
           draw-clear-exception
           drawingwand-clear
           drawingwand-clone
-          drawingwand-destroy
           drawingwand-border-color-set!
           drawingwand-border-color
           drawingwand-clip-path-set!
