@@ -306,11 +306,11 @@
 
 (define magick-query-font-metrics
   (foreign-lambda (c-pointer double) MagickQueryFontMetrics magickwand
-                  (const drawingwand) (const c-string)))
+                  drawingwand (const c-string)))
 
 (define magick-query-multiline-font-metrics
   (foreign-lambda (c-pointer double) MagickQueryMultilineFontMetrics
-                  magickwand (const drawingwand) (const c-string)))
+                  magickwand drawingwand (const c-string)))
 
 (define magick-reset-iterator
   (foreign-lambda void MagickResetIterator magickwand))
@@ -1182,10 +1182,10 @@
   (MagickAddNoiseImageChannel magickwand (const channeltype) (const noisetype)))
 
 (define-magick-image-op (magick-affine-transform-image wand drawing-wand)
-  (MagickAffineTransformImage magickwand (const drawingwand)))
+  (MagickAffineTransformImage magickwand drawingwand))
 
 (define-magick-image-op (magick-annotate-image wand drawing-wand x y angle text)
-  (MagickAnnotateImage magickwand (const drawingwand) (const double) (const double)
+  (MagickAnnotateImage magickwand drawingwand (const double) (const double)
                        (const double) (const c-string)))
 
 (define-magick-image-op (magick-animate-images wand server-name)
@@ -1347,7 +1347,7 @@
                       (const (c-pointer double)) (const bool)))
 
 (define-magick-image-op (magick-draw-image wand drawing-wand)
-  (MagickDrawImage magickwand (const drawingwand)))
+  (MagickDrawImage magickwand drawingwand))
 
 (define-magick-image-op (magick-edge-image wand radius)
   (MagickEdgeImage magickwand (const double)))
@@ -1499,7 +1499,7 @@
 
 (define magick-montage-image
   (foreign-lambda magickwand MagickMontageImage
-                  magickwand (const drawingwand)
+                  magickwand drawingwand
                   (const c-string) (const c-string)
                   (const montagemode) (const c-string)))
 
@@ -1569,7 +1569,7 @@
 ;;                  magickwand (c-pointer FILE)))
 
 (define-magick-image-op (magick-polaroid-image wand drawing-wand angle)
-  (MagickPolaroidImage magickwand (const drawingwand) (const double)))
+  (MagickPolaroidImage magickwand drawingwand (const double)))
 
 (define-magick-image-op (magick-posterize-image wand levels dither)
   (MagickPosterizeImage magickwand (const size_t) (const bool)))
@@ -2163,13 +2163,13 @@
 (define (draw-get-exception wand)
   (let-location ((typeout int))
     (let ((str ((foreign-lambda c-string DrawGetException
-                                (const drawingwand)
+                                drawingwand
                                 (c-pointer "ExceptionType"))
                 wand (location typeout))))
       (values str (int->exceptiontype typeout)))))
 
 (define draw-get-exception-type
-  (foreign-lambda exceptiontype DrawGetExceptionType (const drawingwand)))
+  (foreign-lambda exceptiontype DrawGetExceptionType drawingwand))
 
 (define draw-clear-exception
   (foreign-lambda bool DrawClearException drawingwand))
@@ -2178,7 +2178,7 @@
   (foreign-lambda void ClearDrawingWand drawingwand))
 
 (define drawingwand-clone
-  (foreign-lambda drawingwand CloneDrawingWand (const drawingwand)))
+  (foreign-lambda drawingwand CloneDrawingWand drawingwand))
 
 (define drawingwand-border-color-set!
   (foreign-lambda void DrawSetBorderColor
@@ -2189,7 +2189,7 @@
    (lambda (wand)
      (let ((p (make-pixelwand)))
        ((foreign-lambda void DrawGetBorderColor
-                        (const drawingwand) pixelwand)
+                        drawingwand pixelwand)
         wand p)
        p))
    drawingwand-border-color-set!))
@@ -2199,7 +2199,7 @@
 
 (define drawingwand-clip-path
   (getter-with-setter
-   (foreign-lambda c-string DrawGetClipPath (const drawingwand))
+   (foreign-lambda c-string DrawGetClipPath drawingwand)
    drawingwand-clip-path-set!))
 
 (define drawingwand-clip-rule-set!
@@ -2207,7 +2207,7 @@
 
 (define drawingwand-clip-rule
   (getter-with-setter
-   (foreign-lambda fillrule DrawGetClipRule (const drawingwand))
+   (foreign-lambda fillrule DrawGetClipRule drawingwand)
    drawingwand-clip-rule-set!))
 
 (define drawingwand-clip-units-set!
@@ -2215,7 +2215,7 @@
 
 (define drawingwand-clip-units
   (getter-with-setter
-   (foreign-lambda clippathunits DrawGetClipUnits (const drawingwand))
+   (foreign-lambda clippathunits DrawGetClipUnits drawingwand)
    drawingwand-clip-units-set!))
 
 (define drawingwand-fill-color-set!
@@ -2225,7 +2225,7 @@
   (getter-with-setter
    (lambda (wand)
      (let ((p (make-pixelwand)))
-       ((foreign-lambda void DrawGetFillColor (const drawingwand) pixelwand)
+       ((foreign-lambda void DrawGetFillColor drawingwand pixelwand)
         wand p)
        p))
    drawingwand-fill-color-set!))
@@ -2235,7 +2235,7 @@
 
 (define drawingwand-fill-opacity
   (getter-with-setter
-   (foreign-lambda double DrawGetFillOpacity (const drawingwand))
+   (foreign-lambda double DrawGetFillOpacity drawingwand)
    drawingwand-fill-opacity-set!))
 
 (define drawingwand-fill-rule-set!
@@ -2243,7 +2243,7 @@
 
 (define drawingwand-fill-rule
   (getter-with-setter
-   (foreign-lambda fillrule DrawGetFillRule (const drawingwand))
+   (foreign-lambda fillrule DrawGetFillRule drawingwand)
    drawingwand-fill-rule-set!))
 
 (define drawingwand-font-set!
@@ -2251,7 +2251,7 @@
 
 (define drawingwand-font
   (getter-with-setter
-   (foreign-lambda c-string DrawGetFont (const drawingwand))
+   (foreign-lambda c-string DrawGetFont drawingwand)
    drawingwand-font-set!))
 
 (define drawingwand-font-family-set!
@@ -2259,7 +2259,7 @@
 
 (define drawingwand-font-family
   (getter-with-setter
-   (foreign-lambda c-string DrawGetFontFamily (const drawingwand))
+   (foreign-lambda c-string DrawGetFontFamily drawingwand)
    drawingwand-font-family-set!))
 
 ;;XXX: two numbers for resolution... give as list?
@@ -2269,7 +2269,7 @@
 
 ;; (define %drawingwand-font-resolution
 ;;   (foreign-lambda bool DrawGetFontResolution
-;;                   (const drawingwand) (c-pointer double) (c-pointer double)))
+;;                   drawingwand (c-pointer double) (c-pointer double)))
 
 ;; (define drawingwand-font-resolution
 ;;   (getter-with-setter %drawingwand-font-resolution
@@ -2280,7 +2280,7 @@
 
 (define drawingwand-font-size
   (getter-with-setter
-   (foreign-lambda double DrawGetFontSize (const drawingwand))
+   (foreign-lambda double DrawGetFontSize drawingwand)
    drawingwand-font-size-set!))
 
 (define drawingwand-font-stretch-set!
@@ -2288,7 +2288,7 @@
 
 (define drawingwand-font-stretch
   (getter-with-setter
-   (foreign-lambda stretchtype DrawGetFontStretch (const drawingwand))
+   (foreign-lambda stretchtype DrawGetFontStretch drawingwand)
    drawingwand-font-stretch-set!))
 
 (define drawingwand-font-style-set!
@@ -2296,7 +2296,7 @@
 
 (define drawingwand-font-style
   (getter-with-setter
-   (foreign-lambda styletype DrawGetFontStyle (const drawingwand))
+   (foreign-lambda styletype DrawGetFontStyle drawingwand)
    drawingwand-font-style-set!))
 
 (define drawingwand-font-weight-set!
@@ -2304,7 +2304,7 @@
 
 (define drawingwand-font-weight
   (getter-with-setter
-   (foreign-lambda size_t DrawGetFontWeight (const drawingwand))
+   (foreign-lambda size_t DrawGetFontWeight drawingwand)
    drawingwand-font-weight-set!))
 
 (define drawingwand-gravity-set!
@@ -2312,7 +2312,7 @@
 
 (define drawingwand-gravity
   (getter-with-setter
-   (foreign-lambda gravity DrawGetGravity (const drawingwand))
+   (foreign-lambda gravity DrawGetGravity drawingwand)
    drawingwand-gravity-set!))
 
 (define drawingwand-opacity-set!
@@ -2320,7 +2320,7 @@
 
 (define drawingwand-opacity
   (getter-with-setter
-   (foreign-lambda double DrawGetOpacity (const drawingwand))
+   (foreign-lambda double DrawGetOpacity drawingwand)
    drawingwand-opacity-set!))
 
 (define drawingwand-stroke-antialias-set!
@@ -2328,7 +2328,7 @@
 
 (define drawingwand-stroke-antialias
   (getter-with-setter
-   (foreign-lambda bool DrawGetStrokeAntialias (const drawingwand))
+   (foreign-lambda bool DrawGetStrokeAntialias drawingwand)
    drawingwand-stroke-antialias-set!))
 
 (define drawingwand-stroke-color-set!
@@ -2338,7 +2338,7 @@
   (getter-with-setter
    (lambda (wand)
      (let ((p (make-pixelwand)))
-       ((foreign-lambda void DrawGetStrokeColor (const drawingwand) pixelwand)
+       ((foreign-lambda void DrawGetStrokeColor drawingwand pixelwand)
         wand p)
        p))
    drawingwand-stroke-color-set!))
@@ -2355,7 +2355,7 @@
    (lambda (wand)
      (let-location ((n size_t))
        (let* ((p ((foreign-lambda (c-pointer double) DrawGetStrokeDashArray
-                                  (const drawingwand) (c-pointer size_t))
+                                  drawingwand (c-pointer size_t))
                   wand (location n)))
               (result (make-f64vector n)))
          ((foreign-lambda* void (((c-pointer double) fro) (f64vector to) (size_t len))
@@ -2372,7 +2372,7 @@
 
 (define drawingwand-stroke-dash-offset
   (getter-with-setter
-   (foreign-lambda double DrawGetStrokeDashOffset (const drawingwand))
+   (foreign-lambda double DrawGetStrokeDashOffset drawingwand)
    drawingwand-stroke-dash-offset-set!))
 
 (define drawingwand-stroke-line-cap-set!
@@ -2380,7 +2380,7 @@
 
 (define drawingwand-stroke-line-cap
   (getter-with-setter
-   (foreign-lambda linecap DrawGetStrokeLineCap (const drawingwand))
+   (foreign-lambda linecap DrawGetStrokeLineCap drawingwand)
    drawingwand-stroke-line-cap-set!))
 
 (define drawingwand-stroke-line-join-set!
@@ -2388,7 +2388,7 @@
 
 (define drawingwand-stroke-line-join
   (getter-with-setter
-   (foreign-lambda linejoin DrawGetStrokeLineJoin (const drawingwand))
+   (foreign-lambda linejoin DrawGetStrokeLineJoin drawingwand)
    drawingwand-stroke-line-join-set!))
 
 (define drawingwand-stroke-miter-limit-set!
@@ -2396,7 +2396,7 @@
 
 (define drawingwand-stroke-miter-limit
   (getter-with-setter
-   (foreign-lambda size_t DrawGetStrokeMiterLimit (const drawingwand))
+   (foreign-lambda size_t DrawGetStrokeMiterLimit drawingwand)
    drawingwand-stroke-miter-limit-set!))
 
 (define drawingwand-stroke-opacity-set!
@@ -2404,7 +2404,7 @@
 
 (define drawingwand-stroke-opacity
   (getter-with-setter
-   (foreign-lambda double DrawGetStrokeOpacity (const drawingwand))
+   (foreign-lambda double DrawGetStrokeOpacity drawingwand)
    drawingwand-stroke-opacity-set!))
 
 (define drawingwand-stroke-width-set!
@@ -2412,7 +2412,7 @@
 
 (define drawingwand-stroke-width
   (getter-with-setter
-   (foreign-lambda double DrawGetStrokeWidth (const drawingwand))
+   (foreign-lambda double DrawGetStrokeWidth drawingwand)
    drawingwand-stroke-width-set!))
 
 (define drawingwand-text-alignment-set!
@@ -2420,7 +2420,7 @@
 
 (define drawingwand-text-alignment
   (getter-with-setter
-   (foreign-lambda aligntype DrawGetTextAlignment (const drawingwand))
+   (foreign-lambda aligntype DrawGetTextAlignment drawingwand)
    drawingwand-text-alignment-set!))
 
 (define drawingwand-text-antialias-set!
@@ -2428,7 +2428,7 @@
 
 (define drawingwand-text-antialias
   (getter-with-setter
-   (foreign-lambda bool DrawGetTextAntialias (const drawingwand))
+   (foreign-lambda bool DrawGetTextAntialias drawingwand)
    drawingwand-text-antialias-set!))
 
 (define drawingwand-text-decoration-set!
@@ -2436,7 +2436,7 @@
 
 (define drawingwand-text-decoration
   (getter-with-setter
-   (foreign-lambda decorationtype DrawGetTextDecoration (const drawingwand))
+   (foreign-lambda decorationtype DrawGetTextDecoration drawingwand)
    drawingwand-text-decoration-set!))
 
 (define drawingwand-text-encoding-set!
@@ -2444,7 +2444,7 @@
 
 (define drawingwand-text-encoding
   (getter-with-setter
-   (foreign-lambda c-string DrawGetTextEncoding (const drawingwand))
+   (foreign-lambda c-string DrawGetTextEncoding drawingwand)
    drawingwand-text-encoding-set!))
 
 (define drawingwand-text-kerning-set!
@@ -2486,7 +2486,7 @@
   (getter-with-setter
    (lambda (wand)
      (let ((p (make-pixelwand)))
-       ((foreign-lambda void DrawGetTextUnderColor (const drawingwand) pixelwand)
+       ((foreign-lambda void DrawGetTextUnderColor drawingwand pixelwand)
         wand p)
        p))
    drawingwand-text-under-color-set!))
@@ -2717,7 +2717,7 @@
   (foreign-lambda drawingwand NewDrawingWand))
 
 (define peek-drawingwand
-  (foreign-lambda drawinfo PeekDrawingWand (const drawingwand)))
+  (foreign-lambda drawinfo PeekDrawingWand drawingwand))
 
 (define pop-drawingwand
   (foreign-lambda bool PopDrawingWand drawingwand))
