@@ -1613,7 +1613,7 @@
   (or ((foreign-lambda bool MagickResizeImage
                        magickwand (const size_t) (const size_t)
                        filtertype (const double))
-       wand columns rows (filtertype->int filter) blur)
+       wand columns rows filter blur)
       (signal (%magick-get-exception wand))))
 
 (define-magick-image-op (magick-roll-image wand x y)
