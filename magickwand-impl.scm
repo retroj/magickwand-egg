@@ -1362,11 +1362,9 @@
                               magickevaluateoperator
                               (const double)))
 
-(define (magick-export-image-pixels wand x y columns rows map storage pixels)
-  (or ((foreign-lambda bool MagickExportImagePixels magickwand (const ssize_t) (const ssize_t) (const size_t)
-                       (const size_t) (const c-string) storagetype nonnull-blob)
-       wand x y columns rows map (storagetype->int storage) pixels)
-      (signal (%magick-get-exception wand))))
+(define-magick-image-op (magick-export-image-pixels wand x y columns rows map storage pixels)
+  (MagickExportImagePixels magickwand (const ssize_t) (const ssize_t) (const size_t)
+                           (const size_t) (const c-string) storagetype nonnull-blob))
 
 (define-magick-image-op (magick-extent-image wand width height x y)
   (MagickExtentImage magickwand (const size_t) (const size_t)
